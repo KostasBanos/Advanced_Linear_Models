@@ -38,7 +38,7 @@ library(caret)
 
 ```{r}
 # Import and convert the data to tibble
-olymp <- read.csv("olymp1")
+olymp <- read.csv(url("https://raw.githubusercontent.com/bbolker/stats720/main/data/olymp1.csv"))
 olymp <- as_tibble(olymp)  ## could use readr::read_csv directly
 
 ## frame, using within() or transform() or dplyr::mutate()
