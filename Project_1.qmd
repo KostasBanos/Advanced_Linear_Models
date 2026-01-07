@@ -268,7 +268,6 @@ These coefficients reflect the relative differences between the control and trea
 sim_fun <- function(n = 100, slope = 1, s = 1, m = 0, df = 10) {
   # Generate predictor
   x <- runif(n)
-  # Mean structure: E[y | x] = m + slope * x
   mu <- m + slope * x
   # t-distributed errors with mean 0 and scale s
   e <- s * rt(n, df = df)
