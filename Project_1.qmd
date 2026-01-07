@@ -71,7 +71,7 @@ head(olymp,10)
 
 In this analysis, the focus was on estimating gold medals from the `olymp1` dataset. After importing the dataset, it was transformed into a tibble format for more convenient handling. Five new variables were created by applying a logarithmic transformation to five key variables, reducing their dispersion and ensuring a smoother dataset for further analysis. Subsequently, a new tibble (`mydata`) was created, filtered to include only observations related to gold medals. This filtered dataset serves as the primary basis for the following analysis.
 
-## a.
+## a. Model Complexity and Predictor Selection
 
 In accordance with Harrell's guidelines [@harrell], it is recommended that the optimal number of predictor variables in a regression model should be less than $\frac{m}{15}$ (depends on the skewness of the distribution etc.), where m is the limiting sample size, defined as `nrow(mydata)`. Given that there are no strict limitations on the number of predictors in this analysis due to the sufficiently large sample size, I have opted to maintain a relatively simple and interpretable linear model.
 
@@ -83,7 +83,7 @@ For this analysis, I have selected two predictor variables (they are less correl
 
 The response variable of interest is the natural logarithm of gold medals ($\log_n$), which will be estimated in this model (it was necessary to do a transformation such that: $\log_n = \log(n+1)$, due to zeros in the dataset). This approach aims to facilitate interpretation while ensuring the model remains robust.
 
-## b.
+## b. Variable Scaling, Transformations, and Interpretation Thresholds
 
 The response variable in this analysis is the natural logarithm of the number of gold medals won by each country in a given year, denoted as `log_n`, where n represents the count of gold medals. This transformation is unitless, though it represents a logarithmic transformation of a count variable.
 
@@ -99,7 +99,7 @@ Given the nature of the problem and the logarithmic transformations applied to b
 
 As a result, I have adopted a threshold of 1% on each variable in the log scale. This approach provides a consistent way to interpret changes in the predictor variables and helps to identify significant relationships while managing noise in the model. Specifically, a 1% change in the log scale reflects the relative change in the original variable, offering a practical and scalable criterion for evaluating small changes in each predictor variable.
 
-## c.
+## c. Model Specification
 
 We applied the following model
 
@@ -115,7 +115,7 @@ The model summary indicates that approximately 36% of the variability in the res
 
 However, before drawing definitive conclusions, it is essential to conduct diagnostic tests to evaluate the model's reliability and ensure that key assumptions, such as residual normality, homoscedasticity, and independence, are met. These diagnostics will provide a more comprehensive understanding of the model's validity and its potential limitations.
 
-## d.
+## d. Model Diagnostics and Assessment of Assumptions
 
 To assess the assumptions of our linear regression model, we examined several diagnostic plots.
 
@@ -139,7 +139,7 @@ performance::check_model(model)
 
 In summary, the diagnostic plots indicate several violations of model assumptions, particularly regarding linearity, normality, and homoscedasticity, which may necessitate model reassessment or alternative modeling approaches.
 
-## e.
+## e. Model Revision and Selection of an Appropriate Count Regression
 
 The initial linear regression model was found to be inappropriate for the data at hand. The response variable, the number of medals (n), is a count variable, and using a linear model to predict count data can lead to biased estimates and violations of key assumptions, as evidenced by the diagnostic plots.
 
@@ -181,7 +181,7 @@ The diagnostic graphs provide valuable insights into the model's performance. Th
 
 Furthermore, the analysis shows no signs of collinearity among the predictor variables. The results of the posterior predictive checks are also favorable. However, the robustness of these findings may warrant further investigation, as the overall goodness of fit raises the possibility of potential overfitting or other specification issues that should be explored to ensure the reliability of the model.
 
-## f.
+## f. Coefficient Plot
 
 To draw a coefficient plot:
 
@@ -195,7 +195,7 @@ dwplot(x=nb_model)
 
 I have chosen not to scale and center the predictors because we have only two quantitative variables, which allows for straightforward interpretation of the coefficients.
 
-## g.
+## g. Effect Plot
 
 To draw an effects plot, we have:
 
@@ -261,7 +261,7 @@ The estimated coefficients from the model provide insights into the differences 
 
 These coefficients reflect the relative differences between the control and treatment groups, as well as the differences among the treatments themselves. The results was completely expected.
 
-# 3. Simulation exercises to model misspecification
+# 3. Simulation exercises misspecification problems in Linear Regression
 
 ```{r}
 

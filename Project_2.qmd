@@ -1,17 +1,14 @@
 ---
-title: "STATS 720 Assignment 2"
+title: "Project 2"
 format: 
   pdf:
     code-line-numbers: true
-author: "Konstantinos Banos 400609120"
-date: "Oct/11/2023"
+author: "Konstantinos Banos"
+date: "Oct/11/2024"
 editor: visual
 execute: 
   echo: true
   message: false
-header-includes:
-  \usepackage{fvextra}
-  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 ---
 
 \newpage
@@ -37,6 +34,8 @@ library(boot)
 library(effects)
 library(sjPlot)
 library(AER)
+library(pscl)
+library(patchwork)
 ```
 
 # Question 1: Analysis of Contraception Data from the Package mlmRev
@@ -76,7 +75,7 @@ My approach involves a basic logistic regression model, which utilizes the binom
     The second predictor is the number of living children. It is posited that as individuals find a permanent partner, they tend to use contraception less frequently. Therefore, the presence of children is expected to correlate with contraception usage, making this a reasonable predictor to include in the model.
 
 3.  **Type of Residence (urban)**:\
-    The third and final predictor is the type of residence, categorized as urban or rural. Contraception use is strongly correlated with various socio-economic factors. For instance, urban areas that are wealthier tend to have higher levels of education. It is generally observed that individuals with higher educational attainment are more likely to use contraception [@CanadianContraceptionConsensusChapter1ContraceptioninCanada]. Thus, the type of residence is anticipated to be a significant predictor of contraception use.
+    The third and final predictor is the type of residence, categorized as urban or rural. Contraception use is strongly correlated with various socio-economic factors. For instance, urban areas that are wealthier tend to have higher levels of education. It is generally observed that individuals with higher educational attainment are more likely to use contraception. Thus, the type of residence is anticipated to be a significant predictor of contraception use.
 
 I decide not to include the district at the first model because I can save a lot of degrees of freedom by using only the type of residence. However, I may lose some important information and eventually, the model's fit is not good enough
 
@@ -205,6 +204,43 @@ boot_fit <- boot(data=Contraception, statistic=function(data, indices) {
   return(coef(fit))
 }, R=1000)
 boot_fit
+```
+
+```{r}
+
+boot_df <- as.data.frame(boot_fit$t)
+names(boot_df) <- names(boot_fit$t0)
+
+boot_long <- boot_df %>%
+  pivot_longer(everything(), names_to = "term", values_to = "beta")
+
+ci_df <- boot_long %>%
+  group_by(term) %>%
+  summarise(
+    mean = mean(beta),
+    lo = quantile(beta, 0.025),
+    hi = quantile(beta, 0.975),
+    .groups = "drop"
+  )
+
+ggplot(boot_long, aes(x = beta)) +
+  geom_histogram(bins = 35) +
+  facet_wrap(~ term, scales = "free", ncol = 3) +
+  geom_vline(data = ci_df, aes(xintercept = mean), linewidth = 0.6) +
+  geom_vline(data = ci_df, aes(xintercept = lo), linetype = "dashed", linewidth = 0.5) +
+  geom_vline(data = ci_df, aes(xintercept = hi), linetype = "dashed", linewidth = 0.5) +
+  labs(
+    title = "Bootstrap distributions of coefficient estimates",
+    subtitle = "Solid = mean; dashed = 95% percentile interval (R = 1000)",
+    x = "Coefficient estimate",
+    y = "Count"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5)
+  )
+
 ```
 
 -   The **bias** for all coefficients is relatively small, which is a good sign that the bootstrap estimates closely match the original estimates.
@@ -564,7 +600,7 @@ summary(model_brglmFit)
 
 ### 1. Comparison of Estimates:
 
-```{r}
+```{r, fig.width=10, fig.height=10, dpi=300}
 glm_coefs <- coef(model_glm)
 bayesglm_coefs <- coef(model_bayesglm)
 brglmFit_coefs <- coef(model_brglmFit)
@@ -579,6 +615,69 @@ comparison_df <- data.frame(
 
 # Print the comparison
 print(comparison_df)
+
+# Long format
+plot_df <- comparison_df %>%
+  pivot_longer(cols = c(GLM, BayesGLM, BRGLM),
+               names_to = "Method",
+               values_to = "Estimate") %>%
+  mutate(
+    Method = factor(Method, levels = c("GLM", "BayesGLM", "BRGLM")),
+    Coefficient = factor(Coefficient, levels = unique(Coefficient))
+  )
+
+# Portfolio theme (centered titles)
+theme_portfolio <- theme_minimal(base_size = 12) +
+  theme(
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold", size = 15, hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5, margin = margin(b = 8)),
+    axis.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_blank(),
+    strip.text = element_text(face = "bold")
+  )
+
+# Plot 1: Faceted coefficient comparison (one panel per coefficient)
+p1 <- ggplot(plot_df, aes(x = Estimate, y = Method)) +
+  geom_vline(xintercept = 0, linetype = "dashed", linewidth = 0.6, alpha = 0.8) +
+  geom_point(size = 2.6) +
+  geom_text(
+    aes(label = sprintf("%.3f", Estimate)),
+    vjust = -0.8,
+    size = 3
+  ) +
+  facet_wrap(~ Coefficient, scales = "free_x", nrow = 1) +
+  labs(
+    title = "Coefficient estimates across methods",
+    subtitle = "GLM vs BayesGLM vs BRGLM",
+    x = "Estimate",
+    y = NULL
+  ) +
+  theme_portfolio
+
+
+# Plot 2: Slope chart per coefficient (separate facets, not mixed)
+p2 <- ggplot(plot_df, aes(x = Method, y = Estimate, group = 1)) +
+  geom_hline(yintercept = 0, linetype = "dashed", linewidth = 0.6, alpha = 0.8) +
+  geom_line(linewidth = 0.9, alpha = 0.8) +
+  geom_point(size = 2.4) +
+  facet_wrap(~ Coefficient, scales = "free_y", ncol = 2) +
+  labs(
+    title = "Coefficient profiles by method",
+    subtitle = "Each panel shows one coefficient; dashed line marks zero",
+    x = NULL,
+    y = "Estimate"
+  ) +
+  theme_portfolio +
+  theme(axis.text.x = element_text(face = "bold"))
+
+# Combine into ONE figure (two rows) without mixing plots
+(p1 / p2) +
+  plot_annotation(
+    title = "Comparison of coefficient estimates across estimation methods",
+    theme = theme(plot.title = element_text(face = "bold", hjust = 0.5, size = 16))
+  )
 ```
 
 The comparison of coefficient estimates from the `GLM`, `BayesGLM`, and `BRGLM` models shows notable differences, particularly for the `Intercept` and the predictor `NV`. The `GLM` model produced a very high estimate for `NV` (18.1856), suggesting a strong positive effect, while both the `BayesGLM` (3.2982) and `BRGLM` (2.9293) models showed much lower estimates, indicating they may mitigate the extreme influence of this predictor. For `PI`, all models yielded negative estimates, with `GLM` at -0.0422 and the Bayesian methods being slightly more consistent around -0.0290 and -0.0348. The `EH` variable also had negative estimates across all models, with `GLM` showing the most negative effect at -2.9026. Overall, the Bayesian and bias-reduced methods provide more stable and less extreme estimates compared to the traditional `GLM`, which may be prone to overfitting.
@@ -630,6 +729,85 @@ comparison <- data.frame(
 print(comparison)
 ```
 
+```{r}
+ci_df <- bind_rows(
+  # GLM
+  data.frame(
+    Parameter = rownames(wald_ci_glm),
+    lower = wald_ci_glm$lower,
+    upper = wald_ci_glm$upper,
+    Method = "GLM",
+    CI_Type = "Wald"
+  ),
+  data.frame(
+    Parameter = rownames(profile_ci_glm),
+    lower = profile_ci_glm$lower,
+    upper = profile_ci_glm$upper,
+    Method = "GLM",
+    CI_Type = "Profile"
+  ),
+  # BayesGLM (Wald only)
+  data.frame(
+    Parameter = rownames(wald_ci_bayesglm),
+    lower = wald_ci_bayesglm$lower,
+    upper = wald_ci_bayesglm$upper,
+    Method = "BayesGLM",
+    CI_Type = "Wald"
+  ),
+  # brglmFit
+  data.frame(
+    Parameter = rownames(wald_ci_brglmFit),
+    lower = wald_ci_brglmFit$lower,
+    upper = wald_ci_brglmFit$upper,
+    Method = "BRGLM",
+    CI_Type = "Wald"
+  ),
+  data.frame(
+    Parameter = rownames(profile_ci_brglmFit),
+    lower = profile_ci_brglmFit$lower,
+    upper = profile_ci_brglmFit$upper,
+    Method = "BRGLM",
+    CI_Type = "Profile"
+  )
+) %>%
+  filter(Parameter != "(Intercept)") %>%
+  mutate(
+    Parameter = factor(Parameter, levels = rev(unique(Parameter))),
+    CI_Type = factor(CI_Type, levels = c("Wald", "Profile"))
+  )
+
+
+
+ggplot(ci_df, aes(x = (lower + upper) / 2, y = Parameter)) +
+  geom_vline(xintercept = 0, linetype = "dashed", linewidth = 0.6, alpha = 0.7) +
+  geom_errorbarh(
+    aes(xmin = lower, xmax = upper, color = CI_Type),
+    height = 0.25,
+    position = position_dodge(width = 0.6)
+  ) +
+  geom_point(
+    aes(color = CI_Type),
+    position = position_dodge(width = 0.6),
+    size = 2
+  ) +
+  facet_wrap(~ Method, nrow = 1) +
+  labs(
+    title = "Comparison of confidence intervals across estimation methods",
+    subtitle = "Wald vs profile likelihood intervals for logistic regression coefficients",
+    x = "Coefficient estimate",
+    y = NULL,
+    color = "CI type"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5),
+    strip.text = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+
+```
+
 The comparison of the Wald and profile likelihood confidence intervals (CIs) across the three logistic regression models reveals important insights into the parameter estimates' uncertainty. For the **GLM model**, the Wald CIs are notably wider for the NV parameter, suggesting significant uncertainty, while the profile CIs are narrower, indicating a more concentrated estimate around the true parameter value. The profile CIs for both models show that the lower bound for NV is negative, raising concerns about potential non-identifiability in this parameter. In contrast, the **bayesglm model** presents relatively consistent Wald CIs, indicating robustness, though it lacks a profile CI due to complexities in Bayesian frameworks. For the **brglmFit model**, both the Wald and profile CIs provide nearly identical ranges, reflecting the model's stability in estimating the parameters. Overall, the profile likelihood CIs generally offer a more refined estimate compared to the Wald CIs, particularly for the NV parameter, emphasizing the value of profiling in models with potential non-linearity or parameter constraints.
 
 ### 3. Wald and likelihood ratio-test p-values for all three (non-intercept) coefficients
@@ -671,6 +849,66 @@ comparison <- data.frame(
 
 # Print the comparison table
 print(comparison)
+
+```
+
+```{r, fig.width=10, fig.height=6, dpi=300}
+#| warning: false
+#| message: false
+# Tidy p-values
+pval_df <- comparison %>%
+  pivot_longer(
+    cols = -Coefficient,
+    names_to = "Test",
+    values_to = "p_value"
+  ) %>%
+  separate(Test, into = c("Type", "Method"), sep = "_p_") %>%
+  mutate(
+    Method = factor(Method, levels = c("GLM", "BayesGLM", "BrglmFit")),
+    Type = factor(Type, levels = c("Wald", "LRT")),
+    Coefficient = factor(Coefficient, levels = rev(unique(Coefficient))),
+    # Label formatting: scientific for very small p-values
+    p_label = ifelse(p_value < 0.001, format(p_value, scientific = TRUE, digits = 2),
+                     sprintf("%.3f", p_value))
+  )
+
+# Portfolio theme (centered title)
+theme_portfolio <- theme_minimal(base_size = 12) +
+  theme(
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold", size = 15, hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5, margin = margin(b = 8)),
+    axis.title = element_text(face = "bold"),
+    strip.text = element_text(face = "bold"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_blank()
+  )
+
+ggplot(pval_df, aes(x = p_value, y = Coefficient, color = Type)) +
+  geom_vline(xintercept = 0.05, linetype = "dashed", linewidth = 0.6, alpha = 0.8) +
+  geom_point(size = 2.7, position = position_dodge(width = 0.6)) +
+  geom_text(
+    aes(label = p_label),
+    position = position_dodge(width = 0.6),
+    vjust = -0.9,
+    size = 3,
+    show.legend = FALSE
+  ) +
+  facet_wrap(~ Method, nrow = 1) +
+  scale_x_log10(
+    breaks = c(1, 0.1, 0.01, 0.001, 1e-4),
+    labels = c("1", "0.1", "0.01", "0.001", "1e-4"),
+    limits = c(1e-5, 1)
+  ) +
+  labs(
+    title = "Wald vs Likelihood Ratio Test p-values",
+    subtitle = "Dashed line indicates the 0.05 significance threshold",
+    x = "p-value",
+    y = NULL,
+    color = "Test"
+  ) +
+  theme_portfolio
+
 
 ```
 
