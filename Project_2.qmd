@@ -1,0 +1,741 @@
+---
+title: "STATS 720 Assignment 2"
+format: 
+  pdf:
+    code-line-numbers: true
+author: "Konstantinos Banos 400609120"
+date: "Oct/11/2023"
+editor: visual
+execute: 
+  echo: true
+  message: false
+header-includes:
+  \usepackage{fvextra}
+  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+---
+
+\newpage
+
+```{r}
+#| warning: false
+
+library(mlmRev)           ## LOADING OF THE NECESSARY PACKAGES ##
+library(tidyverse)
+library(MASS)
+library(lme4)
+library(ggplot2)
+library(performance)
+library(DHARMa)
+library(dotwhisker)
+library(coefplot)
+library(bbmle)
+library(brglm2)
+library(brms)
+library(arm)
+library(lmtest)
+library(boot)
+library(effects)
+library(sjPlot)
+library(AER)
+```
+
+# Question 1: Analysis of Contraception Data from the Package mlmRev
+
+Loading the Contraception data and creating a new column called "use_num". Essentially, the new column is the column use a binary as factor
+
+```{r}
+# Load data
+data("Contraception", package = "mlmRev")
+
+# Creation of a new column called "u"
+Contraception <- transform(
+  Contraception,
+  use_num = as.numeric(use)-1
+  )
+head(Contraception,10)
+
+##?mlmRev::Contraception ## Data Description
+```
+
+## a. Data Analysis Description
+
+This dataset originates from the 1988 Bangladesh Fertility Survey and includes a sub-sample of 1,934 women distributed across 60 districts.
+
+According to Harrell's guidelines [@harrell], the optimal number of predictor variables in a logistic regression model should not exceed $\frac{m}{15}$, where m represents the limiting sample size, defined as m = `nrow(Contraception)`. Given the current sample size, this criterion allows for the inclusion of the full number of predictor variables in the model.
+
+Furthermore, it is essential to establish a threshold for assessing the significance of predictor variables. In this analysis, a threshold of 5% for the variable age and 10% for the other predictors will be employed. Specifically, if a unit change in any predictor variable results a change greater than 5% or 10%, respectively in the response variable, this effect will be considered statistically significant. (I decided to use different thresholds in every predictor because the units are different and my sense telling me that it is not the same one year of change and an additional kid for example)
+
+My approach involves a basic logistic regression model, which utilizes the binomial family and a logit link function. This model is appropriate given the binary nature of the response variable, use_num, where a value of 1 indicates the use of contraception and 0 indicates non-use.
+
+### **Predictors:**
+
+1.  **Centered Age of Women (age)**:\
+    The first predictor is the centered age of women. Based on intuitive reasoning, it is hypothesized that the relationship between women's age and contraception use resembles an inverted U-shape. This suggests that both younger and older women are likely to use contraception less frequently than middle-aged women, making age a relevant predictor in the model.
+
+2.  **Number of Living Children (livch)**:\
+    The second predictor is the number of living children. It is posited that as individuals find a permanent partner, they tend to use contraception less frequently. Therefore, the presence of children is expected to correlate with contraception usage, making this a reasonable predictor to include in the model.
+
+3.  **Type of Residence (urban)**:\
+    The third and final predictor is the type of residence, categorized as urban or rural. Contraception use is strongly correlated with various socio-economic factors. For instance, urban areas that are wealthier tend to have higher levels of education. It is generally observed that individuals with higher educational attainment are more likely to use contraception [@CanadianContraceptionConsensusChapter1ContraceptioninCanada]. Thus, the type of residence is anticipated to be a significant predictor of contraception use.
+
+I decide not to include the district at the first model because I can save a lot of degrees of freedom by using only the type of residence. However, I may lose some important information and eventually, the model's fit is not good enough
+
+If the first model is inadequate to fit the dataset properly, a second approach would possibly involves a two-level main effect logistic regression model by including a random intercept for each district. This model will capture the variability at the district level, providing more accurate estimates if there are significant differences in contraceptive use between districts. It is widely known that it is especially useful for hierarchical data structures. The model will utilize the binomial family and a logit link function (I am gonna use this model if the overall fit of the first one is not good).
+
+## b. Data Visualization
+
+The visualizations include bar plots and histograms that elucidate the relationships between contraceptive use, number of living children, urban or rural residence, district, and the age of women.
+
+```{r}
+# Function to create bar plots for contraceptive use by a given categorical variable
+create_bar_plot <- function(data, x_var, x_label) {
+  ggplot(data, aes(x = .data[[x_var]], fill = factor(use_num))) + 
+    geom_bar(position = "fill") +
+    labs(x = x_label, 
+         y = "Proportion of Contraceptive Use", 
+         fill = "Contraceptive Use") +
+    theme_minimal() +
+    scale_fill_manual(values = c("0" = "#E69F00", "1" = "#56B4E9"), 
+                      labels = c("No", "Yes")) +
+    theme(legend.position = "top")
+}
+
+## CONTRACEPTION  VS LIVING CHILDREN BAR PLOT
+create_bar_plot(Contraception, "livch", "Number of Living Children")
+```
+
+### i) Proportion of Contraceptive Use by Number of Living Children
+
+The bar plot depicting the proportion of contraceptive use by the number of living children reveals a clear trend. As the number of living children increases, there is a noticeable variation in the proportion of women using contraception. Specifically, women with fewer children are less likely to use contraception compared to those with more children. This suggests that family size may influence contraceptive decisions, indicating a potential focus area for family planning programs.
+
+```{r}
+## CONTRACEPTION  VS URBAN BAR PLOT
+create_bar_plot(Contraception, "urban", "Residence (Urban/Rural)")
+```
+
+### ii) Proportion of Contraceptive Use by Urban or Rural Residence
+
+The second bar plot compares contraceptive use between women residing in urban and rural areas. The results show that women living in urban areas have a higher proportion of contraceptive use compared to their rural counterparts.
+
+```{r, fig.width=10, fig.height=7, dpi=300}
+## CONTRACEPTION  VS DISTRICT BAR PLOT
+create_bar_plot(Contraception, "district", "District")
+```
+
+### iii) Proportion of Contraceptive Use by District
+
+The bar plot by district illustrates the variations in contraceptive use across different geographical regions. Each district exhibits unique patterns in contraceptive use, indicating that local policies, health services, and cultural factors may significantly influence these behaviors.
+
+```{r}
+# Function to create histograms for age distribution
+create_histogram <- function(data, use_num, color, title) {
+  hist(data$age[data$use_num == use_num], 
+       xlab = "Age (Centered)", 
+       ylab = "Frequency", 
+       main = title, 
+       col = color, 
+       border = "white")
+}
+
+# Create histograms for age distribution and Non-Contraceptive Users
+create_histogram(Contraception, 0, "#E69F00", "Age Distribution: Non-Contraceptive Users")
+```
+
+### iv) Age Distribution of Non-Contraceptive Users
+
+The histogram showing the age distribution of women who do not use contraception indicates a concentration of non-users in younger age groups. This suggests that younger women may either have limited knowledge about contraceptive options or may not yet feel the need for contraception. Addressing knowledge gaps.
+
+```{r}
+# Create histograms for age distribution for Contraceptive Users
+create_histogram(Contraception, 1, "#56B4E9", "Age Distribution: Contraceptive Users")
+```
+
+### v)Age Distribution of Contraceptive Users
+
+This histogram showcases the age distribution for women who do use contraception, similar to the previous plot but focused on users. As we had anticipated the distribution appears to be more evenly spread across age groups, with a notable presence of users in the middle and older age groups.
+
+```{r}
+create_box_plot <- function(data) {
+  boxplot(age ~ use_num, 
+          data = data, 
+          xlab = "Contraceptive Use (0 = Non-Users, 1 = Users)", 
+          ylab = "Age (Centered)", 
+          main = "Age Distribution by Contraceptive Use", 
+          col = c("#E69F00", "#56B4E9"), 
+          border = "darkgray")
+}
+
+# Create the box plot for age distribution
+create_box_plot(Contraception)
+```
+
+## c. Model Fit
+
+```{r}
+# Fit the logistic regression model
+model <- glm(use_num ~ age + livch + urban, 
+             data = Contraception, 
+             family = binomial(link = "logit"))
+
+summary(model)
+```
+
+## d. Comparison of the Diagnostic Plots
+
+```{r, fig.width=10, fig.height=7, dpi=300}
+
+performance::check_model(model, panel = TRUE)
+```
+
+### i) **Posterior Predictive Check:**
+
+The observed and model-predicted intervals seem close, suggesting a reasonable fit.
+
+### ii) **Binned Residuals:**
+
+The plot shows the model’s errors across the probability range, and most residuals fall within the bounds, meaning no strong deviations, but a few points (in red) indicate areas with potential under- or over-prediction. Looking at the graph, there is possibility for overfitting but not something terrible. A good practice to detect data overfitting is by applying Cross-Validation, Bootstrap Resampling etc.
+
+Below I am going test if there is an overfitting problem to my model by using a Bootstrap Resampling algorithm. This will give us a distribution of model coefficients across different resampled datasets, showing how much they vary.
+
+```{r}
+set.seed(123)
+boot_fit <- boot(data=Contraception, statistic=function(data, indices) {
+  d <- data[indices, ]
+  fit <- glm(use_num ~ age + livch + urban, data=d, family=binomial(link="logit"))
+  return(coef(fit))
+}, R=1000)
+boot_fit
+```
+
+-   The **bias** for all coefficients is relatively small, which is a good sign that the bootstrap estimates closely match the original estimates.
+
+-   The **standard errors** are also within reasonable ranges, indicating that the coefficients are relatively stable across the bootstrapped samples. However, `livch` and `urban` coefficients have somewhat higher variability compared to `age`.
+
+This result suggests that the model is **not overfitting**, as the coefficients appear stable with small bias and reasonable variability. I run that bootstrap algorithm in order to support the robustness of my model.
+
+### iii) **Influential Observations:**
+
+This plot identifies points with high leverage (potentially influential points) based on the distance of their leverage (horizontal axis) and standardized residuals (vertical axis).
+
+### iv) **Collinearity:**
+
+All predictors have a VIF below 5, which suggests no problematic collinearity that might affect model stability.
+
+```{r, fig.width=10, fig.height=7, dpi=300}
+
+simulated_residuals <- simulateResiduals(
+  fittedModel = model
+  )
+
+plot(simulated_residuals)
+```
+
+### i) **QQ Plot of Residuals:**
+
+Since the residuals fall almost perfectly along the line, this indicates that they are well-behaved and likely normally distributed. The Kolmogorov-Smirnov (KS) test shows no significant deviation from expectations (p-values \> 0.05).
+
+### ii) **Residual vs. Predicted (Rank Transformed):**
+
+The random scatter of residuals and lack of any clear pattern indicate that the model fits well, with no significant problems detected.
+
+Eventually, I am not going to use the second model or any adjustment to the model as the first one seems to have a reasonable good fit without violating the assumptions.
+
+## e. Results Interpretation and Coefficient/Effect Plots
+
+```{r, fig.width=10, fig.height=7, dpi=300}
+# Coefficient plot with `theme_minimal()`
+plot_model(model, 
+            show.values = TRUE, 
+            value.offset = 0.3,
+            title = "Coefficient Plot of Logistic Regression") + 
+  theme_minimal()
+
+# Plot the effects of the model
+plot(allEffects(model), main = "Effects of Predictors on Contraception Use")
+```
+
+The **log-odds coefficients** can be converted into **odds ratios** (OR) by exponentiating the coefficients. This helps in understanding the percentage change in the odds of the response variable. The odds ratio tells us the multiplicative change in the odds of the outcome for a one-unit change in the predictor. If the odds ratio is above 1, the odds of the event increase; if below 1, the odds decrease.
+
+-   **age**: The odds ratio is exp⁡(−0.023995) = 0.976, meaning that for each additional year of age, the odds of using contraception decrease by about 2.4%. This is less than the 5% threshold, so while it's statistically significant, it did not meet our criteria for a practically significant effect.
+
+-   **livch1**: The odds ratio for having one child is exp⁡(1.059) = 2.884, meaning the odds of using contraception are 188.4% higher compared to women with no children and much higher from 10% (our threshold).
+
+-   **livch2**: The odds ratio for having two children is exp⁡(1.288) = 3.626, meaning the odds of using contraception are 262.6% higher compared to women with no children and much higher from 10% (our threshold).
+
+-   **livch3+**: The odds ratio for having three or more children is exp⁡(1.216) = 3.375, meaning the odds of using contraception are 237.5% higher compared to women with no children and much higher from 10% (our threshold).
+
+-   **urbanY**: The odds ratio is exp⁡(0.797) = 2.219, meaning living in an urban area increases the odds of using contraception by 121.9% compared to rural areas and much higher from 10% (our threshold).
+
+The predictors `livch` and `urban` have strong and significant effects on the odds of using contraception, with odds ratios well above 1, meaning their effects are both statistically and practically significant based on our 10% threshold.
+
+In the logistic regression model examining the use of contraception (`use_num`) based on `age`, `livch` (number of living children), and `urban` (urban vs. non-urban), categorical predictors were automatically encoded by R into dummy variables. Specifically, `livch` and `urban` are categorical variables, and R created separate coefficients for each level of `livch` (e.g., `livch1`, `livch2`, `livch3+`), comparing each to a reference category (`livch = 0`). Similarly, for `urban`, the coefficient `urbanY` compares living in an urban area (`Y`) to the reference group living in a non-urban area (`N`). These coefficients reflect the change in the log-odds of using contraception compared to the reference categories. This encoding allows for a detailed understanding of how each level of the categorical variables affects the likelihood of using contraception.
+
+# Question 2: Analysis of Gopher Tortoise Data
+
+```{r}
+## LOAD DATA
+g_url <- "https://raw.githubusercontent.com/bbolker/mm_workshops/master/data/gopherdat2.csv"
+g_data <- read.csv(g_url)
+
+## Centering of the variable year
+g_data$year_c <- g_data$year - mean(g_data$year)
+
+head(g_data,10)
+```
+
+## a. Data Visualization
+
+```{r}
+#| warning: false
+
+# Line plot
+ggplot(g_data, aes(x = year, y = shells, color = Site, group = Site)) +
+  geom_line(size = 1.2) +  # Line size for visibility
+  geom_point(size = 3, shape = 21, fill = "black") +  # Points with white fill for better contrast
+  labs(
+    title = "Trends in Gopher Shell Counts Over Time by Site",
+    x = "Year",
+    y = "Number of Shells",
+    color = "Site"  # Legend title
+  ) +
+  theme_minimal(base_size = 12) +  # Clean theme
+  theme(
+    legend.position = "right",  # Legend positioning
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),  # Smaller centered title
+    axis.title = element_text(size = 10),  # Axis title size
+    axis.text = element_text(size = 9)  # Axis text size
+  ) +
+  scale_color_brewer(palette = "Set3")  # Color palette
+```
+
+-   The **first plot** shows the variability in shell numbers across different sites and years, with some showing increasing or decreasing trends.
+
+```{r}
+# Scatterplot
+ggplot(g_data, aes(x = prev, y = shells, color = type)) +
+  geom_point(size = 3, alpha = 0.7, shape = 21, fill = "grey") +  # Points with transparency
+  labs(
+    title = "Relationship Between Shell Counts and Seroprevalence",
+    x = "Seroprevalence",
+    y = "Number of Shells",
+    color = "Type"  # Legend title
+  ) +
+  geom_smooth(se = FALSE, method = "loess", color = "lightblue", formula = y ~ x) +  # Smooth line
+  theme_minimal(base_size = 12) +  # Clean theme
+  theme(
+    legend.position = "right",  # Legend positioning
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),  # Smaller centered title
+    axis.title = element_text(size = 10),  # Axis title size
+    axis.text = element_text(size = 9)  # Axis text size
+  ) +
+  scale_color_brewer(palette = "Set2")  # Color palette
+
+```
+
+-   The **second plot** suggests a positive correlation between seroprevalence and the number of shells, particularly when seroprevalence is high.
+
+## b. Model Fit
+
+In this analysis, the response variable is the count of shells, making a Poisson Regression Model an appropriate choice given the nature of the data. To ensure robust estimation, we will adhere to the rule of requiring at least 10-20 observations per predictor. Therefore, the number of predictors will be minimized to meet this criterion, balancing model complexity and data sufficiency for accurate inference.
+
+```{r}
+## Model Fit
+poisson_model <- glm(shells ~ year_c + prev + offset(log(Area)), data = g_data, family = poisson(link = "log"))
+summary(poisson_model)
+
+## Over-dispersion Check
+dispersion <- summary(poisson_model)$deviance / summary(poisson_model)$df.residual
+print(c("Dispersion =", dispersion))
+dispersiontest(poisson_model)
+
+```
+
+The dispersion statistic is calculated as **0.901**, which is less than 1, indicating that the model does not exhibit overdispersion (The results of the dispersion test further confirm this, with a test statistic of **-1.0315** and a p-value of **0.8488**), so Poisson-Regression is an appropriate model for the problem.
+
+## c. Model Fit Using bbmle
+
+```{r}
+## Transforming year as a factor
+g_data <- transform(
+  g_data,
+  year = as.factor(year)
+  )
+
+# Fit the Poisson model using bbmle formula interface
+poisson_model_bbmle <-  mle2(shells ~ dpois(lambda = exp(b0 + b1 * year_c                                  + b2 * prev + log(Area))),
+                             start = list(b0 = 0, b1 = 0, b2 = 0),
+                             data = g_data) 
+
+summary(poisson_model_bbmle)
+```
+
+The results obtained from the Poisson regression models fitted using the `glm()` function and the `bbmle::mle2()` function are notably similar, indicating consistency across both methodologies. Furthermore, if the original factor variable for `year` is employed in the `glm()` model, the estimates would closely align with those derived from the `bbmle` approach.
+
+## d. Creation of a Negative Log-likelihood Function
+
+```{r}
+# the Negative Log-Likelihood
+NGLL <- function(b0, b1, b2) {
+  lamda <- exp(b0 + b1 * g_data$year_c + b2 * g_data$prev + log(g_data$Area)) 
+  negative_log_likelihood <- -sum(dpois(g_data$shells, lambda = lamda, log = TRUE))
+  
+  return(negative_log_likelihood)
+}
+
+## NGLL(0,0,0)    ## Test
+
+# Using optim to Minimize the Negative Log-Likelihood
+my_optim <- optim(par = c(b0 = 0, b1 = 0, b2 = 0), 
+                   fn = function(params) 
+                     NGLL(params[1], params[2], params[3]))
+
+```
+
+## e. Comparison of Parameters for Different Approaches
+
+```{r}
+## Estimates from poisson_model
+poisson_model_params <- coef(poisson_model)
+  
+## Estimates from poisson_model_bbmle
+poisson_model_bbmle_params <- coef(poisson_model_bbmle)
+  
+## Estimates from my_optim
+my_optim_params <- my_optim$par
+  
+# Creation of a data frame
+comparisons <- data.frame(
+    poisson_model = poisson_model_params,
+    poisson_model_bbmle = poisson_model_bbmle_params,
+    my_optim = my_optim_params
+  )
+print(comparisons)  
+```
+
+As we expected, the coefficients of all methods are nearly identical.
+
+## f. Wald and profile CIs
+
+```{r}
+## WALD CIs for Poisson GLM
+# Extract the standard errors and compute the Wald CI
+poisson_model_se <- summary(poisson_model)$coefficients[, "Std. Error"]
+wald_ci_glm <- confint.default(poisson_model, level = 0.95)  # Wald CI from GLM
+
+## WALD CIs for bbmle
+# Get standard errors from bbmle fit
+poisson_model_bbmle_se <- sqrt(diag(vcov(poisson_model_bbmle)))
+wald_ci_bbmle <- cbind(
+  poisson_model_bbmle_params - 1.96 * poisson_model_bbmle_se,
+  poisson_model_bbmle_params + 1.96 * poisson_model_bbmle_se
+)
+
+## WALD CIs for custom optim fit
+# Assume that the Hessian matrix (returned by optim) is an approximation of the covariance matrix
+hessian <- optimHess(par = my_optim$par, fn = function(params) NGLL(params[1], params[2], params[3]))
+cov_matrix <- solve(hessian)
+optim_se <- sqrt(diag(cov_matrix))
+
+# Compute the Wald CIs for optim estimates
+wald_ci_optim <- cbind(
+  my_optim_params - 1.96 * optim_se,
+  my_optim_params + 1.96 * optim_se
+)
+
+## PROFILE CIs for bbmle
+profile_ci_bbmle <- confint(poisson_model_bbmle)
+
+## Print Wald CIs and compare
+wald_comparison <- data.frame(
+  Parameter = names(poisson_model_params),
+  Wald_CI_GLM = paste0(round(wald_ci_glm[, 1], 4), " to ", round(wald_ci_glm[, 2], 4)),
+  Wald_CI_bbmle = paste0(round(wald_ci_bbmle[, 1], 4), " to ", round(wald_ci_bbmle[, 2], 4)),
+  Wald_CI_optim = paste0(round(wald_ci_optim[, 1], 4), " to ", round(wald_ci_optim[, 2], 4))
+)
+
+print(wald_comparison)
+
+## Compare Profile CIs for bbmle
+profile_ci_comparison <- data.frame(
+  Parameter = names(poisson_model_bbmle_params),
+  Profile_CI_bbmle = paste0(round(profile_ci_bbmle[, 1], 4), " to ", round(profile_ci_bbmle[, 2], 4))
+)
+
+print(profile_ci_comparison)
+```
+
+### Wald Confidence Intervals Comparison:
+
+-   **Wald CI for GLM**: These were calculated based on the standard errors from the GLM output. For example, for the intercept (b0​), the Wald CI ranges from -4.03 to -3.08.
+
+-   **Wald CI for bbmle**: Similarly calculated using the standard errors from the `bbmle` model fit, yielding a very similar CI for b0 ​ (-4.0291 to -3.0836), showing that both methods are almost identical in their results.
+
+-   **Wald CI for optim**: Using the Hessian matrix from `optim` as an estimate for the covariance matrix, the Wald CI for the intercept (b0​) was again very close to the previous estimates, ranging from -4.0293 to -3.0839.
+
+**Conclusion**: The Wald CIs are very consistent across all three approaches, indicating that the parameter estimates are robust regardless of the method used to fit the model.
+
+### Profile Confidence Intervals (for bbmle):
+
+-   These CIs were calculated using profile likelihood, which often provides more accurate confidence intervals, particularly for non-linear models or when the parameters are near the boundary of their possible range.
+
+-   For the intercept (b0​), the profile CI ranges from -4.0618 to -3.1126, which is slightly wider than the Wald CIs. Similarly, the CIs for the other parameters (b1​ and b2) are also slightly broader compared to the Wald CIs.
+
+### Comparison and Interpretation:
+
+-   **Wald vs Profile CIs**: Wald CIs assume normality of the estimates and may be narrower, especially when the model is highly non-linear. Profile CIs are generally considered more accurate as they account for the curvature of the likelihood surface. In our case, the profile CIs are slightly wider, suggesting a more conservative estimate of uncertainty around the parameters.
+
+-   **Consistency across methods**: The similarity in Wald CIs from GLM, bbmle, and optim suggests that all methods are implemented correctly and are producing nearly identical parameter estimates.
+
+This shows that both Wald and profile CIs are in good agreement, though the profile CIs provide a slightly more conservative interval, as expected. These comparisons also confirm that your implementations across different methods are consistent.
+
+# Question 3: Endometrial Data
+
+```{r}
+## LOAD DATA
+data("endometrial", package = "brglm2")
+head(endometrial,10)
+summary(endometrial)
+```
+
+In this analysis, the response variable is the Hyperplasia Grade (NG), which is modeled as a binary outcome. The predictors used in the model are the number of vessels (NV), the Progesterone Index, and the Endometrial Index (EH). Based on Harrell's guidelines for binary logistic regression models \[\@harrell\], the number of observations in the dataset is sufficient to include all selected predictors, ensuring that the model avoids overfitting while maintaining adequate statistical power.
+
+To evaluate the relationship between NG and the predictors, three different modeling approaches will be employed:
+
+1.  **Standard Generalized Linear Model (GLM)**: A logistic regression model will be fitted using the canonical logit link function to estimate the probability of a high hyperplasia grade given the predictor variables.
+
+2.  **Bayesian Logistic Regression**: A Bayesian approach will be applied to incorporate prior distributions for the model parameters, allowing for the integration of prior knowledge and uncertainty in the parameter estimates.
+
+3.  **Bias-Reduced Logistic Regression**: This approach will use Firth's correction or another bias-reduction method to mitigate the small-sample bias often encountered in maximum likelihood estimates in logistic regression, particularly when rare events are present in the binary response.
+
+By comparing these methods, the aim is to assess their performance and suitability for modeling hyperplasia grade under different statistical frameworks, while ensuring robust inference.
+
+```{r, fig.show='hide'}
+##HG vs Number of Vessels (NV)
+ggplot(endometrial, aes(x = NV, y = HG)) +
+  geom_jitter(height = 0.05, width = 0) +  # Add some jitter to separate the binary points
+  geom_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE, color = "blue", formula = "y ~ x") +  # Add logistic regression line
+  labs(title = "HG vs Number of Vessels",
+       x = "Number of Vessels (NV)",
+       y = "Hyperplasia Grade (HG)") +
+  theme_minimal() +  # Professional-looking theme
+  theme(text = element_text(size = 14))  # Adjust text size for clarity
+
+##HG vs Progesterone Index (PI)
+ggplot(endometrial, aes(x = PI, y = HG)) +
+  geom_jitter(height = 0.05, width = 0) +
+  geom_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE, color = "green", formula = "y ~ x") +
+  labs(title = "HG vs Progesterone Index",
+       x = "Progesterone Index (PI)",
+       y = "Hyperplasia Grade (HG)") +
+  theme_minimal() +
+  theme(text = element_text(size = 14))
+
+
+##HG vs Endometrial Height (EH)
+ggplot(endometrial, aes(x = EH, y = HG)) +
+  geom_jitter(height = 0.05, width = 0) +
+  geom_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE, color = "red", formula = "y ~ x") +
+  labs(title = "HG vs Endometrial Height",
+       x = "Endometrial Height (EH)",
+       y = "Hyperplasia Grade (HG)") +
+  theme_minimal() +
+  theme(text = element_text(size = 14))
+
+```
+
+**Number of Vessels (NV)** and **Endometrial Height (EH)** have strong, nonlinear relationships with hyperplasia grade (HG). On the other hand, **Progesterone Index (PI)** shows a much weaker and more linear relationship with HG, suggesting that it may be less influential in predicting hyperplasia compared to NV and EH.
+
+```{r, fig.width=10, fig.height=7, dpi=300}
+## Regular GLM Fit
+model_glm <- glm(HG ~ NV + PI + EH, data = endometrial, family = binomial(link = "logit"))
+performance::check_model(model_glm)
+
+## Bayesian Logistic Regression Fit
+model_bayesglm <- bayesglm(HG ~ NV + PI + EH, data = endometrial, family = binomial(link = "logit"))
+performance::check_model(model_bayesglm)
+## Bias-Reduced Logistic Regression Fit
+model_brglmFit <- glm(HG ~ NV + PI + EH, data = endometrial, family = binomial(link = "logit"), method = "brglmFit")
+performance::check_model(model_brglmFit)
+
+summary(model_glm)      
+summary(model_bayesglm)
+summary(model_brglmFit)
+```
+
+### 1. Comparison of Estimates:
+
+```{r}
+glm_coefs <- coef(model_glm)
+bayesglm_coefs <- coef(model_bayesglm)
+brglmFit_coefs <- coef(model_brglmFit)
+
+# Create a comparison data frame
+comparison_df <- data.frame(
+  Coefficient = names(glm_coefs),
+  GLM = round(glm_coefs, 4),
+  BayesGLM = round(bayesglm_coefs, 4),
+  BRGLM = round(brglmFit_coefs, 4)
+)
+
+# Print the comparison
+print(comparison_df)
+```
+
+The comparison of coefficient estimates from the `GLM`, `BayesGLM`, and `BRGLM` models shows notable differences, particularly for the `Intercept` and the predictor `NV`. The `GLM` model produced a very high estimate for `NV` (18.1856), suggesting a strong positive effect, while both the `BayesGLM` (3.2982) and `BRGLM` (2.9293) models showed much lower estimates, indicating they may mitigate the extreme influence of this predictor. For `PI`, all models yielded negative estimates, with `GLM` at -0.0422 and the Bayesian methods being slightly more consistent around -0.0290 and -0.0348. The `EH` variable also had negative estimates across all models, with `GLM` showing the most negative effect at -2.9026. Overall, the Bayesian and bias-reduced methods provide more stable and less extreme estimates compared to the traditional `GLM`, which may be prone to overfitting.
+
+### 2. Wald and likelihood profile confidence intervals
+
+```{r}
+#| warning: false
+
+# Calculate Wald Confidence Intervals for GLM
+wald_ci_glm <- confint.default(model_glm, level = 0.95)
+wald_ci_glm <- as.data.frame(wald_ci_glm)
+colnames(wald_ci_glm) <- c("lower", "upper")
+
+# Calculate Profile Likelihood Confidence Intervals for GLM
+profile_ci_glm <- confint(model_glm)
+profile_ci_glm <- as.data.frame(profile_ci_glm)
+colnames(profile_ci_glm) <- c("lower", "upper")
+
+# Calculate Wald Confidence Intervals for bayesglm
+wald_ci_bayesglm <- confint.default(model_bayesglm, level = 0.95)
+wald_ci_bayesglm <- as.data.frame(wald_ci_bayesglm)
+colnames(wald_ci_bayesglm) <- c("lower", "upper")
+
+# Profile CI for bayesglm may not be straightforward, use the posterior predictive intervals
+# Instead, we will stick to the Wald for bayesglm as it is commonly used
+
+# Calculate Wald Confidence Intervals for brglmFit
+wald_ci_brglmFit <- confint.default(model_brglmFit, level = 0.95)
+wald_ci_brglmFit <- as.data.frame(wald_ci_brglmFit)
+colnames(wald_ci_brglmFit) <- c("lower", "upper")
+
+# Calculate Profile Likelihood Confidence Intervals for brglmFit
+profile_ci_brglmFit <- confint(model_brglmFit)
+profile_ci_brglmFit <- as.data.frame(profile_ci_brglmFit)
+colnames(profile_ci_brglmFit) <- c("lower", "upper")
+
+# Create a summary comparison data frame
+comparison <- data.frame(
+  Parameter = rownames(wald_ci_glm),
+  Wald_CI_GLM = paste0(round(wald_ci_glm$lower, 4), " to ", round(wald_ci_glm$upper, 4)),
+  Profile_CI_GLM = paste0(round(profile_ci_glm$lower, 4), " to ", round(profile_ci_glm$upper, 4)),
+  Wald_CI_BayesGLM = paste0(round(wald_ci_bayesglm$lower, 4), " to ", round(wald_ci_bayesglm$upper, 4)),
+  Wald_CI_brglmFit = paste0(round(wald_ci_brglmFit$lower, 4), " to ", round(wald_ci_brglmFit$upper, 4)),
+  Profile_CI_brglmFit = paste0(round(profile_ci_brglmFit$lower, 4), " to ", round(profile_ci_brglmFit$upper, 4))
+)
+
+# Print the comparison table
+print(comparison)
+```
+
+The comparison of the Wald and profile likelihood confidence intervals (CIs) across the three logistic regression models reveals important insights into the parameter estimates' uncertainty. For the **GLM model**, the Wald CIs are notably wider for the NV parameter, suggesting significant uncertainty, while the profile CIs are narrower, indicating a more concentrated estimate around the true parameter value. The profile CIs for both models show that the lower bound for NV is negative, raising concerns about potential non-identifiability in this parameter. In contrast, the **bayesglm model** presents relatively consistent Wald CIs, indicating robustness, though it lacks a profile CI due to complexities in Bayesian frameworks. For the **brglmFit model**, both the Wald and profile CIs provide nearly identical ranges, reflecting the model's stability in estimating the parameters. Overall, the profile likelihood CIs generally offer a more refined estimate compared to the Wald CIs, particularly for the NV parameter, emphasizing the value of profiling in models with potential non-linearity or parameter constraints.
+
+### 3. Wald and likelihood ratio-test p-values for all three (non-intercept) coefficients
+
+```{r}
+
+# Function to extract Wald p-values
+wald_p_values <- function(model) {
+  coefs <- summary(model)$coefficients
+  p_values <- 2 * (1 - pnorm(abs(coefs[, "Estimate"] / coefs[, "Std. Error"])))
+  return(p_values[-1])  # Exclude the intercept
+}
+
+# Extract Wald p-values
+wald_p_glm <- wald_p_values(model_glm)
+wald_p_bayesglm <- wald_p_values(model_bayesglm)
+wald_p_brglmFit <- wald_p_values(model_brglmFit)
+
+# Likelihood Ratio Tests
+lrt_glm <- anova(model_glm, test = "LRT")
+lrt_bayesglm <- anova(model_bayesglm, test = "LRT")
+lrt_brglmFit <- anova(model_brglmFit, test = "LRT")
+
+# Extract LRT p-values
+lrt_p_glm <- lrt_glm$`Pr(>Chi)`[-1]  # Exclude the intercept
+lrt_p_bayesglm <- lrt_bayesglm$`Pr(>Chi)`[-1]  # Exclude the intercept
+lrt_p_brglmFit <- lrt_brglmFit$`Pr(>Chi)`[-1]  # Exclude the intercept
+
+# Combine Wald and LRT p-values
+comparison <- data.frame(
+  Coefficient = names(wald_p_glm),
+  Wald_p_GLM = wald_p_glm,
+  Wald_p_BayesGLM = wald_p_bayesglm,
+  Wald_p_BrglmFit = wald_p_brglmFit,
+  LRT_p_GLM = lrt_p_glm,
+  LRT_p_BayesGLM = lrt_p_bayesglm,
+  LRT_p_BrglmFit = lrt_p_brglmFit
+)
+
+# Print the comparison table
+print(comparison)
+
+```
+
+The comparison of Wald and likelihood ratio test (LRT) p-values for the coefficients of the models reveals some significant insights. For the variable **NV**, the Wald p-values across the three models (GLM: 0.992, BayesGLM: 0.037, BrglmFit: 0.059) indicate that NV is not statistically significant in the GLM, while it shows significance in the other two models, particularly in BayesGLM. However, the LRT p-values confirm NV's strong significance across all models, with values close to zero (e.g., GLM: 5.32×10−85.32, BayesGLM: 5.32×10−85.32, BrglmFit: 8.69×10−88.69. For the **PI** variable, all models yield high Wald p-values (ranging from 0.341 to 0.427), indicating non-significance, which is corroborated by the LRT p-values (GLM: 0.696, BayesGLM: 0.696, BrglmFit: 0.822). In contrast, **EH** shows a notable discrepancy, with Wald p-values suggesting significance (ranging from 0.0006 to 0.0008), while LRT p-values reinforce this finding with values below 0.0001, affirming EH as a significant predictor in all three models. Overall, the LRT p-values provide a more consistent measure of significance across the models, particularly for NV and EH, while the Wald p-values indicate variability in significance for NV depending on the modeling approach used.
+
+Differences in results arise from the estimation techniques used, how each method handles sample size and data characteristics, the incorporation of prior information in Bayesian approaches, and the robustness of the confidence intervals and p-values generated by each method.
+
+# Question 4: Zero-inflation by simulation
+
+```{r, fig.width=10, fig.height=7, dpi=300}
+## LOAD DATA
+data("bioChemists", package="pscl")
+
+# Fit a negative binomial model
+nb_model <- glm.nb(art ~ fem + mar + kid5 + phd + ment, data = bioChemists)
+
+# Display summary of the model
+summary(nb_model)
+
+# Check model performance
+performance::check_model(nb_model)
+```
+
+```{r, fig.width=10, fig.height=7, dpi=300}
+# Set seed for reproducibility
+set.seed(123)
+
+# Simulate new responses from the negative binomial model
+sim_vals <- simulate(nb_model, nsim = 1000)
+
+# Calculate the number of zeros in each simulation and in the observed data
+zeros_sim <- colSums(sim_vals == 0)
+zeros_obs <- sum(bioChemists$art == 0)
+
+# Create a histogram of the number of zeros in the simulated data
+hist(zeros_sim, breaks = 30, main = "Distribution of Simulated Zeros",
+     xlab = "Number of Zeros", col = "skyblue", border = "black",
+     xlim = range(c(zeros_sim, zeros_obs), na.rm = TRUE), 
+     freq = FALSE)
+
+# Add a vertical line representing the observed number of zeros
+abline(v = zeros_obs, col = "red", lwd = 2, lty = 2)
+
+# Overlay the normal distribution curve for reference
+curve(dnorm(x, mean = mean(zeros_sim), sd = sd(zeros_sim)), 
+      add = TRUE, col = "darkgreen", lwd = 2)
+
+```
+
+After simulating 1000 new responses from your fitted model, the distribution of zeros in the simulated datasets closely follows a normal curve. The vertical red line shows the actual number of zeros in the observed data. The fact that the observed zeros align well with the center of the distribution suggests that the model captures the number of zeros in the data quite well.
+
+```{r, fig.width=10, fig.height=7, dpi=300}
+
+# Calculate p-value based on simulation results
+p_value <- mean(zeros_sim >= zeros_obs)
+cat("P-value from simulation: ", p_value, "\n")
+
+# Perform DHARMa test for zero-inflation
+simulation_output <- simulateResiduals(fittedModel = nb_model)
+dh_test <- testZeroInflation(simulation_output)
+cat("P-value from DHARMa test: ", dh_test$p.value, "\n")
+```
+
+The calculated p-value based on the simulated zeros is 0.6. This indicates that the observed number of zeros is not unusually high or low compared to the simulated datasets, further confirming that the model appropriately accounts for the zeros in the data.
+
+The calculated p-value based on the simulated zeros is 0.6. This indicates that the observed number of zeros is not unusually high or low compared to the simulated datasets, further confirming that the model appropriately accounts for the zeros in the data. The test returns a **p-value of 0.856**, which is well above the typical 0.05 threshold. This high p-value strongly suggests that there is no evidence of zero-inflation in the data. In other words, the number of zeros predicted by the model is consistent with what was observed, and there is no need for a more complex model (like a zero-inflated model).
+
+Therefore, our model appropriately explains the factors influencing article production among biochemistry students, with `gender`, `number of kids under 5`, and `mentorship` being the key drivers.

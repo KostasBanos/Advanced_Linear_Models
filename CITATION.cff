@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: "STATS 720 — Data Science Portfolio"
+message: "If you use this work, please cite it as below."
+type: software
+authors:
+  - family-names: Banos
+    given-names: Konstantinos
+license: MIT
+repository-code: "https://github.com/USER/REPO"
+keywords:
+  - R
+  - Quarto
+  - Statistics
+  - Data Science
+date-released: "2026-01-06"
+version: "1.0.0"
+
+

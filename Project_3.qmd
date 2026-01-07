@@ -1,0 +1,521 @@
+---
+title: "STATS 720 Assignment 3"
+format: 
+  pdf:
+    code-line-numbers: true
+author: "Konstantinos Banos 400609120"
+date: "Nov/05/2024"
+editor: visual
+execute: 
+  echo: true
+  message: false
+header-includes:
+  \usepackage{fvextra}
+  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+---
+
+```{r}
+#| warning: false
+#| message: false
+#| echo: false
+
+library(mlmRev)           ## LOADING OF THE NECESSARY PACKAGES ##
+library(tidyverse)
+library(MASS)
+library(lme4)
+library(ggplot2)
+library(performance)
+library(DHARMa)
+library(dotwhisker)
+library(coefplot)
+library(bbmle)
+library(brglm2)
+library(brms)
+library(arm)
+library(lmtest)
+library(boot)
+library(effects)
+library(sjPlot)
+library(AER)
+library(nlme)
+library(lmerTest)
+library(glmmTMB)
+library(broom.mixed)
+library(pbkrtest)
+library(RLRsim)
+library(patchwork)
+```
+
+# Introduction
+
+This assignment focuses on analyzing the ScotsSec dataset from the `mlmRev` package using linear mixed models to investigate the influence of educational attainment (attain) on various factors, including social and verbal skills, while accounting for variations across primary schools (primary) and differences between genders (sex). The task involves fitting a linear mixed model with both fixed and random effects, simplifying the model to avoid singular fits, and conducting diagnostics using `performance::check_model()` and `DHARMa`. Additionally, the assignment requires comparisons of model fits and coefficients across different modeling approaches using `lme4`, `nlme`, and `glmmTMB`, and visualizing fixed effect estimates. The analysis also involves comparing denominator degrees of freedom methods for model evaluation, examining random effects, and understanding the implications of modeling choices, particularly regarding the treatment of fixed and random effects. Finally, likelihood ratio tests and the parametric bootstrap will be used to compare reduced models, highlighting the challenges of standard testing in mixed models due to their complexity and the potential for overparameterization.
+
+## Data Description
+
+The **ScotsSec** dataset comprises scores attained by 3,435 Scottish secondary school students on a standardized test taken at age 16. The data is structured as a data frame with six variables, each representing different aspects of the students' backgrounds and test performance. The dataset includes:
+
+-   **verbal**: This variable represents the verbal reasoning score achieved by each student on a test administered upon their entry to secondary school. It is measured on a continuous scale, reflecting the students' verbal reasoning abilities prior to secondary education.
+
+-   **attain**: The attainment score indicates the result of the standardized test taken by students at age 16. This continuous variable serves as the primary response variable in analyses focusing on educational outcomes.
+
+-   **primary**: A categorical variable (factor) that identifies the primary school attended by each student. This variable allows for the exploration of variations in attainment based on primary school affiliation.
+
+-   **sex**: This factor variable represents the gender of the students, with levels designated as **M** (male) and **F** (female). It enables the examination of potential gender disparities in test scores.
+
+-   **social**: A numeric variable that quantifies the student's social class on a scale from low to high. This variable captures the socioeconomic background of students, which may influence educational attainment. However, we are going to use this variable as a factor.
+
+-   **second**: A categorical variable (factor) indicating the secondary school attended by each student. Like the primary variable, it allows for analysis of attainment differences across various secondary schools.
+
+This dataset is instrumental for investigating the educational performance of Scottish students, analyzing the influences of demographic factors, and exploring the relationships between social class, school type, and test scores.
+
+```{r}
+data(ScotsSec , package = "mlmRev")
+ScotsSec$social <- as.factor(ScotsSec$social)
+
+head(ScotsSec, 10)
+```
+
+## Data Visualization:
+
+The provided graphs depict the relationship between social status (on the left graph) and verbal ability (on the right graph) with educational attainment, categorized by sex and group size. In each graph, educational attainment (attain) is displayed on the y-axis, while the x-axis represents social status levels and verbal ability scores, respectively. Each data point represents individuals grouped by social status or verbal ability, with connecting lines linking points within each sex category, indicated by distinct colors (red for males and blue for females). The sizes of the points signify group sizes, as shown by the scale indicating values from 5 to 300 in the legend on the right.
+
+```{r, fig.width=12, fig.height=8, dpi=300}
+
+gg0 <- ggplot(ScotsSec, aes(y = attain, colour = sex)) + 
+    stat_sum(alpha = 0.5) +
+    stat_summary(aes(group = interaction(sex, primary)), geom = "line", fun = mean)
+
+gg1 <- gg0 + aes(x = factor(social))
+gg2 <- gg0 + aes(x = verbal)
+
+# Display the plots side by side
+gg1 + gg2
+```
+
+The graphs reveal some patterns in educational attainment across both social and verbal dimensions. In the social status plot, educational attainment varies widely across social levels, with males and females following similar distribution patterns. Larger group sizes are concentrated around mid to high levels of social status, indicating more data points in these social categories. In the verbal ability plot, educational attainment generally increases with higher verbal ability scores, suggesting a positive correlation. Males and females demonstrate overlapping patterns in verbal ability and attainment levels, with some variability at lower scores. The plot highlights a trend of higher attainment with increasing verbal ability, regardless of sex.
+
+# a) Model Fit
+
+```{r}
+#| echo: false
+
+## Fit the "full" model
+model_full <- lmer(attain ~ social + sex + verbal + 
+              (1 + social + sex + verbal | primary), REML = TRUE, 
+              data = ScotsSec)
+
+summary(model_full)
+## isSingular(model_full)
+```
+
+In the analysis of the linear mixed model fitted to the ScotsSec dataset, a warning regarding singularity was encountered. Specifically, the model displayed a boundary (singular) fit, indicating potential issues with model convergence. This is evidenced by the presence of negative eigenvalues during the fitting process, suggesting that the model may not have sufficient variability in the random effects structure. It is necessary thought to simplify the model in order to get some reliable results.
+
+# b) Model Simplification
+
+## Singular Fit:
+
+Complex mixed-effect models, particularly those characterized by a high number of variance-covariance parameters, often encounter issues related to singularity. This phenomenon occurs when the estimated variance-covariance matrices do not achieve full rank, indicating that certain dimensions within the matrix have been estimated as exactly zero.
+
+In simpler terms, singularity implies that the model may have insufficient variability captured in its random effects. For models with scalar random effects, such as those containing only intercepts, or those with two dimensions (e.g., intercept and slope), identifying singularity is relatively straightforward. In these cases, singularity manifests as variance estimates that are nearly zero or as correlations that approach -1 or 1.
+
+However, detecting singularity in more complex models, which possess variance-covariance matrices of three or more dimensions, can be significantly more challenging. These models can exhibit singularity even when individual variance estimates are not close to zero, and correlation estimates do not necessarily converge to extreme values of +/-1. Therefore, careful attention is required in the interpretation of such models to ensure reliable conclusions and to address potential issues related to model fit.\
+\
+By looking at the summary of the "full" model the variable with the smallest estimated variance is the variable "verbal". Hence, from now on I wont treat "verbal" as a random effect. The revised model is as follows:
+
+```{r}
+VarCorr(model_full)
+
+model_revised <- lmerTest::lmer(attain ~ social + sex + verbal + 
+              (1 + social + sex | primary), REML=TRUE, 
+              data = ScotsSec)
+
+summary(model_revised)
+
+## ?convergence
+## modelfit.all <- lme4::allFit(model_revised)
+## ss <- summary(modelfit.all)
+```
+
+The analysis of the linear mixed model fitted to the ScotsSec dataset revealed several convergence issues, as indicated by multiple warnings. Specifically, the model experienced a degenerate Hessian with two negative eigenvalues, suggesting that the optimization algorithm struggled to find a stable solution. Additionally, warnings related to the inability to evaluate the scaled gradient further highlight potential difficulties in estimating the model parameters. Such convergence problems can indicate issues with the model's complexity, possibly due to multicollinearity among predictors or inadequate data for the specified random effects structure.
+
+By using the same method as before, I am going to create a new model using only sex as random effect. Moreover, it does not make sense to treat "social" as random-effect as its levels are not exchangeable (I am going to discuss that later).
+
+```{r}
+VarCorr(model_revised)
+
+model_final <- lmerTest::lmer(attain ~ social + sex + verbal +
+              (1 + sex | primary), REML = TRUE, 
+              data = ScotsSec)
+
+summary(model_final)
+```
+
+Finally, we got a "regular" fit using attain as a response variable, social, sex, verbal as (additive) fixed effects, where sex varying among primary schools.
+
+# c) Model Evaluation
+
+```{r, fig.width=10, fig.height=10, dpi=300}
+# Check the model diagnostics
+performance::check_model(model_final)
+
+# Create a DHARMa residuals object
+residuals_dharma <- simulateResiduals(model_final)
+
+# Plot the residuals
+plot(residuals_dharma)
+
+## model <- lm(attain ~ social + sex + verbal, 
+##              data = ScotsSec)
+
+## Check the model diagnostics
+## performance::check_model(model)
+
+## Create a DHARMa residuals object
+## residuals_dharma <- simulateResiduals(model)
+
+## Plot the residuals
+## plot(residuals_dharma)
+```
+
+### Analysis and Conclusions
+
+Our model diagnostics were performed using both `performance::check_model()` and the DHARMa package, each providing insights into model fit and assumptions.
+
+#### Results using `performance::check_model()`
+
+1.  **Posterior Predictive Check**: The model-predicted data does not resemble the observed data, indicating a non reasonable model fit.
+
+2.  **Linearity**: The residuals vs. fitted values plot shows some deviations from the horizontal line, suggesting potential non-linearity. However, the deviations do not appear severe.
+
+3.  **Homogeneity of Variance**: The spread of standardized residuals varies slightly across fitted values, showing some heteroscedasticity. This indicates that the assumption of constant variance may not be fully met.
+
+4.  **Influential Observations**: It seem like we dont have problems from influential observations
+
+5.  **Collinearity**: The Variance Inflation Factor (VIF) for all variables is below the threshold of 5, suggesting low multicollinearity.
+
+6.  **Normality of Residuals**: The residual Q-Q plot shows minor deviations from normality. This deviation could impact inference, but the effect may be small, given the overall alignment with the reference line.
+
+7.  **Normality of Random Effects**: Additional Q-Q plots for random effects are shown, which would not typically appear in a fixed-effects-only model. Here, these plots check the normality assumption for the random intercept and slope associated with the `primary` grouping. Deviations from the line are minimal, suggesting that the random effects meet the normality assumption reasonably well.
+
+#### DHARMa Diagnostics
+
+1.  **QQ Plot Residuals**: The Kolmogorov-Smirnov (KS) test for uniformity is significant (p = 0.04934), indicating a deviation from the expected residual distribution. While this suggests some issues with model fit, the significance is marginal, so it may not drastically affect inference.
+
+2.  **Residual vs. Predicted Plot**: The red trend line shows a nonlinear pattern, hinting at potential misspecification of fixed effects or variance structure in the model. Additionally, the residuals have some structure, especially near the boundaries, suggesting the model may not fully capture the data pattern.
+
+3.  **Dispersion and Outlier Tests**: The dispersion test is non-significant (p = 0.944), indicating no substantial overdispersion. However, the outlier test is significant (p = 0.04362), suggesting that some observations may be poorly predicted.
+
+#### Key Differences from a Fixed-Effects-Only Linear Model
+
+Compared to a fixed-effects-only linear model, the `check_model()` output for this mixed-effects model includes:
+
+-   **Normality of Random Effects**: Additional Q-Q plots for the random intercept and slope are unique to mixed models, where random effect assumptions are tested.
+
+### Overall Conclusion
+
+The model generally meets assumptions, but there are minor issues with linearity, homogeneity of variance, and outliers. The DHARMa tests suggest possible minor deviations from the assumptions, especially in the residual distribution and the presence of outliers. These issues may slightly affect model accuracy but do not appear severe. Further investigation via simulation is needed to access the predictability of the model.
+
+# d) Model Fit Using Different Functions
+
+```{r}
+
+## Fitting the model using lme
+model_nlme <- nlme::lme(fixed = attain ~ social + sex + verbal, random = ~ 1 + sex | primary, data = ScotsSec, method = 'REML', control = lmeControl(opt = "optim"))
+
+summary(model_nlme)
+
+## Fitting the model using glmmTMB
+model_glmmTMB <- glmmTMB(attain ~ social + sex + verbal + (1 + sex | primary), data = ScotsSec, REML = TRUE)
+
+summary(model_glmmTMB)
+```
+
+# e) Model Comparison
+
+```{r}
+# Define the models (assuming you've already fitted them as model_final, model_nlme, and model_glmmTMB)
+mod_list <- list(
+  lmer_model = model_final,
+  nlme_model = model_nlme,
+  glmmTMB_model = model_glmmTMB
+)
+
+# Use purrr::map_dfr to compare model fits
+model_comparison <- purrr::map_dfr(mod_list, broom.mixed::glance, .id = "model")
+
+# View the comparison
+model_comparison
+```
+
+Using the log-likelihood as a criterion, we observe that the model fits obtained through the `lmerTest` and `glmmTMB` packages are indeed "identical or practically identical" with a log-likelihood of -7340.201 in both cases. In contrast, the fit from the `nlme` package, with a log-likelihood of -7340.216, is "slightly worse," as it is marginally lower than the other two fits. Although this difference is minor (0.015), it suggests that the `lmerTest` and `glmmTMB` models achieve a marginally better fit compared to the `nlme` model.
+
+# f) Qualitative Comparison of the Estimates, Standard Errors, Df, and p-values Among Packages
+
+```{r}
+# Extract and arrange fixed effect coefficients for comparison
+fixed_effects_comparison <- purrr::map_dfr(mod_list, ~tidy(., effects = "fixed"), .id = "model") |>
+  dplyr::arrange(term)
+
+# View the comparison
+fixed_effects_comparison
+```
+
+Based on the extracted coefficients from the three models (`lmer_model`, `nlme_model`, and `glmmTMB_model`), the fixed effects show strong consistency across packages. The intercept estimates are practically identical, with differences well within a tolerance of 10\^-4, indicating robustness in the intercept term across these models. The `sexF` term also displays nearly identical estimates and very similar standard errors, suggesting consistency in the estimated effect of this predictor. For the `social` terms (`social1`, `social20`, and `social31`), the estimates and standard errors are very similar across models, with variations generally within a tolerance of 0.01, although `social31` has slightly more variation in the standard error, which remains within acceptable bounds. The `verbal` term shows practically identical estimates and standard errors across all three models, further supporting the stability of this effect across packages. The degrees of freedom vary among models, likely due to differing estimation methods; however, p-values are consistently significant across models (often \<2e-16), making them identical or practically identical in terms of statistical significance.
+
+# g) Coefficient Plot of the Fixed Effects
+
+I decided to create two versions of the coefficient plot for fixed effects to provide a clearer understanding of the model estimates and their variances. The first plot is a straightforward visualization of the fixed effect estimates with their confidence intervals, helping to convey the direction and relative magnitude of each predictor’s effect. However, to give more insight into the variability of each estimate, I created a second plot that includes additional enhancements: I increased the point size, added a dashed vertical line at zero to help identify significant effects, and included the exact estimate values above each point for clarity. The second plot also includes a bit of padding on the x-axis to avoid any crowding of estimates near the plot edges. These changes make it easier to distinguish differences in variance between fixed effects, as well as to quickly see which estimates are both positive and statistically significant.
+
+```{r, fig.width=10, fig.height=7, dpi=300}
+
+
+# Plot fixed effects using ggplot2
+ggplot(fixed_effects_comparison, aes(x = estimate, y = model, color = model)) +
+  geom_point() +
+  geom_errorbarh(aes(xmin = estimate - std.error, xmax = estimate + std.error), height = 0.2) +
+  facet_wrap(~term, scales = "free") +
+  labs(title = "Coefficient Plot of Fixed Effects",
+       x = "Estimate",
+       y = "Model") +
+  theme_minimal()
+
+
+
+ggplot(fixed_effects_comparison, aes(x = estimate, y = model, color = model)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = estimate - std.error, xmax = estimate + std.error), height = 0.2) +
+  facet_wrap(~term, scales = "free") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "grey") + # Reference line at zero
+  geom_text(aes(label = round(estimate, 4)),  # Display estimate values rounded to 4 decimal places
+            vjust = -1,                      # Place text above each point
+            size = 3,                        # Adjust text size
+            color = "black") +               # Set text color to black for visibility
+  scale_x_continuous(expand = expansion(mult = c(0.1, 0.1))) + # Add padding to the x-axis
+  labs(
+    title = "Coefficient Plot of Fixed Effects",
+    x = "Estimate",
+    y = "Model"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+# h) Comparison Between Satterthwaite and Kenward-Roger and lme
+
+The table compares the Satterthwaite and Kenward-Roger approaches for computing denominator degrees of freedom (df) and p-values for a linear mixed-effects model. The effects considered include the intercept, social factors, sex, and verbal ability.
+
+```{r}
+## Assuming model_final was fitted as:
+## model_final <- lmer(attain ~ social + sex + verbal + (1 + sex | primary), data = ScotsSec)
+## model_nlme <- nlme::lme(fixed = attain ~ social + sex + verbal, random = ~ 1 + sex | primary, data = ScotsSec, method = 'REML', control = lmeControl(opt = "optim"))
+
+
+## Get summary with Satterthwaite approximation
+satt_summary <- coef(summary(model_final, ddf = "Satterthwaite"))
+
+## Get summary with Kenward-Roger approximation
+kr_summary <- coef(summary(model_final, ddf = "Kenward-Roger"))
+
+## Get summary from lme 
+lme_summary  <- coef(summary(model_nlme))
+
+
+## Compare the degrees of freedom and p-values
+comparison <- data.frame(
+  Satt_df = satt_summary[, "df"],
+  Satt_p = satt_summary[, "Pr(>|t|)"],
+  KR_df = kr_summary[, "df"],
+  KR_p = kr_summary[, "Pr(>|t|)"],
+  lme_df = lme_summary[, "DF"],
+  lme_p = lme_summary[, "p-value"]
+)
+print(comparison)
+
+## Calculate absolute differences
+comparison$df_diff_Satt_KR <- abs(comparison$Satt_df - comparison$KR_df)
+comparison$p_diff_Satt_KR <- abs(comparison$Satt_p - comparison$KR_p)
+comparison$df_diff_Satt_lme <- abs(comparison$Satt_df - comparison$lme_df)
+comparison$p_diff_Satt_lme <- abs(comparison$Satt_p - comparison$lme_p)
+comparison$df_diff_lme_KR <- abs(comparison$lme_df - comparison$KR_df)
+comparison$p_diff_lme_KR <- abs(comparison$lme_p - comparison$KR_p)
+
+
+print(comparison[, c( "df_diff_Satt_KR", "p_diff_Satt_KR", "df_diff_Satt_lme", "p_diff_Satt_lme", "df_diff_lme_KR", "p_diff_lme_KR")])
+
+```
+
+The comparison between the Satterthwaite and Kenward-Roger approximations for computing denominator degrees of freedom (df) in the mixed model shows close agreement, though some differences in df values and p-values are observed. For most predictors, the differences in df between Satterthwaite and Kenward-Roger are minor, with the df varying slightly—often by only a few units. Notably, predictors such as "social1" and "social20" display larger df discrepancies, though these differences do not substantially impact p-values, as both methods consistently yield highly significant results for the same predictors. Compared with the results from the `lme` model, which provides fixed df values without these refined approximations, both Satterthwaite and Kenward-Roger offer more precise df estimates, particularly beneficial in cases of smaller sample sizes or complex random structures. However, in this example, these differences are not practically important, as they do not alter the statistical significance or interpretation of the model.
+
+# i) Plot of the Random Effect of Sex for Each school
+
+```{r}
+## model_final <- lmer(attain ~ social + sex + verbal + (1 + sex | primary), data = ScotsSec)
+
+## Extract random effects and convert to a tidy data frame
+random_effects <- ranef(model_final, condVar = TRUE, drop = TRUE)
+random_effects_df <- random_effects$primary %>%
+  as.data.frame() %>%
+  rownames_to_column(var = "school") %>%
+  rename(
+    intercept = `(Intercept)`,
+    sex_effect = `sexF`
+  )
+
+# Plot: Random Effect of Sex vs. Random Intercept by School
+ggplot(random_effects_df, aes(x = sex_effect, y = intercept)) +
+  geom_point(color = "black", size = 2, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE, color = "#E74C3C", linetype = "dashed", formula = y ~ x) +
+  labs(
+    title = "Random Intercept vs. Random Effect of Sex by School",
+    x = "Random Effect of Sex",
+    y = "Random Intercept"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    axis.title = element_text(face = "bold"),
+    plot.background = element_rect(fill = "white", color = NA)
+  )
+
+correlation <- round(cor(random_effects_df$intercept, random_effects_df$sex_effect), 4)
+print(c("The Degree of Linear Correlation is: ", correlation))
+```
+
+In the analysis of school-level random effects from a linear mixed-effects model predicting attainment, we observe a notable negative correlation between the random intercepts and the random effects of sex for each school (r =−0.6633). The plot illustrates this relationship, with each point representing a school, showing how schools with higher random intercepts tend to have smaller (or even negative) deviations in the effect of sex on attainment. The fitted trend line, shown as a dashed red line, further emphasizes this negative linear relationship. This finding suggests that as the baseline attainment (random intercept) of a school increases, the difference between genders in attainment tends to decrease, potentially indicating that schools with higher baseline attainment levels exhibit less gender disparity in achievement.
+
+# j) Why It Does Not Make Sense to Treat "social" as a Random-Effect Grouping Variable
+
+In this model, it would not make sense to treat the variable *social* (indicating students' social class) as a random-effects grouping factor because the levels of *social* represent specific, ordered categories reflecting socioeconomic status rather than exchangeable clusters. Unlike random effects, which assume that groups are sampled from a larger, homogeneous population and can be treated as similar or interchangeable, social classes carry unique and non-interchangeable socioeconomic implications that likely exert distinct, fixed influences on educational attainment. Treating *social* as a fixed effect appropriately models these non-random, structured differences across social classes, allowing for direct estimation of the unique effects associated with each social class level on attainment, which is essential for accurate interpretation of its impact in the context of socioeconomic background.
+
+# k) Some Weird Parametrization
+
+In modeling educational attainment using the ScotsSec dataset, omitting the fixed effect of sex while retaining its random variation across primary schools would yield an incomplete understanding of the data's structure. Specifically, the fixed effect of sex accounts for systematic differences in attainment scores attributable to gender, providing a baseline adjustment that is critical for interpreting the influence of other variables such as social class and verbal reasoning. Conversely, allowing for random variation of sex across primary schools suggests that the effect of gender on attainment may differ by school context, yet without the fixed effect, this model would not appropriately estimate or control for the average gender disparity across the entire sample. This could lead to biased estimates of other predictors and ultimately obscure the nuanced interactions between sex, social class, and school type, thereby compromising the validity and interpretability of the findings.
+
+# l) **Evaluating Random Effects in Linear Mixed-Effects Models: A Comparison of Standard Likelihood Ratio Tests and Parametric Bootstrapping Techniques**
+
+```{r}
+
+# Model m3: Linear mixed-effects model with separate random intercept and random slope for sex by primary school
+m3 <- lmer(attain ~ 1 + social + sex + verbal + (1 | primary) + (0 + dummy(sex, "M") | primary), data = ScotsSec, REML = FALSE)
+# Explanation: (I used different optimization algo and increase the umber of interactions to resolve some convergence issues)
+# - Fixed effects: Same as m3.
+# - Random effects: Separate terms for the random intercept (1 | primary) and the random slope for sex (0 + dummy(sex, "M") | primary).
+# - This model has the same random structure as m3 but separates the intercept and slope components, consider them independent.
+
+
+# Model m2: Linear mixed-effects model with both random intercept and random slope for sex by primary school
+m2 <- update(m3, . ~ 1 + social + sex + verbal + (1 + sex | primary))
+# Explanation:
+# - Fixed effects: Intercept, social class (social), sex, and verbal ability (verbal).
+# - Random effects: Random intercept and random slope for sex, grouped by primary school.
+# - REML = FALSE is used to fit the model with maximum likelihood, as it allows for comparison between models via ANOVA.
+
+# Model m1: Linear mixed-effects model with only a random intercept for primary school
+m1 <- update(m3, . ~ 1 + social + sex + verbal + (1 | primary))
+# Explanation:
+# - Fixed effects: Same as m3.
+# - Random effects: Only a random intercept for primary school, without a random slope for sex.
+# - This model tests if the random slope for sex by primary school is necessary.
+
+# Model m0: Linear model without random effects (i.e., fixed-effects model)
+m0 <- lm(attain ~ 1 + social + sex + verbal, data = ScotsSec)
+# Explanation:
+# - Fixed effects: Same as m3.
+# - No random effects; this is a traditional linear regression model.
+# - This model serves as a baseline to assess the need for random intercepts and slopes.
+
+# Conduct ANOVA to compare models
+# Explanation:
+# - Sequential tests comparing each model to the simpler model, allowing assessment of the need for random effects.
+# - These tests help determine if random slopes, intercepts, or both improve model fit.
+anova(m3, m2, m1, m0)
+
+```
+
+The analysis compared four models predicting educational attainment (`attain`) in the ScotsSec dataset, progressively adding random effects to examine their impact on model fit. Model m0 served as a baseline linear model with only fixed effects for social class, sex, and verbal ability, while Model m1 introduced a random intercept for primary school to account for differences between schools. Model m1 significantly improved fit over m0 (X² = 31.9812, df = 1, p \< 0.001), suggesting that including school-level variation enhances explanatory power. Model m3 further added a separate random slope for sex, allowing the effect of sex to vary across schools independently from the intercept. This model improved significantly over m1 (X² = 7.9352, df = 1, p = 0.004848), indicating that sex effects vary by school context. Model m2, specifying both a random intercept and random slope for sex but treating them as correlated, showed a smaller, non-significant improvement over m3 (X² = 2.9059, df = 1, p = 0.088259), suggesting that treating the random intercept and slope as independent better captures the data structure. Overall, model m3 provides the best fit with interpretable random effects, balancing complexity and model improvement (there is no big difference from the model with correlated random effects).
+
+-   **Comparing Linear Mixed-Effects Models with Parametric Bootstrap Testing: Assessing the Impact of Random Slopes for Sex by Primary School**
+
+```{r}
+#| warning: false
+#| message: false
+
+set.seed(1234)
+# Perform parametric bootstrapping
+boot_comp <- pbkrtest::PBmodcomp(m2, m1, nsim = 1000)
+
+# Print the bootstrap comparison results
+print(boot_comp)
+```
+
+A parametric bootstrap test was conducted to further examine the necessity of including a random slope for sex in the model predicting educational attainment ("attain"). Comparing models m1 (random intercept only) and m2 (random intercept and slope for sex), the likelihood ratio test (LRT) yielded a significant improvement (X² = 7.9352, df = 1, p = 0.004848), suggesting that including a random slope for sex captures meaningful variability across primary schools. The parametric bootstrap test confirmed this result, with a significant p-value (p = 0.001998), reinforcing that the inclusion of the random slope significantly improves model fit. Thus, model m2, which allows for both random intercepts and slopes, is supported as an improved model over m1, capturing school-level differences in the effect of sex on educational attainment.
+
+-   **Evaluating the Impact of Including an Independent Random Slope for Sex by Primary School on Model Fit for Educational Attainment**
+
+```{r}
+#| warning: false
+#| message: false
+
+set.seed(1234)
+# Perform parametric bootstrapping
+boot_comp <- pbkrtest::PBmodcomp(m3, m1, nsim = 1000)
+
+# Print the bootstrap comparison results
+print(boot_comp)
+```
+
+A parametric bootstrap test was conducted to assess the necessity of including an independent random slope for sex by primary school in the model predicting educational attainment ("attain"). Model m1 included only a random intercept for primary school, while model m3 added a separate, independent random slope for sex. The likelihood ratio test (LRT) showed a significant improvement in fit with the addition of the random slope (X² = 7.9352, df = 1, p = 0.004848), suggesting that the effect of sex on attainment varies across primary schools. This finding was further supported by the parametric bootstrap test, which yielded a p-value of 0.001575. These results indicate that incorporating an independent random slope for sex by school (as in model m3) provides a significantly better fit than a model with only a random intercept, capturing meaningful school-level variation in the effect of sex on educational attainment.
+
+**To sum up**, the results from the likelihood ratio tests and parametric bootstrap tests consistently indicate that including random effects for primary school meaningfully improves model fit in predicting educational attainment ("attain"). Model comparisons demonstrated that adding a random intercept for primary school (m1) significantly enhanced fit over the fixed-effects model (m0), highlighting the importance of accounting for school-level variability. Furthermore, including a random slope for sex, either as a separate independent term (m3) or as a correlated term with the intercept (m2), also significantly improved fit compared to the intercept-only model (m1). The parametric bootstrap tests confirmed these improvements, with significant p-values (m2 vs. m1: p = 0.001998; m3 vs. m1: p = 0.001575), underscoring the relevance of allowing the effect of sex to vary by school. Overall, model m3, which includes a separate random intercept and slope for sex by primary school, provides a balanced, interpretable approach that effectively captures school-level differences in the influence of sex on attainment.
+
+## Conclusion / Discussion
+
+The **Bobyqa optimizer** is chosen for fitting linear mixed-effects models because it effectively handles complex, non-linear optimization problems that often arise in such models. Its ability to search in a trust region helps avoid issues of convergence that can occur with simpler algorithms, especially when dealing with multiple random effects or high-dimensional parameter spaces. Additionally, Bobyqa is robust in terms of stability and efficiency, making it suitable for models with intricate covariance structures. The increased iteration limit of 10 million iterations ensures that the algorithm has ample opportunity to converge to an optimal solution, which is particularly important when fitting models with complicated random effects. Overall, this choice aims to enhance model reliability and accuracy in parameter estimation. However, the algorithm can also get trapped in local minima, yielding biased parameter estimates. Additionally, reliance on Bobyqa may overlook important model diagnostics, which could result in conclusions based on misspecified models or poor data quality. During the diagnostic process, we had signs for violations of the assumptions of the model, as well as, outliers (how is possible the graph for influential observations looks desirable, while the test and graph for outliers not?). Outlines is a very important issue that may add bias to our estimates and inflate p-values, so further investigation is required.
+
+Another very important topic is the reliability of the LRT comparison between the models m0, m1, m2 and m3. For instance, in this analysis, we evaluated two linear mixed-effects models to assess the impact of social class, sex, and verbal ability on educational attainment, while accounting for the hierarchical structure of the data with primary schools as a grouping factor. Model m2 incorporated a random intercept and a random slope for sex, allowing us to investigate whether the relationship between sex and educational attainment varied by primary school. In contrast, Model m1 included only a random intercept for primary school, serving as a baseline to determine the necessity of the random slope for sex. To compare the models, we conducted a likelihood ratio test (LRT); however, we acknowledge that LRT-based null hypothesis assumes zero variance, it is on the **boundary of the parameter space**, which violates the assumptions underlying the standard asymptotic chi-square distribution ( the information matrix is not inversable) used in LRTs (the distribution in this case looks more to a mixture). As shown by Self and Liang (1987) and others, when the null hypothesis is on the boundary, the standard LRT becomes **conservative**, meaning it tends to yield higher p-values than it should. This can reduce the test's sensitivity, making it harder to detect significant random effects when they actually exist (In simpler cases (e.g., one random effect variance), the p-value under standard LRT tends to be approximately **twice as large** as it would be with a correctly adjusted test (Pinheiro and Bates 2000)). (As we have indications for outliers, a coherent question would be: How the outliers could inflate the above comparisons?)
+
+Parametric bootstrapping involves simulating data under the null hypothesis (e.g. σ\^2 = 0 ), fitting models to each simulated dataset, and calculating the likelihood ratio for each. The empirical distribution of the test statistic from these simulations provides an adjusted p-value that better reflects the boundary constraint.
+
+# **References**
+
+-   Barr, Dale J., Roger Levy, Christoph Scheepers, and Harry J. Tily. 2013. “Random Effects Structure for Confirmatory Hypothesis Testing: Keep It Maximal.” Journal of Memory and Language 68 (3): 255–78. https://doi.org/10.1016/j.jml.2012.11.001.
+
+-   Bates, Douglas, Reinhold Kliegl, Shravan Vasishth, and Harald Baayen. 2015. “Parsimonious Mixed Models.” arXiv:1506.04967 \[Stat\], June. https://arxiv.org/abs/1506.04967.
+
+-   Bates, Douglas, Martin Mächler, Ben Bolker, and Steve Walker. 2015. “Fitting Linear MixedEffects Models Using Lme4.” Journal of Statistical Software 67 (October): 1–48. https://doi. org/10.18637/jss.v067.i01.
+
+-   Biswas, Keya. 2015. “Performances of Different Estimation Methods for Generalized Linear Mixed Models.” Master’s thesis, McMaster University. https://macsphere.mcmaster.ca/ bitstream/11375/17272/2/M.Sc_Thesis_final_Keya_Biswas.pdf.
+
+-   Bolker, Benjamin M. 2015. “Generalized Linear Mixed Models.” In Ecological Statistics: Contemporary Theory and Application, edited by Gordon A. Fox, Simoneta Negrete-Yankelevich, and Vinicio J. Sosa. Oxford University Press.
+
+-   Booth, James G., and James P. Hobert. 1999. “Maximizing Generalized Linear Mixed Model Likelihoods with an Automated Monte Carlo EM Algorithm.” Journal of the Royal Statistical Society. Series B 61 (1): 265–85. https://doi.org/10.1111/1467-9868.00176.
+
+-   Breslow, N. E. 2004. “Whither PQL?” In Proceedings of the Second Seattle Symposium in Biostatistics: Analysis of Correlated Data, edited by Danyu Y. Lin and P. J. Heagerty, 1–22. Springer.
+
+-   Crawley, Michael J. 2002. Statistical Computing: An Introduction to Data Analysis Using S-PLUS. John Wiley & Sons.
+
+-   Gelman, Andrew. 2005. “Analysis of Variance: Why It Is More Important Than Ever.” Annals of Statistics 33 (1): 1–53. https://doi.org/doi:10.1214/009053604000001048.
+
+-   Matuschek, Hannes, Reinhold Kliegl, Shravan Vasishth, Harald Baayen, and Douglas Bates.
+
+    2017. “Balancing Type I Error and Power in Linear Mixed Models.” Journal of Memory and Language 94 (June): 305–15. https://doi.org/10.1016/j.jml.2017.01.001.
+
+-   Murtaugh, Paul A. 2007. “Simplicity and Complexity in Ecological Data Analysis.” Ecology 88 (1): 56–62. http://www.esajournals.org/doi/abs/10.1890/0012-9658%282007%2988%5B5 6%3ASACIED%5D2.0.CO%3B2.
+
+-   Pinheiro, José C., and Douglas M. Bates. 1996. “Unconstrained Parametrizations for VarianceCovariance Matrices.” Statistics and Computing 6 (3): 289–96. https://doi.org/10.1007/BF
+
+    140873. 
+
+-   Ponciano, José Miguel, Mark L. Taper, Brian Dennis, and Subhash R. Lele. 2009. “Hierarchical Models in Ecology: Confidence Intervals, Hypothesis Testing, and Model Selection Using Data Cloning.” Ecology 90 (2): 356–62. http://www.jstor.org/stable/27650990.
+
+-   Stroup, Walter W. 2014. “Rethinking the Analysis of Non-Normal Data in Plant and Soil Science.” Agronomy Journal 106: 1–17. https://doi.org/10.2134/agronj2013.0342.
+
+-   Sung, Yun Ju, and Charles J. Geyer. 2007. “Monte Carlo Likelihood Inference for Missing Data Models.” The Annals of Statistics 35 (3): 990–1011. https://doi.org/10.1214/009053606000
+
+    1389. 
+
+-   I read assignments for previous years in order to gain some great code ideas and identify previous mistakes inorder to avoid them.
+
+-   I used Chat Gpt extensively to create reports (I was writting my conclusions and after that, I was asking Chat Gpt to write it in a formal way as a report).
+
+-   I used chat-gpt to code some plots I didnt know and create a more professional output.

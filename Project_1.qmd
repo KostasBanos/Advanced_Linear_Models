@@ -1,0 +1,335 @@
+---
+title: "STATS 720 Assignment 1"
+format: 
+  pdf:
+    code-line-numbers: true
+author: "Konstantinos Banos 400609120"
+date: "Sep/20/2023"
+editor: visual
+execute: 
+  echo: true
+  message: false
+header-includes:
+  \usepackage{fvextra}
+  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+---
+
+\newpage
+
+```{r}
+#| message: false
+
+# load libraries
+library(tidyverse)
+library(dotwhisker)
+library(effects)
+library(lemon)
+library(MASS)
+library(dplyr)
+library(glmmTMB)
+library(ggplot2)
+library(performance)
+library(AER)
+library(caret)
+
+```
+
+# 1. Dataset and modelling
+
+```{r}
+# Import and convert the data to tibble
+olymp <- read.csv("olymp1")
+olymp <- as_tibble(olymp)  ## could use readr::read_csv directly
+
+## frame, using within() or transform() or dplyr::mutate()
+## Separate variables floating around in the workspace can easily
+##  get out of sync
+gdp_per_cap <- olymp$gdp/olymp$pop ## GDP per Capita
+log_gdp <- log(olymp$gdp)          ## Logarithm of GDP
+log_pop <- log(olymp$pop)          ## Logarithm of Population
+log_gdp_perC <- log_gdp-log_pop    ## Logarithm of GDP per Capita
+log_n <- log(olymp$n+1)            ## Logarithm of the Number of Medals
+
+
+
+## Add six new columns using mutate to the olymp dataset
+
+ olymp <- olymp %>%
+  mutate(gdp_per_cap = gdp_per_cap,
+         log_gdp = log_gdp,
+         log_pop = log_pop,
+         log_gdp_perC = log_gdp_perC,
+         log_n = log_n)
+    
+ 
+mydata = olymp |> filter(medal == "Gold")  ## Filtering by "Gold" Metal and creation of a new dataset
+
+head(mydata,200)
+head(olymp,200)
+```
+
+In this analysis, the focus was on estimating gold medals from the `olymp1` dataset. After importing the dataset, it was transformed into a tibble format for more convenient handling. Five new variables were created by applying a logarithmic transformation to five key variables, reducing their dispersion and ensuring a smoother dataset for further analysis. Subsequently, a new tibble (`mydata`) was created, filtered to include only observations related to gold medals. This filtered dataset serves as the primary basis for the following analysis.
+
+## a.
+
+In accordance with Harrell's guidelines [@harrell], it is recommended that the optimal number of predictor variables in a regression model should be less than $\frac{m}{15}$ (depends on the skewness of the distribution etc.), where m is the limiting sample size, defined as `nrow(mydata)`. Given that there are no strict limitations on the number of predictors in this analysis due to the sufficiently large sample size, I have opted to maintain a relatively simple and interpretable linear model.
+
+For this analysis, I have selected two predictor variables (they are less correlated):
+
+1.  The natural logarithm of Gross Domestic Product (log_gdp).
+
+2.  The natural logarithm of the Population (log_pop).
+
+The response variable of interest is the natural logarithm of gold medals ($\log_n$), which will be estimated in this model (it was necessary to do a transformation such that: $\log_n = \log(n+1)$, due to zeros in the dataset). This approach aims to facilitate interpretation while ensuring the model remains robust.
+
+## b.
+
+The response variable in this analysis is the natural logarithm of the number of gold medals won by each country in a given year, denoted as `log_n`, where n represents the count of gold medals (**BMB**: +1 ...). This transformation is unitless, though it represents a logarithmic transformation of a count variable.
+
+The two predictor variables used in the model are:
+
+-   The natural logarithm of Gross Domestic Product (GDP), denoted as log_gdp, where GDP is typically expressed in dollars. \[**BMB**: here it's in billions of dollars\]
+
+-   The natural logarithm of population, denoted as log_pop, with the original variable representing the count of people. \[**BMB**: millions of people\]
+
+Both of the are basically unitless.
+
+Given the nature of the problem and the logarithmic transformations applied to both the response and predictor variables, defining thresholds in terms of absolute units becomes challenging. For example, determining what constitutes a "small" change in GDP is difficult due to the variation in economic significance across countries.
+
+As a result, I have adopted a threshold of 1% on each variable in the log scale. This approach provides a consistent way to interpret changes in the predictor variables and helps to identify significant relationships while managing noise in the model. Specifically, a 1% change in the log scale reflects the relative change in the original variable, offering a practical and scalable criterion for evaluating small changes in each predictor variable.
+
+## c.
+
+We applied the following model
+
+```{r}
+# original model
+model <- lm(log_n ~ log_gdp+log_pop, data = mydata)
+
+# View summary of the model
+summary(model)
+```
+
+The model summary indicates that approximately 36% of the variability in the response variable is explained by the predictors included in the model. The natural logarithm of GDP (log_gdp) emerges as a highly significant predictor, with a strong association with the response variable. In contrast, the natural logarithm of Population (log_pop) appears to be statistically insignificant and may not contribute meaningfully to the model.
+
+However, before drawing definitive conclusions, it is essential to conduct diagnostic tests to evaluate the model's reliability and ensure that key assumptions, such as residual normality, homoscedasticity, and independence, are met. These diagnostics will provide a more comprehensive understanding of the model's validity and its potential limitations.
+
+## d.
+
+To assess the assumptions of our linear regression model, we examined several diagnostic plots.
+
+1.  **Residuals vs. Fitted**: The plot reveals a moderate V-shaped pattern, indicating a potential non-linear relationship between the predictors and the response variable. This suggests that the linear model may not adequately capture the underlying relationship.
+
+2.  **Q-Q Plot**: The Q-Q plot demonstrates deviations in the tails from the theoretical quantiles of the Normal distribution. While this suggests violations of the normality assumption, it is important to note that Q-Q plots are not always the most reliable method for assessing normality. **BMB**: Q-Q plots are fine for assessing normality (can you suggest a better method? Do you want to do a hypothesis test?). It's just that normality may not be very important!
+
+3.  **Scale-Location Plot**: This plot indicates a clear upward trend, suggesting that the assumption of homoscedasticity (constant variance of the residuals) is violated. The presence of heteroscedasticity could impact the validity of the regression results. **BMB**: how? (Loss of efficiency, type 1 errors -- usually not bias unless the model is nonlinear.)
+
+4.  **Posterior Predictive Plot**: The model's ability to simulate the distribution of the observed data is insufficient, as indicated by the discrepancies in the posterior predictive plot. This further underscores the limitations of the current model.
+
+5.  **Collinearity Assessment**: In contrast, the collinearity diagnostics suggest that there is no significant collinearity among the predictor variables. While collinearity is generally not a major concern for linear models, it is still a positive finding.
+
+```{r}
+# plot model evaluation graphs
+plot(x=model)
+performance::check_model(model)
+```
+
+In summary, the diagnostic plots indicate several violations of model assumptions, particularly regarding linearity, normality, and homoscedasticity, which may necessitate model reassessment or alternative modeling approaches.
+
+## e.
+
+The initial linear regression model was found to be inappropriate for the data at hand. The response variable, the number of medals (n), is a count variable, and using a linear model to predict count data can lead to biased estimates and violations of key assumptions, as evidenced by the diagnostic plots.
+
+Given the nature of the response variable, I have opted for a Negative Binomial (NB) regression model. The Negative Binomial model is particularly well-suited for count data and is commonly used when the data exhibits over-dispersion—a scenario where the variance exceeds the mean. Over-dispersion appears to be a significant issue in this case, making the NB regression an appropriate choice.
+
+In the NB regression model, I will use the original response variable (n) rather than its logarithmic transformation. The predictors will be the natural logarithm of GDP per capita (log_gdp_perC) and the natural logarithm of population (log_pop). This approach allows for a better fit of the data and addresses the limitations observed in the initial linear model, particularly in handling the over-dispersion inherent in the data.
+
+```{r}
+## Test for Over-dispersion : dispersiontest(nb_model)
+
+# Fit Negative Binomial regression model
+nb_model <- glm.nb(n ~ log_pop + log_gdp_perC, data = mydata)
+
+# View summary of the nb_model
+summary(nb_model)
+
+# plot nb_model evaluation graphs
+performance::check_model(nb_model)
+
+### check for collinearity
+### vif less than 3 indicate no significant
+vif(nb_model)
+
+## Pseudo R^2
+performance::r2(nb_model)
+## Predictive Performance (Cross-validation)
+## train_control <- trainControl(method="cv", number=10)
+## train(ln ~ log_gdp_perC + log_pop, data=mydata, method="glm.nb", trControl=train_control)
+
+
+```
+
+Looking at the summary results, the model reveals that both population size and GDP per capita are significant predictors of Olympic gold medal success. Specifically, a 1% increase in population is associated with approximately a 0.62% increase in the expected number of gold medals, while a 1% increase in GDP per capita corresponds to about a 0.64% increase in expected medals. These findings suggest that countries with larger populations and higher economic resources are more likely to perform well in the Olympics, underscoring the importance of demographic and economic factors in athletic achievement. Moreover, theta = 0.3548, which is something that creates evidence for the over-dispersion nature of data. (**BMB**: "which is evidence for the overdispersed nature ...")
+
+$$
+n = e^{-1.90041 + 0.61990 \log(\text{pop}) + 0.63563 \log(\text{gdp\_perC})}
+$$
+
+Can do this: $$
+equatiomatic::extract_eq(nb_model, use_coefs = TRUE)
+$$
+
+The diagnostic graphs provide valuable insights into the model's performance. The Q-Q plot indicates a relatively strong fit, suggesting that the residuals conform closely to a normal distribution. One critical assumption of the model is the absence of influential observations, which is confirmed by the analysis of influential observations. While there are some minor discrepancies between the observed and predicted residual variances, the overall model fit remains satisfactory.
+
+Furthermore, the analysis shows no signs of collinearity among the predictor variables. The results of the posterior predictive checks are also favorable. However, the robustness of these findings may warrant further investigation, as the overall goodness of fit raises the possibility of potential overfitting or other specification issues that should be explored to ensure the reliability of the model.
+
+## f.
+
+To draw a coefficient plot:
+
+```{r}
+# model coefficient plot
+dwplot(x=nb_model)
+```
+
+I have chosen not to scale and center the predictors because we have only two quantitative variables, which allows for straightforward interpretation of the coefficients. **BMB**: works because they're already log-transformed (unitless)
+
+## g.
+
+To draw an effects plot, we have:
+
+```{r}
+# Plot an effect plot and Effects of Predictors on the Model
+effects::allEffects(nb_model)
+plot(allEffects(nb_model))
+```
+
+As the logarithm of population increases, the expected number of gold medals (n) increases significantly, demonstrating a strong positive relationship. Similarly, as the logarithm of GDP per capita increases, the expected number of gold medals also increases, indicating that higher economic resources are associated with better Olympic performance. These effects illustrate the influence of population size and economic capacity on the success of countries in the Olympic Games.
+
+# **Question 2: contrasts**
+
+Since we have $\overline y = C\beta$ where C is our contrasts matrix, $\beta = C^{-1}\overline y$.
+
+Below is our contrasts matrix as requested in the question:
+
+```{r}
+# Define the inverse of contrast matrix 
+c_inv <- matrix(c(
+  -1, 1/3, 1/3, 1/3,     ## C vs Average of Treatments
+   0, 1, -1, 0,          ## I vs II
+   0, 0, 1, -1,          ## II vs III
+   1, 0, 0, 0),          ## Treat Control as an Intercept
+  nrow=4,byrow=TRUE)
+
+MASS::fractions(c_inv)
+```
+
+In this part we are gonna define the contrast matrix and creating a sample to employ the model
+
+```{r}
+# inverse contrasts matrix
+c_mat <- solve((c_inv))
+MASS::fractions(c_mat)
+
+data = data.frame(
+  treatment = factor(c("C", "I", "II", "III")),
+  response = c(2,4,6,8)
+)
+print(data())
+```
+
+At this point, I applied the contrast matrix to the data set
+
+```{r}
+model = lm(response ~ treatment, contrasts = list(treatment = c_mat[,-4]), data = data)
+coef(summary(model))
+```
+
+The estimated coefficients from the model provide insights into the differences between the control and the treatment groups. Specifically:
+
+-   The coefficient for the control group is **2**, serving as the baseline for comparison.
+
+-   The coefficient for the overall effect of the treatments (the average of all treatments) is **4**, indicating that, on average, the treatments differ from the control group by **4 units**.
+
+-   The difference between Treatment 1 and Treatment 2 is represented by a coefficient of **-2**, suggesting that Treatment 2 results in **2 units** less than Treatment 1, on average.
+
+-   The difference between Treatment 2 and Treatment 3 is also represented by a coefficient of **-2**, meaning that Treatment 3 results in **2 units** less than Treatment 2, on average.
+
+These coefficients reflect the relative differences between the control and treatment groups, as well as the differences among the treatments themselves. The results was completely expected.
+
+# 3. Simulation exercises to model misspecification
+
+```{r}
+
+sim_fun <- function(n = 100, slope = 1, s = 1, m = 0, df = df) {
+    x <- runif(n)
+    ## BMB: this is a bit weird (I would say = mu = m + slope*x;
+    ##  e <- s*rt(n, df); y <- mu + e) but works
+    e <- m + s * rt(n, df)
+    y <- (slope*x) + e  # t-distributed errors
+    data.frame(x, y)
+}
+
+run_simulations <- function(df, num_simulations = num_simulations) {
+  true_slope <- 1  # True slope value
+  
+  results <- data.frame(
+    bias =  numeric(num_simulations),    ## data frame creation for later usage
+    rmse = numeric(num_simulations),
+    coverage = numeric(num_simulations),
+    power = numeric(num_simulations)
+    )
+  
+  for (i in 1:num_simulations) {
+    sim_data <- sim_fun(n = 100, slope = 1, s = 1, m = 1, df = df)
+    
+    model <- lm(y ~ x, data = sim_data)
+    
+    # Validating the model and the results
+    if (is.na(summary(model)$coefficients["x", "Estimate"])) {
+      # Invalid model results
+      results[i, ] <- c(NA, NA, NA)
+    } else {
+      #coefficients
+      coef_summary <- coef(summary(model))
+      
+      ##  RMSE
+      rmse <- sqrt(mean((coef_summary["x", "Estimate"] - true_slope)^2))
+      
+      ## Bias
+      bias <- coef_summary["x", "Estimate"] - true_slope
+      
+      # power (p < alpha)
+      alpha <- 0.05
+      p_value <- coef_summary["x", "Pr(>|t|)"]
+      power <- mean(p_value < alpha)
+      
+      # coverage
+      conf_interval <- confint(model)
+      coverage <- (true_slope >= conf_interval["x", 1] & true_slope <= conf_interval["x", 2])
+      
+      results[i, ] <- c(bias, rmse, coverage, power)
+    }
+  }
+  
+  return(results)
+}
+
+# Run different number of simulations for different degrees of fredom 
+set.seed(123)
+deg = seq(2,50,by=6)
+n = c(10, 20, 100)
+
+for (j in 1:length(n)) {
+  for (i in 1:length(deg)) {
+  normality <- run_simulations(num_simulations = n[j], df = deg[i])
+  print(c("Number of Simulations:", n[j]))
+  print(c("Degrees of Freedom:", deg[i]))
+  print(summary(normality, na.rm = TRUE))
+ }
+}
+```
+
+In this set of simulations, I tested the effects of violating the normality assumption by generating data from a t-distribution with varying degrees of freedom (df). As the degrees of freedom increase, the t-distribution converges to the normal distribution, theoretically satisfying the normality assumption when df→∞.
+
+As we expected, due to the converges nature of T distribution to the normal distribution, as we increase the number of simulations to converge to the real value and when we increase the df the violation is eliminated. For example, when evaluating model coverage, with the true coverage rate set at 95%, the results from the simulation demonstrate that the estimated coverage rate converges to 95% as df increases. Additionally, both the bias and the root mean square error (RMSE) exhibit convergence; the bias tends towards 0, and the RMSE stabilizes at approximately 0.27.
