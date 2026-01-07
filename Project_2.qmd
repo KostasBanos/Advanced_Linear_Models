@@ -553,7 +553,7 @@ ggplot(endometrial, aes(x = NV, y = HG)) +
   labs(title = "HG vs Number of Vessels",
        x = "Number of Vessels (NV)",
        y = "Hyperplasia Grade (HG)") +
-  theme_minimal() +  # Professional-looking theme
+  theme_minimal() +  
   theme(text = element_text(size = 14))  # Adjust text size for clarity
 
 ##HG vs Progesterone Index (PI)
