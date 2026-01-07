@@ -31,7 +31,8 @@ library(ggplot2)
 library(performance)
 library(AER)
 library(caret)
-
+library(see)
+library(DHARMa)
 ```
 
 # 1. Dataset and modelling
@@ -64,8 +65,8 @@ log_n <- log(olymp$n+1)            ## Logarithm of the Number of Medals
  
 mydata = olymp |> filter(medal == "Gold")  ## Filtering by "Gold" Metal and creation of a new dataset
 
-head(mydata,200)
-head(olymp,200)
+head(mydata,10)
+head(olymp,10)
 ```
 
 In this analysis, the focus was on estimating gold medals from the `olymp1` dataset. After importing the dataset, it was transformed into a tibble format for more convenient handling. Five new variables were created by applying a logarithmic transformation to five key variables, reducing their dispersion and ensuring a smoother dataset for further analysis. Subsequently, a new tibble (`mydata`) was created, filtered to include only observations related to gold medals. This filtered dataset serves as the primary basis for the following analysis.
@@ -84,13 +85,13 @@ The response variable of interest is the natural logarithm of gold medals ($\log
 
 ## b.
 
-The response variable in this analysis is the natural logarithm of the number of gold medals won by each country in a given year, denoted as `log_n`, where n represents the count of gold medals (**BMB**: +1 ...). This transformation is unitless, though it represents a logarithmic transformation of a count variable.
+The response variable in this analysis is the natural logarithm of the number of gold medals won by each country in a given year, denoted as `log_n`, where n represents the count of gold medals. This transformation is unitless, though it represents a logarithmic transformation of a count variable.
 
 The two predictor variables used in the model are:
 
--   The natural logarithm of Gross Domestic Product (GDP), denoted as log_gdp, where GDP is typically expressed in dollars. \[**BMB**: here it's in billions of dollars\]
+-   The natural logarithm of Gross Domestic Product (GDP), denoted as log_gdp, where GDP is typically expressed in dollars.
 
--   The natural logarithm of population, denoted as log_pop, with the original variable representing the count of people. \[**BMB**: millions of people\]
+-   The natural logarithm of population, denoted as log_pop, with the original variable representing the count of people.
 
 Both of the are basically unitless.
 
@@ -120,9 +121,9 @@ To assess the assumptions of our linear regression model, we examined several di
 
 1.  **Residuals vs. Fitted**: The plot reveals a moderate V-shaped pattern, indicating a potential non-linear relationship between the predictors and the response variable. This suggests that the linear model may not adequately capture the underlying relationship.
 
-2.  **Q-Q Plot**: The Q-Q plot demonstrates deviations in the tails from the theoretical quantiles of the Normal distribution. While this suggests violations of the normality assumption, it is important to note that Q-Q plots are not always the most reliable method for assessing normality. **BMB**: Q-Q plots are fine for assessing normality (can you suggest a better method? Do you want to do a hypothesis test?). It's just that normality may not be very important!
+2.  **Q-Q Plot**: The Q-Q plot demonstrates deviations in the tails from the theoretical quantiles of the Normal distribution. While this suggests violations of the normality assumption, it is important to note that Q-Q plots are not always the most reliable method for assessing normality.
 
-3.  **Scale-Location Plot**: This plot indicates a clear upward trend, suggesting that the assumption of homoscedasticity (constant variance of the residuals) is violated. The presence of heteroscedasticity could impact the validity of the regression results. **BMB**: how? (Loss of efficiency, type 1 errors -- usually not bias unless the model is nonlinear.)
+3.  **Scale-Location Plot**: This plot indicates a clear upward trend, suggesting that the assumption of homoscedasticity (constant variance of the residuals) is violated. The presence of heteroscedasticity could impact the validity of the regression results.
 
 4.  **Posterior Predictive Plot**: The model's ability to simulate the distribution of the observed data is insufficient, as indicated by the discrepancies in the posterior predictive plot. This further underscores the limitations of the current model.
 
@@ -171,15 +172,7 @@ performance::r2(nb_model)
 
 ```
 
-Looking at the summary results, the model reveals that both population size and GDP per capita are significant predictors of Olympic gold medal success. Specifically, a 1% increase in population is associated with approximately a 0.62% increase in the expected number of gold medals, while a 1% increase in GDP per capita corresponds to about a 0.64% increase in expected medals. These findings suggest that countries with larger populations and higher economic resources are more likely to perform well in the Olympics, underscoring the importance of demographic and economic factors in athletic achievement. Moreover, theta = 0.3548, which is something that creates evidence for the over-dispersion nature of data. (**BMB**: "which is evidence for the overdispersed nature ...")
-
-$$
-n = e^{-1.90041 + 0.61990 \log(\text{pop}) + 0.63563 \log(\text{gdp\_perC})}
-$$
-
-Can do this: $$
-equatiomatic::extract_eq(nb_model, use_coefs = TRUE)
-$$
+Looking at the summary results, the model reveals that both population size and GDP per capita are significant predictors of Olympic gold medal success. Specifically, a 1% increase in population is associated with approximately a 0.62% increase in the expected number of gold medals, while a 1% increase in GDP per capita corresponds to about a 0.64% increase in expected medals. These findings suggest that countries with larger populations and higher economic resources are more likely to perform well in the Olympics, underscoring the importance of demographic and economic factors in athletic achievement. Moreover, theta = 0.3548, which is something that creates evidence for the over-dispersion nature of data.
 
 The diagnostic graphs provide valuable insights into the model's performance. The Q-Q plot indicates a relatively strong fit, suggesting that the residuals conform closely to a normal distribution. One critical assumption of the model is the absence of influential observations, which is confirmed by the analysis of influential observations. While there are some minor discrepancies between the observed and predicted residual variances, the overall model fit remains satisfactory.
 
@@ -195,7 +188,7 @@ To draw a coefficient plot:
 dwplot(x=nb_model)
 ```
 
-I have chosen not to scale and center the predictors because we have only two quantitative variables, which allows for straightforward interpretation of the coefficients. **BMB**: works because they're already log-transformed (unitless)
+I have chosen not to scale and center the predictors because we have only two quantitative variables, which allows for straightforward interpretation of the coefficients.
 
 ## g.
 
