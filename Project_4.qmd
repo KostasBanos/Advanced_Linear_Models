@@ -45,7 +45,7 @@ library(RLRsim)
 library(patchwork)
 library(Matrix)
 library(plotly)
-#library(ggalt)
+library(ggalt)
 library(splines)
 library(ggeffects)
 library(HSAUR3)
@@ -102,7 +102,7 @@ mydata <- mydata[!is.na(mydata$log_pop) & !is.na(mydata$log_gdp) &
                        !is.infinite(mydata$log_pop) & !is.infinite(mydata$log_gdp), ]
 
 
-head(mydata,100)
+head(mydata,10)
 ## table(mydata$wealthy_class)
 ## hist(log_gdp_perC)
 ```
@@ -230,13 +230,20 @@ The scatter plot depicts the relationship between the logarithm of population (`
 
 Some additional graphs indicating this correlation are:
 
-```{r, fig.width=10, fig.height=7, dpi=300}
+```{r, fig.width=15, fig.height=13, dpi=400}
 
 #| warning: false
 #| message: false
-ggplot(mydata, aes(x = log_gdp, y = n, color = factor(wealthy_class), group = wealthy_class)) +
+p1 <- ggplot(mydata, aes(x = log_gdp, y = n,
+                         color = factor(wealthy_class),
+                         group = wealthy_class)) +
   geom_point(alpha = 0.5) +
-  geom_smooth(method = "glm", formula = 'y ~ x', method.args = list(family = quasipoisson), se = FALSE) +
+  geom_smooth(
+    method = "glm",
+    formula = y ~ x,
+    method.args = list(family = quasipoisson),
+    se = FALSE
+  ) +
   labs(
     title = "Gold Medals vs Log GDP by Wealth Class",
     x = "Log GDP",
@@ -244,44 +251,73 @@ ggplot(mydata, aes(x = log_gdp, y = n, color = factor(wealthy_class), group = we
     color = "Wealth Class"
   ) +
   theme_minimal(base_size = 14) +
- theme(
+  theme(
     axis.title = element_text(face = "bold", size = 16),
     axis.text = element_text(size = 12),
     plot.title = element_text(face = "bold", size = 18, hjust = 0.5),
     legend.position = "top",
     legend.title = element_text(size = 14),
-    legend.text = element_text(size = 12))
+    legend.text = element_text(size = 12)
+  )
 
-ggplot(mydata, aes(x = log_pop, y = n, color = factor(wealthy_class), group = wealthy_class)) +
+
+p2 <- ggplot(mydata, aes(x = log_pop, y = n,
+                         color = factor(wealthy_class),
+                         group = wealthy_class)) +
   geom_point(alpha = 0.5) +
-  geom_smooth(method = "glm", formula = 'y ~ x', method.args = list(family = quasipoisson), se = FALSE) +
+  geom_smooth(
+    method = "glm",
+    formula = y ~ x,
+    method.args = list(family = quasipoisson),
+    se = FALSE
+  ) +
   labs(
-    title = "Gold Medals vs Log Pop by Wealth Class",
-    x = "Log Pop",
+    title = "Gold Medals vs Log Population by Wealth Class",
+    x = "Log Population",
     y = "Number of Gold Medals",
     color = "Wealth Class"
   ) +
   theme_minimal(base_size = 14) +
- theme(
+  theme(
     axis.title = element_text(face = "bold", size = 16),
     axis.text = element_text(size = 12),
     plot.title = element_text(face = "bold", size = 18, hjust = 0.5),
     legend.position = "top",
     legend.title = element_text(size = 14),
-    legend.text = element_text(size = 12))
+    legend.text = element_text(size = 12)
+  )
 
 
-ggplot(mydata, aes(x = centered_log_pop, y = log_gdp, colour = team)) +
+p3 <- ggplot(mydata, aes(x = centered_log_pop, y = log_gdp, colour = team)) +
   geom_point(alpha = 0.5) +
   stat_ellipse(aes(fill = team), geom = "polygon", alpha = 0.2) +
-  theme(legend.position = "none") +
-  labs(title = "Elliptical Clusters of GDP and Population by Team", x = "Centered Log(Population)", y = "Log(GDP)")
+  labs(
+    title = "Elliptical Clusters of GDP and Population by Team",
+    x = "Centered Log(Population)",
+    y = "Log(GDP)"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 18, hjust = 0.5),
+    axis.title = element_text(face = "bold", size = 16),
+    axis.text = element_text(size = 12),
+    legend.position = "none"
+  )
+
+(p1 | p2) / p3 +
+  plot_annotation(
+    title = "Economic Indicators and Olympic Gold Medals",
+    theme = theme(
+      plot.title = element_text(face = "bold", size = 20, hjust = 0.5)
+    )
+  )
+
 
 ```
 
 Bellow I will create an interactive 3D scatter plot capturing the effect of population and GDP on the number of gold medals:
 
-```{r}
+```{r, fig.width=10, fig.height=7, dpi=300}
 # Fit the Negative Binomial GLM model
 model <- lm(log_n ~ log_pop + log_gdp, data = mydata)
 
@@ -341,7 +377,8 @@ The provided plot explores the relationship between a country’s population (lo
 
 For the sake of completeness, below I provide an animated version of the same graph, which displays the data over time. This animation allows for a clearer visualization of the evolving structures across different years.
 
-```{r}
+```{r, fig.width=10, fig.height=7, dpi=300}
+
 plot_ly(
   mydata,
   x = ~log_pop,
@@ -423,7 +460,8 @@ plot_ly(
 
 Again the interpretation is similar with similar structure across the years. Bellow I will provide the same plot with the regression surface from the first analysis (for comparison reasons)
 
-```{r}
+```{r, fig.width=10, fig.height=7, dpi=300}
+
 # Fit the Negative Binomial GLM model
 nb_model <- glm.nb(n ~ log_pop + log_gdp_perC, data = mydata)
 
@@ -832,8 +870,10 @@ ggplot(pred, aes(x = x, y = predicted, color = group)) +
 ### f) Fixed Effects Comparison from Different packages
 
 ```{r, results='hide'}
-#| warning: false
+#| echo: false
 #| message: false
+#| warning: false
+#| results: false
 # Fit models
 
 # Model 1: glm
