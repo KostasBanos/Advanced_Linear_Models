@@ -1,17 +1,14 @@
 ---
-title: "STATS 720 Assignment 1"
+title: "Project 1"
 format: 
   pdf:
     code-line-numbers: true
-author: "Konstantinos Banos 400609120"
-date: "Sep/20/2023"
+author: "Konstantinos Banos"
+date: "Sep/20/2024"
 editor: visual
 execute: 
   echo: true
   message: false
-header-includes:
-  \usepackage{fvextra}
-  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 ---
 
 \newpage
@@ -34,6 +31,8 @@ library(caret)
 library(see)
 library(DHARMa)
 library(patchwork)
+library(mlmRev)
+library(coefplot)
 ```
 
 # 1. Dataset and modelling
@@ -132,8 +131,9 @@ To assess the assumptions of our linear regression model, we examined several di
 
 ```{r, fig.width=10, fig.height=7, dpi=300}
 #| warning: false
-#| message: false# plot model evaluation graphs
-plot(x=model)
+#| message: false
+
+# plot model evaluation graphs
 performance::check_model(model)
 ```
 
@@ -149,7 +149,9 @@ In the NB regression model, I will use the original response variable (n) rather
 
 ```{r, fig.width=10, fig.height=7, dpi=300}
 #| warning: false
-#| message: false## Test for Over-dispersion : dispersiontest(nb_model)
+#| message: false
+
+## Test for Over-dispersion : dispersiontest(nb_model)
 
 # Fit Negative Binomial regression model
 nb_model <- glm.nb(n ~ log_pop + log_gdp_perC, data = mydata)
@@ -185,7 +187,9 @@ To draw a coefficient plot:
 
 ```{r, fig.width=10, fig.height=7, dpi=300}
 #| warning: false
-#| message: false# model coefficient plot
+#| message: false
+
+# model coefficient plot
 dwplot(x=nb_model)
 ```
 
@@ -197,14 +201,16 @@ To draw an effects plot, we have:
 
 ```{r, fig.width=10, fig.height=7, dpi=300}
 #| warning: false
-#| message: false# Plot an effect plot and Effects of Predictors on the Model
+#| message: false
+
+# Plot an effect plot and Effects of Predictors on the Model
 effects::allEffects(nb_model)
 plot(allEffects(nb_model))
 ```
 
 As the logarithm of population increases, the expected number of gold medals (n) increases significantly, demonstrating a strong positive relationship. Similarly, as the logarithm of GDP per capita increases, the expected number of gold medals also increases, indicating that higher economic resources are associated with better Olympic performance. These effects illustrate the influence of population size and economic capacity on the success of countries in the Olympic Games.
 
-# **Question 2: contrasts**
+# **2: Contrasts**
 
 Since we have $\overline y = C\beta$ where C is our contrasts matrix, $\beta = C^{-1}\overline y$.
 
@@ -359,9 +365,6 @@ head(summary_results,10)
 ```
 
 ```{r}
-library(dplyr)
-library(ggplot2)
-
 # --- Add uncertainty bands (95% CI around the Monte Carlo mean) ---
 summary_results2 <- summary_results %>%
   mutate(
@@ -387,6 +390,17 @@ summary_results2 <- summary_results %>%
 ```
 
 ```{r, fig.width=15, fig.height=10, dpi=400}
+
+theme_portfolio <- theme_minimal(base_size = 12) +
+  theme(
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold", size = 15, hjust = 0.5),
+    axis.title = element_text(face = "bold"),
+    strip.text = element_text(face = "bold"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank()
+  )
+
 p_bias <- ggplot(summary_results2, aes(x = df, y = bias_mean)) +
   geom_hline(yintercept = 0, linetype = "dashed", linewidth = 0.6) +
   geom_ribbon(aes(ymin = bias_lo, ymax = bias_hi), alpha = 0.15) +
@@ -451,6 +465,4 @@ p_power <- ggplot(summary_results2, aes(x = df, y = power_rate)) +
 
 In this set of simulations, I tested the effects of violating the normality assumption by generating data from a t-distribution with varying degrees of freedom (df). As the degrees of freedom increase, the t-distribution converges to the normal distribution, theoretically satisfying the normality assumption when df→∞.
 
-As we expected, due to the converges nature of T distribution to the normal distribution, as we increase the number of simulations to converge to the real value and when we increase the df the violation is eliminated. For example, when evaluating model coverage, with the true coverage rate set at 95%, the results from the simulation demonstrate that the estimated coverage rate converges to 95% as df increases. Additionally, both the bias and the root mean square error (RMSE) exhibit convergence; the bias tends towards 0, and the RMSE stabilizes at approximately 0.27.\
-
-\
+As we expected, due to the converges nature of T distribution to the normal distribution, as we increase the number of simulations to converge to the real value and when we increase the df the violation is eliminated. For example, when evaluating model coverage, with the true coverage rate set at 95%, the results from the simulation demonstrate that the estimated coverage rate converges to 95% as df increases. Additionally, both the bias and the root mean square error (RMSE) exhibit convergence; the bias tends towards 0, and the RMSE stabilizes at approximately 0.27.
