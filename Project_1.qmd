@@ -128,8 +128,9 @@ To assess the assumptions of our linear regression model, we examined several di
 
 5.  **Collinearity Assessment**: In contrast, the collinearity diagnostics suggest that there is no significant collinearity among the predictor variables. While collinearity is generally not a major concern for linear models, it is still a positive finding.
 
-```{r}
-# plot model evaluation graphs
+```{r, fig.width=10, fig.height=7, dpi=300}
+#| warning: false
+#| message: false# plot model evaluation graphs
 plot(x=model)
 performance::check_model(model)
 ```
@@ -144,8 +145,9 @@ Given the nature of the response variable, I have opted for a Negative Binomial 
 
 In the NB regression model, I will use the original response variable (n) rather than its logarithmic transformation. The predictors will be the natural logarithm of GDP per capita (log_gdp_perC) and the natural logarithm of population (log_pop). This approach allows for a better fit of the data and addresses the limitations observed in the initial linear model, particularly in handling the over-dispersion inherent in the data.
 
-```{r}
-## Test for Over-dispersion : dispersiontest(nb_model)
+```{r, fig.width=10, fig.height=7, dpi=300}
+#| warning: false
+#| message: false## Test for Over-dispersion : dispersiontest(nb_model)
 
 # Fit Negative Binomial regression model
 nb_model <- glm.nb(n ~ log_pop + log_gdp_perC, data = mydata)
@@ -187,8 +189,9 @@ Furthermore, the analysis shows no signs of collinearity among the predictor var
 
 To draw a coefficient plot:
 
-```{r}
-# model coefficient plot
+```{r, fig.width=10, fig.height=7, dpi=300}
+#| warning: false
+#| message: false# model coefficient plot
 dwplot(x=nb_model)
 ```
 
@@ -198,8 +201,9 @@ I have chosen not to scale and center the predictors because we have only two qu
 
 To draw an effects plot, we have:
 
-```{r}
-# Plot an effect plot and Effects of Predictors on the Model
+```{r, fig.width=10, fig.height=7, dpi=300}
+#| warning: false
+#| message: false# Plot an effect plot and Effects of Predictors on the Model
 effects::allEffects(nb_model)
 plot(allEffects(nb_model))
 ```
