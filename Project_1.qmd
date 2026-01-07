@@ -33,6 +33,7 @@ library(AER)
 library(caret)
 library(see)
 library(DHARMa)
+library(patchwork)
 ```
 
 # 1. Dataset and modelling
@@ -258,14 +259,18 @@ These coefficients reflect the relative differences between the control and trea
 
 ```{r}
 
-sim_fun <- function(n = 100, slope = 1, s = 1, m = 0, df = df) {
-    x <- runif(n)
-    ## BMB: this is a bit weird (I would say = mu = m + slope*x;
-    ##  e <- s*rt(n, df); y <- mu + e) but works
-    e <- m + s * rt(n, df)
-    y <- (slope*x) + e  # t-distributed errors
-    data.frame(x, y)
+sim_fun <- function(n = 100, slope = 1, s = 1, m = 0, df = 10) {
+  # Generate predictor
+  x <- runif(n)
+  # Mean structure: E[y | x] = m + slope * x
+  mu <- m + slope * x
+  # t-distributed errors with mean 0 and scale s
+  e <- s * rt(n, df = df)
+  # Response
+  y <- mu + e
+  data.frame(x = x, y = y)
 }
+
 
 run_simulations <- function(df, num_simulations = num_simulations) {
   true_slope <- 1  # True slope value
@@ -278,7 +283,7 @@ run_simulations <- function(df, num_simulations = num_simulations) {
     )
   
   for (i in 1:num_simulations) {
-    sim_data <- sim_fun(n = 100, slope = 1, s = 1, m = 1, df = df)
+    sim_data <- sim_fun(n = 100, slope = 1, s = 1, m = 0, df = df)
     
     model <- lm(y ~ x, data = sim_data)
     
@@ -311,22 +316,141 @@ run_simulations <- function(df, num_simulations = num_simulations) {
   
   return(results)
 }
+```
 
-# Run different number of simulations for different degrees of fredom 
+```{r}
 set.seed(123)
-deg = seq(2,50,by=6)
-n = c(10, 20, 100)
 
-for (j in 1:length(n)) {
-  for (i in 1:length(deg)) {
-  normality <- run_simulations(num_simulations = n[j], df = deg[i])
-  print(c("Number of Simulations:", n[j]))
-  print(c("Degrees of Freedom:", deg[i]))
-  print(summary(normality, na.rm = TRUE))
- }
-}
+deg <- seq(2, 50, by = 6)
+n_vec <- c(10, 20, 100)
+
+all_results <- do.call(rbind, lapply(n_vec, function(nsim) {
+  do.call(rbind, lapply(deg, function(df_val) {
+    res <- run_simulations(df = df_val, num_simulations = nsim)
+
+    # add identifiers so you can group later
+    res$n_sim <- nsim
+    res$df <- df_val
+    res$sim_id <- seq_len(nrow(res))
+
+    res
+  }))
+}))
+
+# str(all_results)
+# head(all_results)
+
+
+
+summary_results <- all_results %>%
+  group_by(n_sim, df) %>%
+  summarise(
+    bias_mean = mean(bias, na.rm = TRUE),
+    bias_sd   = sd(bias, na.rm = TRUE),
+    rmse_mean = mean(rmse, na.rm = TRUE),
+    rmse_sd   = sd(rmse, na.rm = TRUE),
+    coverage_rate = mean(coverage, na.rm = TRUE),  # should approach ~0.95 if calibrated
+    power_rate    = mean(power, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+head(summary_results,10)
+
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+# --- Add uncertainty bands (95% CI around the Monte Carlo mean) ---
+summary_results2 <- summary_results %>%
+  mutate(
+    bias_se = bias_sd / sqrt(n_sim),
+    rmse_se = rmse_sd / sqrt(n_sim),
+
+    bias_lo = bias_mean - 1.96 * bias_se,
+    bias_hi = bias_mean + 1.96 * bias_se,
+
+    rmse_lo = rmse_mean - 1.96 * rmse_se,
+    rmse_hi = rmse_mean + 1.96 * rmse_se,
+
+    # conservative SE for proportions (coverage/power)
+    cov_se = sqrt(pmax(coverage_rate * (1 - coverage_rate), 0) / n_sim),
+    pow_se = sqrt(pmax(power_rate * (1 - power_rate), 0) / n_sim),
+
+    cov_lo = pmax(0, coverage_rate - 1.96 * cov_se),
+    cov_hi = pmin(1, coverage_rate + 1.96 * cov_se),
+
+    pow_lo = pmax(0, power_rate - 1.96 * pow_se),
+    pow_hi = pmin(1, power_rate + 1.96 * pow_se)
+  )
+```
+
+```{r, fig.width=15, fig.height=10, dpi=400}
+p_bias <- ggplot(summary_results2, aes(x = df, y = bias_mean)) +
+  geom_hline(yintercept = 0, linetype = "dashed", linewidth = 0.6) +
+  geom_ribbon(aes(ymin = bias_lo, ymax = bias_hi), alpha = 0.15) +
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 2) +
+  facet_wrap(~ n_sim, nrow = 1) +
+  scale_x_continuous(breaks = unique(summary_results2$df)) +
+  labs(x = "Degrees of freedom (df)", y = "Mean bias",
+       title = "Bias") +
+  theme_portfolio
+
+
+p_rmse <- ggplot(summary_results2, aes(x = df, y = rmse_mean)) +
+  geom_ribbon(aes(ymin = rmse_lo, ymax = rmse_hi), alpha = 0.15) +
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 2) +
+  facet_wrap(~ n_sim, nrow = 1) +
+  scale_x_continuous(breaks = unique(summary_results2$df)) +
+  labs(x = "Degrees of freedom (df)", y = "Mean RMSE",
+       title = "RMSE") +
+  theme_portfolio
+
+
+p_cov <- ggplot(summary_results2, aes(x = df, y = coverage_rate)) +
+  geom_hline(yintercept = 0.95, linetype = "dashed", linewidth = 0.6) +
+  geom_ribbon(aes(ymin = cov_lo, ymax = cov_hi), alpha = 0.15) +
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 2) +
+  facet_wrap(~ n_sim, nrow = 1) +
+  scale_x_continuous(breaks = unique(summary_results2$df)) +
+  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.2)) +
+  labs(x = "Degrees of freedom (df)", y = "Coverage rate",
+       title = "Coverage") +
+  theme_portfolio
+
+
+p_power <- ggplot(summary_results2, aes(x = df, y = power_rate)) +
+  geom_ribbon(aes(ymin = pow_lo, ymax = pow_hi), alpha = 0.15) +
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 2) +
+  facet_wrap(~ n_sim, nrow = 1) +
+  scale_x_continuous(breaks = unique(summary_results2$df)) +
+  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.2)) +
+  labs(x = "Degrees of freedom (df)", y = "Power",
+       title = "Power") +
+  theme_portfolio
+
+
+
+(p_bias | p_rmse) /
+(p_cov  | p_power) +
+  plot_annotation(
+    title = "Effect of Heavy-Tailed Errors on OLS Inference",
+    subtitle = "Monte Carlo means with 95% uncertainty bands across degrees of freedom",
+    theme = theme(
+      plot.title = element_text(face = "bold", size = 16, hjust = 0.5),
+      plot.subtitle = element_text(size = 12, hjust = 0.5)
+    )
+  )
+
 ```
 
 In this set of simulations, I tested the effects of violating the normality assumption by generating data from a t-distribution with varying degrees of freedom (df). As the degrees of freedom increase, the t-distribution converges to the normal distribution, theoretically satisfying the normality assumption when df→∞.
 
-As we expected, due to the converges nature of T distribution to the normal distribution, as we increase the number of simulations to converge to the real value and when we increase the df the violation is eliminated. For example, when evaluating model coverage, with the true coverage rate set at 95%, the results from the simulation demonstrate that the estimated coverage rate converges to 95% as df increases. Additionally, both the bias and the root mean square error (RMSE) exhibit convergence; the bias tends towards 0, and the RMSE stabilizes at approximately 0.27.
+As we expected, due to the converges nature of T distribution to the normal distribution, as we increase the number of simulations to converge to the real value and when we increase the df the violation is eliminated. For example, when evaluating model coverage, with the true coverage rate set at 95%, the results from the simulation demonstrate that the estimated coverage rate converges to 95% as df increases. Additionally, both the bias and the root mean square error (RMSE) exhibit convergence; the bias tends towards 0, and the RMSE stabilizes at approximately 0.27.\
+
+\
