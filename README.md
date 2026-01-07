@@ -1,4 +1,4 @@
-## STATS 720 — Data Science Portfolio
+## STATS 720 — Statistical Modelling
 
 This repository contains a set of Quarto notebooks (.qmd) demonstrating statistical modeling and simulation work in R. It is set up to run reproducibly in RStudio and to render a small portfolio website suitable for GitHub Pages.
 
