@@ -260,44 +260,165 @@ fixed_effects_comparison <- purrr::map_dfr(mod_list, ~tidy(., effects = "fixed")
 fixed_effects_comparison
 ```
 
+```{r, fig.width=10, fig.height=10, dpi=300}
+
+fe_plot_df <- fixed_effects_comparison %>%
+  filter(term != "(Intercept)") %>%                 # optional: drop intercept if you prefer
+  mutate(
+    model = factor(model),
+    term  = factor(term, levels = rev(sort(unique(term))))
+  ) %>%
+  # ensure p-values exist; broom outputs may use "p.value"
+  rename(p_value = p.value) %>%
+  mutate(
+    p_value = ifelse(is.na(p_value), NA_real_, p_value),
+    p_floor = 1e-16,
+    p_plot  = pmax(p_value, p_floor),               # avoids log(0) issues
+    p_label = ifelse(is.na(p_value), NA_character_,
+                     ifelse(p_value < 0.001, format(p_value, scientific = TRUE, digits = 2),
+                            sprintf("%.3f", p_value)))
+  )
+
+theme_portfolio <- theme_minimal(base_size = 12) +
+  theme(
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold", size = 15, hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5, margin = margin(b = 8)),
+    axis.title = element_text(face = "bold"),
+    strip.text = element_text(face = "bold"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_blank()
+  )
+
+p_est <- ggplot(fe_plot_df, aes(x = estimate, y = term)) +
+  geom_vline(xintercept = 0, linetype = "dashed", linewidth = 0.6, alpha = 0.7) +
+  geom_point(size = 2.6) +
+  geom_text(
+    aes(label = sprintf("%.4f", estimate)),
+    vjust = -0.8,
+    size = 3
+  ) +
+  facet_wrap(~ model, nrow = 1) +
+  scale_x_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+  labs(
+    title = "Fixed-effect estimates across packages",
+    subtitle = "Each panel corresponds to one package; dashed line marks zero",
+    x = "Estimate",
+    y = NULL
+  ) +
+  theme_portfolio
+
+
+
+p_se <- ggplot(fe_plot_df, aes(x = std.error, y = term)) +
+  geom_point(size = 2.6) +
+  geom_text(
+    aes(label = sprintf("%.4f", std.error)),
+    vjust = -0.8,
+    size = 3
+  ) +
+  facet_wrap(~ model, nrow = 1) +
+  scale_x_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+  labs(
+    title = "Standard errors across packages",
+    subtitle = "Comparison of uncertainty estimates for fixed effects",
+    x = "Standard error",
+    y = NULL
+  ) +
+  theme_portfolio
+
+
+
+p_pval <- ggplot(fe_plot_df, aes(x = p_plot, y = term)) +
+  geom_vline(xintercept = 0.05, linetype = "dashed",
+             linewidth = 0.6, alpha = 0.8) +
+  geom_point(size = 2.6) +
+  geom_text(
+    aes(label = p_label),
+    vjust = -0.8,
+    size = 3,
+    na.rm = TRUE
+  ) +
+  facet_wrap(~ model, nrow = 1) +
+  scale_x_log10(
+    limits = c(1e-16, 1),
+    breaks = c(1, 1e-2, 1e-4, 1e-6, 1e-8, 1e-12, 1e-16),
+    labels = c("1", "1e-2", "1e-4", "1e-6", "1e-8", "1e-12", "1e-16"),
+    expand = expansion(mult = c(0.02, 0.12))
+  ) +
+  labs(
+    title = "p-values across packages",
+    subtitle = "Log scale; dashed line indicates the 0.05 significance threshold",
+    x = "p-value (log scale)",
+    y = NULL
+  ) +
+  theme_portfolio
+
+
+
+
+(p_est / p_se / p_pval) +
+  plot_annotation(
+    title = "Qualitative comparison of fixed effects across mixed-model packages",
+    theme = theme(plot.title = element_text(face = "bold", hjust = 0.5, size = 16))
+  )
+```
+
 Based on the extracted coefficients from the three models (`lmer_model`, `nlme_model`, and `glmmTMB_model`), the fixed effects show strong consistency across packages. The intercept estimates are practically identical, with differences well within a tolerance of 10\^-4, indicating robustness in the intercept term across these models. The `sexF` term also displays nearly identical estimates and very similar standard errors, suggesting consistency in the estimated effect of this predictor. For the `social` terms (`social1`, `social20`, and `social31`), the estimates and standard errors are very similar across models, with variations generally within a tolerance of 0.01, although `social31` has slightly more variation in the standard error, which remains within acceptable bounds. The `verbal` term shows practically identical estimates and standard errors across all three models, further supporting the stability of this effect across packages. The degrees of freedom vary among models, likely due to differing estimation methods; however, p-values are consistently significant across models (often \<2e-16), making them identical or practically identical in terms of statistical significance.
 
 # g) Coefficient Plot of the Fixed Effects
 
 I decided to create two versions of the coefficient plot for fixed effects to provide a clearer understanding of the model estimates and their variances. The first plot is a straightforward visualization of the fixed effect estimates with their confidence intervals, helping to convey the direction and relative magnitude of each predictor’s effect. However, to give more insight into the variability of each estimate, I created a second plot that includes additional enhancements: I increased the point size, added a dashed vertical line at zero to help identify significant effects, and included the exact estimate values above each point for clarity. The second plot also includes a bit of padding on the x-axis to avoid any crowding of estimates near the plot edges. These changes make it easier to distinguish differences in variance between fixed effects, as well as to quickly see which estimates are both positive and statistically significant.
 
-```{r, fig.width=10, fig.height=7, dpi=300}
+```{r, fig.width=14, fig.height=10, dpi=400}
+#| warning: false
+#| message: false
 
 
-# Plot fixed effects using ggplot2
-ggplot(fixed_effects_comparison, aes(x = estimate, y = model, color = model)) +
+# Plot 1 (your first version)
+p1 <- ggplot(fixed_effects_comparison, aes(x = estimate, y = model, color = model)) +
   geom_point() +
   geom_errorbarh(aes(xmin = estimate - std.error, xmax = estimate + std.error), height = 0.2) +
   facet_wrap(~term, scales = "free") +
-  labs(title = "Coefficient Plot of Fixed Effects",
-       x = "Estimate",
-       y = "Model") +
-  theme_minimal()
-
-
-
-ggplot(fixed_effects_comparison, aes(x = estimate, y = model, color = model)) +
-  geom_point(size = 3) +
-  geom_errorbarh(aes(xmin = estimate - std.error, xmax = estimate + std.error), height = 0.2) +
-  facet_wrap(~term, scales = "free") +
-  geom_vline(xintercept = 0, linetype = "dashed", color = "grey") + # Reference line at zero
-  geom_text(aes(label = round(estimate, 4)),  # Display estimate values rounded to 4 decimal places
-            vjust = -1,                      # Place text above each point
-            size = 3,                        # Adjust text size
-            color = "black") +               # Set text color to black for visibility
-  scale_x_continuous(expand = expansion(mult = c(0.1, 0.1))) + # Add padding to the x-axis
   labs(
-    title = "Coefficient Plot of Fixed Effects",
+    title = "Coefficient Plot of Fixed Effects (basic)",
     x = "Estimate",
     y = "Model"
   ) +
   theme_minimal() +
-  theme(legend.position = "bottom")
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+
+# Plot 2 (your enhanced version)
+p2 <- ggplot(fixed_effects_comparison, aes(x = estimate, y = model, color = model)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = estimate - std.error, xmax = estimate + std.error), height = 0.2) +
+  facet_wrap(~term, scales = "free") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "grey") +
+  geom_text(
+    aes(label = sprintf("%.4f", estimate)),
+    vjust = -1,
+    size = 3,
+    color = "black"
+  ) +
+  scale_x_continuous(expand = expansion(mult = c(0.1, 0.1))) +
+  labs(
+    title = "Coefficient Plot of Fixed Effects (labeled)",
+    x = "Estimate",
+    y = "Model"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    legend.position = "bottom"
+  )
+
+# Combine into ONE figure (two rows, not mixed)
+(p1 / p2) +
+  plot_annotation(
+    title = "Fixed Effects Coefficient Plots",
+    theme = theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 16))
+  )
+
 ```
 
 # h) Comparison Between Satterthwaite and Kenward-Roger and lme
@@ -341,6 +462,119 @@ comparison$p_diff_lme_KR <- abs(comparison$lme_p - comparison$KR_p)
 
 
 print(comparison[, c( "df_diff_Satt_KR", "p_diff_Satt_KR", "df_diff_Satt_lme", "p_diff_Satt_lme", "df_diff_lme_KR", "p_diff_lme_KR")])
+
+```
+
+```{r, fig.width=14, fig.height=10, dpi=400}
+#| warning: false
+#| message: false
+# Build comparable tables (term, estimate, se, p, df)
+satt_df <- data.frame(
+  term = rownames(satt_summary),
+  estimate = satt_summary[, "Estimate"],
+  std.error = satt_summary[, "Std. Error"],
+  p.value = satt_summary[, "Pr(>|t|)"],
+  df = satt_summary[, "df"],
+  method = "Satterthwaite",
+  row.names = NULL
+)
+
+kr_df <- data.frame(
+  term = rownames(kr_summary),
+  estimate = kr_summary[, "Estimate"],
+  std.error = kr_summary[, "Std. Error"],
+  p.value = kr_summary[, "Pr(>|t|)"],
+  df = kr_summary[, "df"],
+  method = "Kenward-Roger",
+  row.names = NULL
+)
+
+lme_df <- data.frame(
+  term = rownames(lme_summary),
+  estimate = lme_summary[, "Value"],
+  std.error = lme_summary[, "Std.Error"],
+  p.value = lme_summary[, "p-value"],
+  df = lme_summary[, "DF"],
+  method = "nlme::lme",
+  row.names = NULL
+)
+
+comp_df <- bind_rows(satt_df, kr_df, lme_df) %>%
+  mutate(
+    method = factor(method, levels = c("Satterthwaite", "Kenward-Roger", "nlme::lme")),
+    term = factor(term, levels = rev(unique(term))),
+    # safe p-values for log scale
+    p_floor = 1e-16,
+    p_plot  = pmax(p.value, p_floor),
+    # labels
+    est_lab = sprintf("%.4f", estimate),
+    se_lab  = sprintf("%.4f", std.error),
+    p_lab   = ifelse(p.value < 0.001, format(p.value, scientific = TRUE, digits = 2),
+                     sprintf("%.3f", p.value))
+  )
+
+theme_portfolio <- theme_minimal(base_size = 12) +
+  theme(
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold", size = 15, hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5, margin = margin(b = 8)),
+    axis.title = element_text(face = "bold"),
+    strip.text = element_text(face = "bold"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_blank()
+  )
+
+p_est <- ggplot(comp_df, aes(x = estimate, y = term)) +
+  geom_vline(xintercept = 0, linetype = "dashed", linewidth = 0.6, alpha = 0.7) +
+  geom_point(size = 2.6) +
+  geom_text(aes(label = est_lab), vjust = -0.8, size = 3) +
+  facet_wrap(~ method, nrow = 1) +
+  scale_x_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+  labs(
+    title = "Fixed-effect estimates",
+    subtitle = "Satterthwaite vs Kenward–Roger vs nlme",
+    x = "Estimate",
+    y = NULL
+  ) +
+  theme_portfolio
+
+p_se <- ggplot(comp_df, aes(x = std.error, y = term)) +
+  geom_point(size = 2.6) +
+  geom_text(aes(label = se_lab), vjust = -0.8, size = 3) +
+  facet_wrap(~ method, nrow = 1) +
+  scale_x_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+  labs(
+    title = "Standard errors",
+    subtitle = "Comparison of uncertainty estimates across approaches",
+    x = "Std. error",
+    y = NULL
+  ) +
+  theme_portfolio
+
+p_pval <- ggplot(comp_df, aes(x = p_plot, y = term)) +
+  geom_vline(xintercept = 0.05, linetype = "dashed", linewidth = 0.6, alpha = 0.8) +
+  geom_point(size = 2.6) +
+  geom_text(aes(label = p_lab), vjust = -0.8, size = 3) +
+  facet_wrap(~ method, nrow = 1) +
+  scale_x_log10(
+    limits = c(1e-16, 1),
+    breaks = c(1, 1e-2, 1e-4, 1e-6, 1e-8, 1e-12, 1e-16),
+    labels = c("1", "1e-2", "1e-4", "1e-6", "1e-8", "1e-12", "1e-16"),
+    expand = expansion(mult = c(0.02, 0.12))
+  ) +
+  labs(
+    title = "p-values",
+    subtitle = "Log scale; dashed line indicates 0.05 threshold",
+    x = "p-value (log scale)",
+    y = NULL
+  ) +
+  theme_portfolio
+
+(p_est / p_se / p_pval) +
+  plot_annotation(
+    title = "Comparison of inference across denominator df approximations and nlme",
+    theme = theme(plot.title = element_text(face = "bold", hjust = 0.5, size = 16))
+  )
 
 ```
 
@@ -396,7 +630,7 @@ In modeling educational attainment using the ScotsSec dataset, omitting the fixe
 ```{r}
 
 # Model m3: Linear mixed-effects model with separate random intercept and random slope for sex by primary school
-m3 <- lmer(attain ~ 1 + social + sex + verbal + (1 | primary) + (0 + dummy(sex, "M") | primary), data = ScotsSec, REML = FALSE)
+m3 <- lme4::lmer(attain ~ 1 + social + sex + verbal + (1 | primary) + (0 + dummy(sex, "M") | primary), data = ScotsSec, REML = FALSE)
 # Explanation: (I used different optimization algo and increase the umber of interactions to resolve some convergence issues)
 # - Fixed effects: Same as m3.
 # - Random effects: Separate terms for the random intercept (1 | primary) and the random slope for sex (0 + dummy(sex, "M") | primary).
@@ -448,7 +682,7 @@ boot_comp <- pbkrtest::PBmodcomp(m2, m1, nsim = 1000)
 print(boot_comp)
 ```
 
-A parametric bootstrap test was conducted to further examine the necessity of including a random slope for sex in the model predicting educational attainment ("attain"). Comparing models m1 (random intercept only) and m2 (random intercept and slope for sex), the likelihood ratio test (LRT) yielded a significant improvement (X² = 7.9352, df = 1, p = 0.004848), suggesting that including a random slope for sex captures meaningful variability across primary schools. The parametric bootstrap test confirmed this result, with a significant p-value (p = 0.001998), reinforcing that the inclusion of the random slope significantly improves model fit. Thus, model m2, which allows for both random intercepts and slopes, is supported as an improved model over m1, capturing school-level differences in the effect of sex on educational attainment.
+A parametric bootstrap test was conducted to further examine the necessity of including a random slope for sex in the model predicting educational attainment ("attain"). Comparing models m1 (random intercept only) and m2 (random intercept and slope for sex), the likelihood ratio test (LRT) yielded a significant improvement (X² = 10.841, df = 2, p = 0.004425), suggesting that including a random slope for sex captures meaningful variability across primary schools. The parametric bootstrap test confirmed this result, with a significant p-value (p = 0.001348), reinforcing that the inclusion of the random slope significantly improves model fit. Thus, model m2, which allows for both random intercepts and slopes, is supported as an improved model over m1, capturing school-level differences in the effect of sex on educational attainment.
 
 -   **Evaluating the Impact of Including an Independent Random Slope for Sex by Primary School on Model Fit for Educational Attainment**
 
@@ -464,9 +698,9 @@ boot_comp <- pbkrtest::PBmodcomp(m3, m1, nsim = 1000)
 print(boot_comp)
 ```
 
-A parametric bootstrap test was conducted to assess the necessity of including an independent random slope for sex by primary school in the model predicting educational attainment ("attain"). Model m1 included only a random intercept for primary school, while model m3 added a separate, independent random slope for sex. The likelihood ratio test (LRT) showed a significant improvement in fit with the addition of the random slope (X² = 7.9352, df = 1, p = 0.004848), suggesting that the effect of sex on attainment varies across primary schools. This finding was further supported by the parametric bootstrap test, which yielded a p-value of 0.001575. These results indicate that incorporating an independent random slope for sex by school (as in model m3) provides a significantly better fit than a model with only a random intercept, capturing meaningful school-level variation in the effect of sex on educational attainment.
+A parametric bootstrap test was conducted to assess the necessity of including an independent random slope for sex by primary school in the model predicting educational attainment ("attain"). Model m1 included only a random intercept for primary school, while model m3 added a separate, independent random slope for sex. The likelihood ratio test (LRT) showed a significant improvement in fit with the addition of the random slope (X² = 7.9352, df = 1, p = 0.004848), suggesting that the effect of sex on attainment varies across primary schools. This finding was further supported by the parametric bootstrap test, which yielded a p-value of 0.001751. These results indicate that incorporating an independent random slope for sex by school (as in model m3) provides a significantly better fit than a model with only a random intercept, capturing meaningful school-level variation in the effect of sex on educational attainment.
 
-**To sum up**, the results from the likelihood ratio tests and parametric bootstrap tests consistently indicate that including random effects for primary school meaningfully improves model fit in predicting educational attainment ("attain"). Model comparisons demonstrated that adding a random intercept for primary school (m1) significantly enhanced fit over the fixed-effects model (m0), highlighting the importance of accounting for school-level variability. Furthermore, including a random slope for sex, either as a separate independent term (m3) or as a correlated term with the intercept (m2), also significantly improved fit compared to the intercept-only model (m1). The parametric bootstrap tests confirmed these improvements, with significant p-values (m2 vs. m1: p = 0.001998; m3 vs. m1: p = 0.001575), underscoring the relevance of allowing the effect of sex to vary by school. Overall, model m3, which includes a separate random intercept and slope for sex by primary school, provides a balanced, interpretable approach that effectively captures school-level differences in the influence of sex on attainment.
+**To sum up**, the results from the likelihood ratio tests and parametric bootstrap tests consistently indicate that including random effects for primary school meaningfully improves model fit in predicting educational attainment ("attain"). Model comparisons demonstrated that adding a random intercept for primary school (m1) significantly enhanced fit over the fixed-effects model (m0), highlighting the importance of accounting for school-level variability. Furthermore, including a random slope for sex, either as a separate independent term (m3) or as a correlated term with the intercept (m2), also significantly improved fit compared to the intercept-only model (m1). The parametric bootstrap tests confirmed these improvements, with significant p-values (m2 vs. m1: p = 0.001348; m3 vs. m1: p = 0.001751), underscoring the relevance of allowing the effect of sex to vary by school. Overall, model m3, which includes a separate random intercept and slope for sex by primary school, provides a balanced, interpretable approach that effectively captures school-level differences in the influence of sex on attainment.
 
 ## Conclusion / Discussion
 
