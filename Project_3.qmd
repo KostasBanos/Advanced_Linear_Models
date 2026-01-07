@@ -1,18 +1,17 @@
 ---
-title: "STATS 720 Assignment 3"
+title: "Project 3"
 format: 
   pdf:
     code-line-numbers: true
-author: "Konstantinos Banos 400609120"
+author: "Konstantinos Banos"
 date: "Nov/05/2024"
 editor: visual
 execute: 
   echo: true
   message: false
-header-includes:
-  \usepackage{fvextra}
-  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 ---
+
+\newpage
 
 ```{r}
 #| warning: false
