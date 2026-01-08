@@ -1,4 +1,4 @@
-## Advanced Linear Models (STATS 720) — Portfolio
+## Advanced Statistical Modelling (STATS 720) — Portfolio
 
 Interactive analyses and write-ups for STATS 720 (Statistical Modelling), authored in Quarto and rendered as a website.
 
