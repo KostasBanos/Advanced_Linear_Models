@@ -1,31 +1,24 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - index.qmd
+    - Project_4.qmd
 
 website:
   title: "STATS 720 Portfolio — Konstantinos Banos"
   navbar:
     left:
       - text: "Home"
-        href: index.qmd
-      - text: "Project 1"
-        href: Project_1.qmd
-      - text: "Project 2"
-        href: Project_2.qmd
-      - text: "Project 3"
-        href: Project_3.qmd
+        href: index.html
       - text: "Project 4"
-        href: Project_4.qmd
-      - text: "Project 5"
-        href: Project_5.qmd
+        href: Project_4.html
 
 format:
   html:
     theme: cosmo
     toc: true
     code-line-numbers: true
-  pdf:
-    toc: true
 
 execute:
   echo: true
