@@ -3,7 +3,11 @@ project:
   output-dir: docs
   render:
     - index.qmd
+    - Project_1.qmd
+    - Project_2.qmd
+    - Project_3.qmd
     - Project_4.qmd
+    - Project_5.qmd
 
 website:
   title: "STATS 720 Portfolio — Konstantinos Banos"
@@ -11,8 +15,16 @@ website:
     left:
       - text: "Home"
         href: index.html
+      - text: "Project 1"
+        href: Project_1.html
+      - text: "Project 2"
+        href: Project_2.html
+      - text: "Project 3"
+        href: Project_3.html
       - text: "Project 4"
         href: Project_4.html
+      - text: "Project 5"
+        href: Project_5.html
 
 format:
   html:
