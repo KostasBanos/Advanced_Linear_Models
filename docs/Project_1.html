@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Konstantinos Banos">
+<meta name="dcterms.date" content="2024-09-20">
+
+<title>Project 1 – STATS 720 Portfolio — Konstantinos Banos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">STATS 720 Portfolio — Konstantinos Banos</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_1.pdf"> 
+<span class="menu-text">Project 1</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_2.pdf"> 
+<span class="menu-text">Project 2</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_3.pdf"> 
+<span class="menu-text">Project 3</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_4.html"> 
+<span class="menu-text">Project 4</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_5.pdf"> 
+<span class="menu-text">Project 5</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#dataset-and-modelling" id="toc-dataset-and-modelling" class="nav-link active" data-scroll-target="#dataset-and-modelling">1. Dataset and modelling</a>
+  <ul class="collapse">
+  <li><a href="#a.-model-complexity-and-predictor-selection" id="toc-a.-model-complexity-and-predictor-selection" class="nav-link" data-scroll-target="#a.-model-complexity-and-predictor-selection">a. Model Complexity and Predictor Selection</a></li>
+  <li><a href="#b.-variable-scaling-transformations-and-interpretation-thresholds" id="toc-b.-variable-scaling-transformations-and-interpretation-thresholds" class="nav-link" data-scroll-target="#b.-variable-scaling-transformations-and-interpretation-thresholds">b. Variable Scaling, Transformations, and Interpretation Thresholds</a></li>
+  <li><a href="#c.-model-specification" id="toc-c.-model-specification" class="nav-link" data-scroll-target="#c.-model-specification">c.&nbsp;Model Specification</a></li>
+  <li><a href="#d.-model-diagnostics-and-assessment-of-assumptions" id="toc-d.-model-diagnostics-and-assessment-of-assumptions" class="nav-link" data-scroll-target="#d.-model-diagnostics-and-assessment-of-assumptions">d.&nbsp;Model Diagnostics and Assessment of Assumptions</a></li>
+  <li><a href="#e.-model-revision-and-selection-of-an-appropriate-count-regression" id="toc-e.-model-revision-and-selection-of-an-appropriate-count-regression" class="nav-link" data-scroll-target="#e.-model-revision-and-selection-of-an-appropriate-count-regression">e. Model Revision and Selection of an Appropriate Count Regression</a></li>
+  <li><a href="#f.-coefficient-plot" id="toc-f.-coefficient-plot" class="nav-link" data-scroll-target="#f.-coefficient-plot">f.&nbsp;Coefficient Plot</a></li>
+  <li><a href="#g.-effect-plot" id="toc-g.-effect-plot" class="nav-link" data-scroll-target="#g.-effect-plot">g. Effect Plot</a></li>
+  </ul></li>
+  <li><a href="#contrasts" id="toc-contrasts" class="nav-link" data-scroll-target="#contrasts"><strong>2: Contrasts</strong></a></li>
+  <li><a href="#simulation-exercises-misspecification-problems-in-linear-regression" id="toc-simulation-exercises-misspecification-problems-in-linear-regression" class="nav-link" data-scroll-target="#simulation-exercises-misspecification-problems-in-linear-regression">3. Simulation exercises misspecification problems in Linear Regression</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Project_1.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Project 1</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Konstantinos Banos </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 20, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div style="page-break-after: always;"></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># load libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(dotwhisker)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(effects)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(lemon)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">library</span>(glmmTMB)</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">library</span>(performance)</span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">library</span>(AER)</span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">library</span>(caret)</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="fu">library</span>(see)</span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="fu">library</span>(DHARMa)</span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="fu">library</span>(mlmRev)</span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="fu">library</span>(coefplot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="dataset-and-modelling" class="level1">
+<h1>1. Dataset and modelling</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Import and convert the data to tibble</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>olymp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/bbolker/stats720/main/data/olymp1.csv"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3"></a>olymp <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(olymp)  <span class="do">## could use readr::read_csv directly</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="do">## frame, using within() or transform() or dplyr::mutate()</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="do">## Separate variables floating around in the workspace can easily</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="do">##  get out of sync</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>gdp_per_cap <span class="ot">&lt;-</span> olymp<span class="sc">$</span>gdp<span class="sc">/</span>olymp<span class="sc">$</span>pop <span class="do">## GDP per Capita</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>log_gdp <span class="ot">&lt;-</span> <span class="fu">log</span>(olymp<span class="sc">$</span>gdp)          <span class="do">## Logarithm of GDP</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>log_pop <span class="ot">&lt;-</span> <span class="fu">log</span>(olymp<span class="sc">$</span>pop)          <span class="do">## Logarithm of Population</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>log_gdp_perC <span class="ot">&lt;-</span> log_gdp<span class="sc">-</span>log_pop    <span class="do">## Logarithm of GDP per Capita</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>log_n <span class="ot">&lt;-</span> <span class="fu">log</span>(olymp<span class="sc">$</span>n<span class="sc">+</span><span class="dv">1</span>)            <span class="do">## Logarithm of the Number of Medals</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14"></a></span>
+<span id="cb2-15"><a href="#cb2-15"></a></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="do">## Add six new columns using mutate to the olymp dataset</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a></span>
+<span id="cb2-18"><a href="#cb2-18"></a> olymp <span class="ot">&lt;-</span> olymp <span class="sc">%&gt;%</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a>  <span class="fu">mutate</span>(<span class="at">gdp_per_cap =</span> gdp_per_cap,</span>
+<span id="cb2-20"><a href="#cb2-20"></a>         <span class="at">log_gdp =</span> log_gdp,</span>
+<span id="cb2-21"><a href="#cb2-21"></a>         <span class="at">log_pop =</span> log_pop,</span>
+<span id="cb2-22"><a href="#cb2-22"></a>         <span class="at">log_gdp_perC =</span> log_gdp_perC,</span>
+<span id="cb2-23"><a href="#cb2-23"></a>         <span class="at">log_n =</span> log_n)</span>
+<span id="cb2-24"><a href="#cb2-24"></a>    </span>
+<span id="cb2-25"><a href="#cb2-25"></a> </span>
+<span id="cb2-26"><a href="#cb2-26"></a>mydata <span class="ot">=</span> olymp <span class="sc">|&gt;</span> <span class="fu">filter</span>(medal <span class="sc">==</span> <span class="st">"Gold"</span>)  <span class="do">## Filtering by "Gold" Metal and creation of a new dataset</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a></span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="fu">head</span>(mydata,<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 11
+   team   year medal     n    gdp   pop gdp_per_cap log_gdp log_pop log_gdp_perC
+   &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Afgh…  2000 Gold      0   6.21  19.5       0.318    1.83    2.97       -1.15 
+ 2 Afgh…  2004 Gold      0   7.98  23.6       0.339    2.08    3.16       -1.08 
+ 3 Afgh…  2008 Gold      0  11.1   26.4       0.419    2.40    3.27       -0.871
+ 4 Afgh…  2012 Gold      0  17.4   30.5       0.571    2.86    3.42       -0.561
+ 5 Afgh…  2016 Gold      0  19.6   34.6       0.565    2.97    3.54       -0.571
+ 6 Alge…  2000 Gold      1 110.    30.8       3.57     4.70    3.43        1.27 
+ 7 Alge…  2004 Gold      0 133.    32.5       4.08     4.89    3.48        1.41 
+ 8 Alge…  2008 Gold      0 152.    34.6       4.40     5.02    3.54        1.48 
+ 9 Alge…  2012 Gold      1 170.    37.3       4.57     5.14    3.62        1.52 
+10 Alge…  2016 Gold      0 195.    40.3       4.83     5.27    3.70        1.57 
+# ℹ 1 more variable: log_n &lt;dbl&gt;</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">head</span>(olymp,<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 11
+   team    year medal     n   gdp   pop gdp_per_cap log_gdp log_pop log_gdp_perC
+   &lt;chr&gt;  &lt;int&gt; &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Afgha…  2000 Bron…     0  6.21  19.5       0.318    1.83    2.97       -1.15 
+ 2 Afgha…  2000 Gold      0  6.21  19.5       0.318    1.83    2.97       -1.15 
+ 3 Afgha…  2000 Silv…     0  6.21  19.5       0.318    1.83    2.97       -1.15 
+ 4 Afgha…  2004 Bron…     0  7.98  23.6       0.339    2.08    3.16       -1.08 
+ 5 Afgha…  2004 Gold      0  7.98  23.6       0.339    2.08    3.16       -1.08 
+ 6 Afgha…  2004 Silv…     0  7.98  23.6       0.339    2.08    3.16       -1.08 
+ 7 Afgha…  2008 Bron…     1 11.1   26.4       0.419    2.40    3.27       -0.871
+ 8 Afgha…  2008 Gold      0 11.1   26.4       0.419    2.40    3.27       -0.871
+ 9 Afgha…  2008 Silv…     0 11.1   26.4       0.419    2.40    3.27       -0.871
+10 Afgha…  2012 Bron…     1 17.4   30.5       0.571    2.86    3.42       -0.561
+# ℹ 1 more variable: log_n &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>In this analysis, the focus was on estimating gold medals from the <code>olymp1</code> dataset. After importing the dataset, it was transformed into a tibble format for more convenient handling. Five new variables were created by applying a logarithmic transformation to five key variables, reducing their dispersion and ensuring a smoother dataset for further analysis. Subsequently, a new tibble (<code>mydata</code>) was created, filtered to include only observations related to gold medals. This filtered dataset serves as the primary basis for the following analysis.</p>
+<section id="a.-model-complexity-and-predictor-selection" class="level2">
+<h2 class="anchored" data-anchor-id="a.-model-complexity-and-predictor-selection">a. Model Complexity and Predictor Selection</h2>
+<p>In accordance with Harrell’s guidelines <span class="citation" data-cites="harrell">[@harrell]</span>, it is recommended that the optimal number of predictor variables in a regression model should be less than <span class="math inline">\(\frac{m}{15}\)</span> (depends on the skewness of the distribution etc.), where m is the limiting sample size, defined as <code>nrow(mydata)</code>. Given that there are no strict limitations on the number of predictors in this analysis due to the sufficiently large sample size, I have opted to maintain a relatively simple and interpretable linear model.</p>
+<p>For this analysis, I have selected two predictor variables (they are less correlated):</p>
+<ol type="1">
+<li><p>The natural logarithm of Gross Domestic Product (log_gdp).</p></li>
+<li><p>The natural logarithm of the Population (log_pop).</p></li>
+</ol>
+<p>The response variable of interest is the natural logarithm of gold medals (<span class="math inline">\(\log_n\)</span>), which will be estimated in this model (it was necessary to do a transformation such that: <span class="math inline">\(\log_n = \log(n+1)\)</span>, due to zeros in the dataset). This approach aims to facilitate interpretation while ensuring the model remains robust.</p>
+</section>
+<section id="b.-variable-scaling-transformations-and-interpretation-thresholds" class="level2">
+<h2 class="anchored" data-anchor-id="b.-variable-scaling-transformations-and-interpretation-thresholds">b. Variable Scaling, Transformations, and Interpretation Thresholds</h2>
+<p>The response variable in this analysis is the natural logarithm of the number of gold medals won by each country in a given year, denoted as <code>log_n</code>, where n represents the count of gold medals. This transformation is unitless, though it represents a logarithmic transformation of a count variable.</p>
+<p>The two predictor variables used in the model are:</p>
+<ul>
+<li><p>The natural logarithm of Gross Domestic Product (GDP), denoted as log_gdp, where GDP is typically expressed in dollars.</p></li>
+<li><p>The natural logarithm of population, denoted as log_pop, with the original variable representing the count of people.</p></li>
+</ul>
+<p>Both of the are basically unitless.</p>
+<p>Given the nature of the problem and the logarithmic transformations applied to both the response and predictor variables, defining thresholds in terms of absolute units becomes challenging. For example, determining what constitutes a “small” change in GDP is difficult due to the variation in economic significance across countries.</p>
+<p>As a result, I have adopted a threshold of 1% on each variable in the log scale. This approach provides a consistent way to interpret changes in the predictor variables and helps to identify significant relationships while managing noise in the model. Specifically, a 1% change in the log scale reflects the relative change in the original variable, offering a practical and scalable criterion for evaluating small changes in each predictor variable.</p>
+</section>
+<section id="c.-model-specification" class="level2">
+<h2 class="anchored" data-anchor-id="c.-model-specification">c.&nbsp;Model Specification</h2>
+<p>We applied the following model</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># original model</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_n <span class="sc">~</span> log_gdp<span class="sc">+</span>log_pop, <span class="at">data =</span> mydata)</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co"># View summary of the model</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log_n ~ log_gdp + log_pop, data = mydata)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.08919 -0.65611 -0.07442  0.54266  2.82003 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.77938    0.10621  -7.338 8.03e-13 ***
+log_gdp      0.38106    0.03119  12.216  &lt; 2e-16 ***
+log_pop     -0.01074    0.03575  -0.300    0.764    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9701 on 538 degrees of freedom
+  (94 observations deleted due to missingness)
+Multiple R-squared:  0.3604,    Adjusted R-squared:  0.358 
+F-statistic: 151.6 on 2 and 538 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The model summary indicates that approximately 36% of the variability in the response variable is explained by the predictors included in the model. The natural logarithm of GDP (log_gdp) emerges as a highly significant predictor, with a strong association with the response variable. In contrast, the natural logarithm of Population (log_pop) appears to be statistically insignificant and may not contribute meaningfully to the model.</p>
+<p>However, before drawing definitive conclusions, it is essential to conduct diagnostic tests to evaluate the model’s reliability and ensure that key assumptions, such as residual normality, homoscedasticity, and independence, are met. These diagnostics will provide a more comprehensive understanding of the model’s validity and its potential limitations.</p>
+</section>
+<section id="d.-model-diagnostics-and-assessment-of-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="d.-model-diagnostics-and-assessment-of-assumptions">d.&nbsp;Model Diagnostics and Assessment of Assumptions</h2>
+<p>To assess the assumptions of our linear regression model, we examined several diagnostic plots.</p>
+<ol type="1">
+<li><p><strong>Residuals vs.&nbsp;Fitted</strong>: The plot reveals a moderate V-shaped pattern, indicating a potential non-linear relationship between the predictors and the response variable. This suggests that the linear model may not adequately capture the underlying relationship.</p></li>
+<li><p><strong>Q-Q Plot</strong>: The Q-Q plot demonstrates deviations in the tails from the theoretical quantiles of the Normal distribution. While this suggests violations of the normality assumption, it is important to note that Q-Q plots are not always the most reliable method for assessing normality.</p></li>
+<li><p><strong>Scale-Location Plot</strong>: This plot indicates a clear upward trend, suggesting that the assumption of homoscedasticity (constant variance of the residuals) is violated. The presence of heteroscedasticity could impact the validity of the regression results.</p></li>
+<li><p><strong>Posterior Predictive Plot</strong>: The model’s ability to simulate the distribution of the observed data is insufficient, as indicated by the discrepancies in the posterior predictive plot. This further underscores the limitations of the current model.</p></li>
+<li><p><strong>Collinearity Assessment</strong>: In contrast, the collinearity diagnostics suggest that there is no significant collinearity among the predictor variables. While collinearity is generally not a major concern for linear models, it is still a positive finding.</p></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># plot model evaluation graphs</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_1_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In summary, the diagnostic plots indicate several violations of model assumptions, particularly regarding linearity, normality, and homoscedasticity, which may necessitate model reassessment or alternative modeling approaches.</p>
+</section>
+<section id="e.-model-revision-and-selection-of-an-appropriate-count-regression" class="level2">
+<h2 class="anchored" data-anchor-id="e.-model-revision-and-selection-of-an-appropriate-count-regression">e. Model Revision and Selection of an Appropriate Count Regression</h2>
+<p>The initial linear regression model was found to be inappropriate for the data at hand. The response variable, the number of medals (n), is a count variable, and using a linear model to predict count data can lead to biased estimates and violations of key assumptions, as evidenced by the diagnostic plots.</p>
+<p>Given the nature of the response variable, I have opted for a Negative Binomial (NB) regression model. The Negative Binomial model is particularly well-suited for count data and is commonly used when the data exhibits over-dispersion—a scenario where the variance exceeds the mean. Over-dispersion appears to be a significant issue in this case, making the NB regression an appropriate choice.</p>
+<p>In the NB regression model, I will use the original response variable (n) rather than its logarithmic transformation. The predictors will be the natural logarithm of GDP per capita (log_gdp_perC) and the natural logarithm of population (log_pop). This approach allows for a better fit of the data and addresses the limitations observed in the initial linear model, particularly in handling the over-dispersion inherent in the data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="do">## Test for Over-dispersion : dispersiontest(nb_model)</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># Fit Negative Binomial regression model</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>nb_model <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(n <span class="sc">~</span> log_pop <span class="sc">+</span> log_gdp_perC, <span class="at">data =</span> mydata)</span>
+<span id="cb9-5"><a href="#cb9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co"># View summary of the nb_model</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="fu">summary</span>(nb_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm.nb(formula = n ~ log_pop + log_gdp_perC, data = mydata, init.theta = 0.3548300421, 
+    link = log)
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  -1.90041    0.22471  -8.457   &lt;2e-16 ***
+log_pop       0.61990    0.04987  12.431   &lt;2e-16 ***
+log_gdp_perC  0.63563    0.06174  10.295   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for Negative Binomial(0.3548) family taken to be 1)
+
+    Null deviance: 795.35  on 540  degrees of freedom
+Residual deviance: 492.81  on 538  degrees of freedom
+  (94 observations deleted due to missingness)
+AIC: 2230.6
+
+Number of Fisher Scoring iterations: 1
+
+              Theta:  0.3548 
+          Std. Err.:  0.0312 
+
+ 2 x log-likelihood:  -2222.5810 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># plot nb_model evaluation graphs</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(nb_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="do">### check for collinearity</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="do">### vif less than 3 indicate no significant</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="fu">vif</span>(nb_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     log_pop log_gdp_perC 
+    1.062566     1.062566 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="do">## Pseudo R^2</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>performance<span class="sc">::</span><span class="fu">r2</span>(nb_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># R2 for Generalized Linear Regression
+  Nagelkerke's R2: 0.556</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="do">## Predictive Performance (Cross-validation)</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="do">## train_control &lt;- trainControl(method="cv", number=10)</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="do">## train(ln ~ log_gdp_perC + log_pop, data=mydata, method="glm.nb", trControl=train_control)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Looking at the summary results, the model reveals that both population size and GDP per capita are significant predictors of Olympic gold medal success. Specifically, a 1% increase in population is associated with approximately a 0.62% increase in the expected number of gold medals, while a 1% increase in GDP per capita corresponds to about a 0.64% increase in expected medals. These findings suggest that countries with larger populations and higher economic resources are more likely to perform well in the Olympics, underscoring the importance of demographic and economic factors in athletic achievement. Moreover, theta = 0.3548, which is something that creates evidence for the over-dispersion nature of data.</p>
+<p>The diagnostic graphs provide valuable insights into the model’s performance. The Q-Q plot indicates a relatively strong fit, suggesting that the residuals conform closely to a normal distribution. One critical assumption of the model is the absence of influential observations, which is confirmed by the analysis of influential observations. While there are some minor discrepancies between the observed and predicted residual variances, the overall model fit remains satisfactory.</p>
+<p>Furthermore, the analysis shows no signs of collinearity among the predictor variables. The results of the posterior predictive checks are also favorable. However, the robustness of these findings may warrant further investigation, as the overall goodness of fit raises the possibility of potential overfitting or other specification issues that should be explored to ensure the reliability of the model.</p>
+</section>
+<section id="f.-coefficient-plot" class="level2">
+<h2 class="anchored" data-anchor-id="f.-coefficient-plot">f.&nbsp;Coefficient Plot</h2>
+<p>To draw a coefficient plot:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># model coefficient plot</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">dwplot</span>(<span class="at">x=</span>nb_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_1_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>I have chosen not to scale and center the predictors because we have only two quantitative variables, which allows for straightforward interpretation of the coefficients.</p>
+</section>
+<section id="g.-effect-plot" class="level2">
+<h2 class="anchored" data-anchor-id="g.-effect-plot">g. Effect Plot</h2>
+<p>To draw an effects plot, we have:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Plot an effect plot and Effects of Predictors on the Model</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>effects<span class="sc">::</span><span class="fu">allEffects</span>(nb_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> model: n ~ log_pop + log_gdp_perC
+
+ log_pop effect
+log_pop
+        -2        0.1          3          5          7 
+ 0.1577998  0.5800481  3.5010293 12.0957119 41.7894949 
+
+ log_gdp_perC effect
+log_gdp_perC
+       -1       0.1         2         3         4 
+0.3645483 0.7335204 2.4542054 4.6340731 8.7501368 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(nb_model))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_1_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As the logarithm of population increases, the expected number of gold medals (n) increases significantly, demonstrating a strong positive relationship. Similarly, as the logarithm of GDP per capita increases, the expected number of gold medals also increases, indicating that higher economic resources are associated with better Olympic performance. These effects illustrate the influence of population size and economic capacity on the success of countries in the Olympic Games.</p>
+</section>
+</section>
+<section id="contrasts" class="level1">
+<h1><strong>2: Contrasts</strong></h1>
+<p>Since we have <span class="math inline">\(\overline y = C\beta\)</span> where C is our contrasts matrix, <span class="math inline">\(\beta = C^{-1}\overline y\)</span>.</p>
+<p>Below is our contrasts matrix as requested in the question:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Define the inverse of contrast matrix </span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>c_inv <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,     <span class="do">## C vs Average of Treatments</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>   <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>,          <span class="do">## I vs II</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>   <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>,          <span class="do">## II vs III</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a>   <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),          <span class="do">## Treat Control as an Intercept</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a>  <span class="at">nrow=</span><span class="dv">4</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb21-8"><a href="#cb21-8"></a></span>
+<span id="cb21-9"><a href="#cb21-9"></a>MASS<span class="sc">::</span><span class="fu">fractions</span>(c_inv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]  -1  1/3  1/3  1/3 
+[2,]   0    1   -1    0 
+[3,]   0    0    1   -1 
+[4,]   1    0    0    0 </code></pre>
+</div>
+</div>
+<p>In this part we are gonna define the contrast matrix and creating a sample to employ the model</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># inverse contrasts matrix</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>c_mat <span class="ot">&lt;-</span> <span class="fu">solve</span>((c_inv))</span>
+<span id="cb23-3"><a href="#cb23-3"></a>MASS<span class="sc">::</span><span class="fu">fractions</span>(c_mat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    1
+[2,]    1  2/3  1/3    1
+[3,]    1 -1/3  1/3    1
+[4,]    1 -1/3 -2/3    1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>data <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="at">treatment =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"I"</span>, <span class="st">"II"</span>, <span class="st">"III"</span>)),</span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="at">response =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>)</span>
+<span id="cb25-4"><a href="#cb25-4"></a>)</span>
+<span id="cb25-5"><a href="#cb25-5"></a><span class="fu">print</span>(<span class="fu">data</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>At this point, I applied the contrast matrix to the data set</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>model <span class="ot">=</span> <span class="fu">lm</span>(response <span class="sc">~</span> treatment, <span class="at">contrasts =</span> <span class="fu">list</span>(<span class="at">treatment =</span> c_mat[,<span class="sc">-</span><span class="dv">4</span>]), <span class="at">data =</span> data)</span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">coef</span>(<span class="fu">summary</span>(model))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)        2        NaN     NaN      NaN
+treatment1         4        NaN     NaN      NaN
+treatment2        -2        NaN     NaN      NaN
+treatment3        -2        NaN     NaN      NaN</code></pre>
+</div>
+</div>
+<p>The estimated coefficients from the model provide insights into the differences between the control and the treatment groups. Specifically:</p>
+<ul>
+<li><p>The coefficient for the control group is <strong>2</strong>, serving as the baseline for comparison.</p></li>
+<li><p>The coefficient for the overall effect of the treatments (the average of all treatments) is <strong>4</strong>, indicating that, on average, the treatments differ from the control group by <strong>4 units</strong>.</p></li>
+<li><p>The difference between Treatment 1 and Treatment 2 is represented by a coefficient of <strong>-2</strong>, suggesting that Treatment 2 results in <strong>2 units</strong> less than Treatment 1, on average.</p></li>
+<li><p>The difference between Treatment 2 and Treatment 3 is also represented by a coefficient of <strong>-2</strong>, meaning that Treatment 3 results in <strong>2 units</strong> less than Treatment 2, on average.</p></li>
+</ul>
+<p>These coefficients reflect the relative differences between the control and treatment groups, as well as the differences among the treatments themselves. The results was completely expected.</p>
+</section>
+<section id="simulation-exercises-misspecification-problems-in-linear-regression" class="level1">
+<h1>3. Simulation exercises misspecification problems in Linear Regression</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>sim_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">s =</span> <span class="dv">1</span>, <span class="at">m =</span> <span class="dv">0</span>, <span class="at">df =</span> <span class="dv">10</span>) {</span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="co"># Generate predictor</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb28-4"><a href="#cb28-4"></a>  mu <span class="ot">&lt;-</span> m <span class="sc">+</span> slope <span class="sc">*</span> x</span>
+<span id="cb28-5"><a href="#cb28-5"></a>  <span class="co"># t-distributed errors with mean 0 and scale s</span></span>
+<span id="cb28-6"><a href="#cb28-6"></a>  e <span class="ot">&lt;-</span> s <span class="sc">*</span> <span class="fu">rt</span>(n, <span class="at">df =</span> df)</span>
+<span id="cb28-7"><a href="#cb28-7"></a>  <span class="co"># Response</span></span>
+<span id="cb28-8"><a href="#cb28-8"></a>  y <span class="ot">&lt;-</span> mu <span class="sc">+</span> e</span>
+<span id="cb28-9"><a href="#cb28-9"></a>  <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb28-10"><a href="#cb28-10"></a>}</span>
+<span id="cb28-11"><a href="#cb28-11"></a></span>
+<span id="cb28-12"><a href="#cb28-12"></a></span>
+<span id="cb28-13"><a href="#cb28-13"></a>run_simulations <span class="ot">&lt;-</span> <span class="cf">function</span>(df, <span class="at">num_simulations =</span> num_simulations) {</span>
+<span id="cb28-14"><a href="#cb28-14"></a>  true_slope <span class="ot">&lt;-</span> <span class="dv">1</span>  <span class="co"># True slope value</span></span>
+<span id="cb28-15"><a href="#cb28-15"></a>  </span>
+<span id="cb28-16"><a href="#cb28-16"></a>  results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb28-17"><a href="#cb28-17"></a>    <span class="at">bias =</span>  <span class="fu">numeric</span>(num_simulations),    <span class="do">## data frame creation for later usage</span></span>
+<span id="cb28-18"><a href="#cb28-18"></a>    <span class="at">rmse =</span> <span class="fu">numeric</span>(num_simulations),</span>
+<span id="cb28-19"><a href="#cb28-19"></a>    <span class="at">coverage =</span> <span class="fu">numeric</span>(num_simulations),</span>
+<span id="cb28-20"><a href="#cb28-20"></a>    <span class="at">power =</span> <span class="fu">numeric</span>(num_simulations)</span>
+<span id="cb28-21"><a href="#cb28-21"></a>    )</span>
+<span id="cb28-22"><a href="#cb28-22"></a>  </span>
+<span id="cb28-23"><a href="#cb28-23"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>num_simulations) {</span>
+<span id="cb28-24"><a href="#cb28-24"></a>    sim_data <span class="ot">&lt;-</span> <span class="fu">sim_fun</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">s =</span> <span class="dv">1</span>, <span class="at">m =</span> <span class="dv">0</span>, <span class="at">df =</span> df)</span>
+<span id="cb28-25"><a href="#cb28-25"></a>    </span>
+<span id="cb28-26"><a href="#cb28-26"></a>    model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> sim_data)</span>
+<span id="cb28-27"><a href="#cb28-27"></a>    </span>
+<span id="cb28-28"><a href="#cb28-28"></a>    <span class="co"># Validating the model and the results</span></span>
+<span id="cb28-29"><a href="#cb28-29"></a>    <span class="cf">if</span> (<span class="fu">is.na</span>(<span class="fu">summary</span>(model)<span class="sc">$</span>coefficients[<span class="st">"x"</span>, <span class="st">"Estimate"</span>])) {</span>
+<span id="cb28-30"><a href="#cb28-30"></a>      <span class="co"># Invalid model results</span></span>
+<span id="cb28-31"><a href="#cb28-31"></a>      results[i, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>)</span>
+<span id="cb28-32"><a href="#cb28-32"></a>    } <span class="cf">else</span> {</span>
+<span id="cb28-33"><a href="#cb28-33"></a>      <span class="co">#coefficients</span></span>
+<span id="cb28-34"><a href="#cb28-34"></a>      coef_summary <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(model))</span>
+<span id="cb28-35"><a href="#cb28-35"></a>      </span>
+<span id="cb28-36"><a href="#cb28-36"></a>      <span class="do">##  RMSE</span></span>
+<span id="cb28-37"><a href="#cb28-37"></a>      rmse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((coef_summary[<span class="st">"x"</span>, <span class="st">"Estimate"</span>] <span class="sc">-</span> true_slope)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb28-38"><a href="#cb28-38"></a>      </span>
+<span id="cb28-39"><a href="#cb28-39"></a>      <span class="do">## Bias</span></span>
+<span id="cb28-40"><a href="#cb28-40"></a>      bias <span class="ot">&lt;-</span> coef_summary[<span class="st">"x"</span>, <span class="st">"Estimate"</span>] <span class="sc">-</span> true_slope</span>
+<span id="cb28-41"><a href="#cb28-41"></a>      </span>
+<span id="cb28-42"><a href="#cb28-42"></a>      <span class="co"># power (p &lt; alpha)</span></span>
+<span id="cb28-43"><a href="#cb28-43"></a>      alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb28-44"><a href="#cb28-44"></a>      p_value <span class="ot">&lt;-</span> coef_summary[<span class="st">"x"</span>, <span class="st">"Pr(&gt;|t|)"</span>]</span>
+<span id="cb28-45"><a href="#cb28-45"></a>      power <span class="ot">&lt;-</span> <span class="fu">mean</span>(p_value <span class="sc">&lt;</span> alpha)</span>
+<span id="cb28-46"><a href="#cb28-46"></a>      </span>
+<span id="cb28-47"><a href="#cb28-47"></a>      <span class="co"># coverage</span></span>
+<span id="cb28-48"><a href="#cb28-48"></a>      conf_interval <span class="ot">&lt;-</span> <span class="fu">confint</span>(model)</span>
+<span id="cb28-49"><a href="#cb28-49"></a>      coverage <span class="ot">&lt;-</span> (true_slope <span class="sc">&gt;=</span> conf_interval[<span class="st">"x"</span>, <span class="dv">1</span>] <span class="sc">&amp;</span> true_slope <span class="sc">&lt;=</span> conf_interval[<span class="st">"x"</span>, <span class="dv">2</span>])</span>
+<span id="cb28-50"><a href="#cb28-50"></a>      </span>
+<span id="cb28-51"><a href="#cb28-51"></a>      results[i, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(bias, rmse, coverage, power)</span>
+<span id="cb28-52"><a href="#cb28-52"></a>    }</span>
+<span id="cb28-53"><a href="#cb28-53"></a>  }</span>
+<span id="cb28-54"><a href="#cb28-54"></a>  </span>
+<span id="cb28-55"><a href="#cb28-55"></a>  <span class="fu">return</span>(results)</span>
+<span id="cb28-56"><a href="#cb28-56"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb29-2"><a href="#cb29-2"></a></span>
+<span id="cb29-3"><a href="#cb29-3"></a>deg <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">50</span>, <span class="at">by =</span> <span class="dv">6</span>)</span>
+<span id="cb29-4"><a href="#cb29-4"></a>n_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">100</span>)</span>
+<span id="cb29-5"><a href="#cb29-5"></a></span>
+<span id="cb29-6"><a href="#cb29-6"></a>all_results <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(n_vec, <span class="cf">function</span>(nsim) {</span>
+<span id="cb29-7"><a href="#cb29-7"></a>  <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(deg, <span class="cf">function</span>(df_val) {</span>
+<span id="cb29-8"><a href="#cb29-8"></a>    res <span class="ot">&lt;-</span> <span class="fu">run_simulations</span>(<span class="at">df =</span> df_val, <span class="at">num_simulations =</span> nsim)</span>
+<span id="cb29-9"><a href="#cb29-9"></a></span>
+<span id="cb29-10"><a href="#cb29-10"></a>    <span class="co"># add identifiers so you can group later</span></span>
+<span id="cb29-11"><a href="#cb29-11"></a>    res<span class="sc">$</span>n_sim <span class="ot">&lt;-</span> nsim</span>
+<span id="cb29-12"><a href="#cb29-12"></a>    res<span class="sc">$</span>df <span class="ot">&lt;-</span> df_val</span>
+<span id="cb29-13"><a href="#cb29-13"></a>    res<span class="sc">$</span>sim_id <span class="ot">&lt;-</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(res))</span>
+<span id="cb29-14"><a href="#cb29-14"></a></span>
+<span id="cb29-15"><a href="#cb29-15"></a>    res</span>
+<span id="cb29-16"><a href="#cb29-16"></a>  }))</span>
+<span id="cb29-17"><a href="#cb29-17"></a>}))</span>
+<span id="cb29-18"><a href="#cb29-18"></a></span>
+<span id="cb29-19"><a href="#cb29-19"></a><span class="co"># str(all_results)</span></span>
+<span id="cb29-20"><a href="#cb29-20"></a><span class="co"># head(all_results)</span></span>
+<span id="cb29-21"><a href="#cb29-21"></a></span>
+<span id="cb29-22"><a href="#cb29-22"></a></span>
+<span id="cb29-23"><a href="#cb29-23"></a></span>
+<span id="cb29-24"><a href="#cb29-24"></a>summary_results <span class="ot">&lt;-</span> all_results <span class="sc">%&gt;%</span></span>
+<span id="cb29-25"><a href="#cb29-25"></a>  <span class="fu">group_by</span>(n_sim, df) <span class="sc">%&gt;%</span></span>
+<span id="cb29-26"><a href="#cb29-26"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb29-27"><a href="#cb29-27"></a>    <span class="at">bias_mean =</span> <span class="fu">mean</span>(bias, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb29-28"><a href="#cb29-28"></a>    <span class="at">bias_sd   =</span> <span class="fu">sd</span>(bias, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb29-29"><a href="#cb29-29"></a>    <span class="at">rmse_mean =</span> <span class="fu">mean</span>(rmse, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb29-30"><a href="#cb29-30"></a>    <span class="at">rmse_sd   =</span> <span class="fu">sd</span>(rmse, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb29-31"><a href="#cb29-31"></a>    <span class="at">coverage_rate =</span> <span class="fu">mean</span>(coverage, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),  <span class="co"># should approach ~0.95 if calibrated</span></span>
+<span id="cb29-32"><a href="#cb29-32"></a>    <span class="at">power_rate    =</span> <span class="fu">mean</span>(power, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb29-33"><a href="#cb29-33"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb29-34"><a href="#cb29-34"></a>  )</span>
+<span id="cb29-35"><a href="#cb29-35"></a></span>
+<span id="cb29-36"><a href="#cb29-36"></a><span class="fu">head</span>(summary_results,<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 8
+   n_sim    df bias_mean bias_sd rmse_mean rmse_sd coverage_rate power_rate
+   &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;
+ 1    10     2    0.0695   1.34      0.899  0.953            1          0.2
+ 2    10     8   -0.112    0.284     0.207  0.216            1          0.8
+ 3    10    14    0.177    0.251     0.202  0.229            1          1  
+ 4    10    20    0.0660   0.218     0.202  0.0834           1          1  
+ 5    10    26    0.0617   0.298     0.252  0.151            1          0.8
+ 6    10    32    0.137    0.244     0.173  0.218            1          1  
+ 7    10    38    0.0373   0.238     0.182  0.147            1          0.9
+ 8    10    44    0.0534   0.412     0.292  0.279            0.9        0.9
+ 9    10    50   -0.0456   0.392     0.324  0.198            0.9        0.8
+10    20     2   -0.171    0.811     0.600  0.556            1          0.2</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># --- Add uncertainty bands (95% CI around the Monte Carlo mean) ---</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>summary_results2 <span class="ot">&lt;-</span> summary_results <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb31-4"><a href="#cb31-4"></a>    <span class="at">bias_se =</span> bias_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n_sim),</span>
+<span id="cb31-5"><a href="#cb31-5"></a>    <span class="at">rmse_se =</span> rmse_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n_sim),</span>
+<span id="cb31-6"><a href="#cb31-6"></a></span>
+<span id="cb31-7"><a href="#cb31-7"></a>    <span class="at">bias_lo =</span> bias_mean <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> bias_se,</span>
+<span id="cb31-8"><a href="#cb31-8"></a>    <span class="at">bias_hi =</span> bias_mean <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> bias_se,</span>
+<span id="cb31-9"><a href="#cb31-9"></a></span>
+<span id="cb31-10"><a href="#cb31-10"></a>    <span class="at">rmse_lo =</span> rmse_mean <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> rmse_se,</span>
+<span id="cb31-11"><a href="#cb31-11"></a>    <span class="at">rmse_hi =</span> rmse_mean <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> rmse_se,</span>
+<span id="cb31-12"><a href="#cb31-12"></a></span>
+<span id="cb31-13"><a href="#cb31-13"></a>    <span class="co"># conservative SE for proportions (coverage/power)</span></span>
+<span id="cb31-14"><a href="#cb31-14"></a>    <span class="at">cov_se =</span> <span class="fu">sqrt</span>(<span class="fu">pmax</span>(coverage_rate <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> coverage_rate), <span class="dv">0</span>) <span class="sc">/</span> n_sim),</span>
+<span id="cb31-15"><a href="#cb31-15"></a>    <span class="at">pow_se =</span> <span class="fu">sqrt</span>(<span class="fu">pmax</span>(power_rate <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> power_rate), <span class="dv">0</span>) <span class="sc">/</span> n_sim),</span>
+<span id="cb31-16"><a href="#cb31-16"></a></span>
+<span id="cb31-17"><a href="#cb31-17"></a>    <span class="at">cov_lo =</span> <span class="fu">pmax</span>(<span class="dv">0</span>, coverage_rate <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> cov_se),</span>
+<span id="cb31-18"><a href="#cb31-18"></a>    <span class="at">cov_hi =</span> <span class="fu">pmin</span>(<span class="dv">1</span>, coverage_rate <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> cov_se),</span>
+<span id="cb31-19"><a href="#cb31-19"></a></span>
+<span id="cb31-20"><a href="#cb31-20"></a>    <span class="at">pow_lo =</span> <span class="fu">pmax</span>(<span class="dv">0</span>, power_rate <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pow_se),</span>
+<span id="cb31-21"><a href="#cb31-21"></a>    <span class="at">pow_hi =</span> <span class="fu">pmin</span>(<span class="dv">1</span>, power_rate <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pow_se)</span>
+<span id="cb31-22"><a href="#cb31-22"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>theme_portfolio <span class="ot">&lt;-</span> <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">theme</span>(</span>
+<span id="cb32-3"><a href="#cb32-3"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb32-5"><a href="#cb32-5"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb32-6"><a href="#cb32-6"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb32-7"><a href="#cb32-7"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb32-8"><a href="#cb32-8"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb32-9"><a href="#cb32-9"></a>  )</span>
+<span id="cb32-10"><a href="#cb32-10"></a></span>
+<span id="cb32-11"><a href="#cb32-11"></a>p_bias <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(summary_results2, <span class="fu">aes</span>(<span class="at">x =</span> df, <span class="at">y =</span> bias_mean)) <span class="sc">+</span></span>
+<span id="cb32-12"><a href="#cb32-12"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb32-13"><a href="#cb32-13"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> bias_lo, <span class="at">ymax =</span> bias_hi), <span class="at">alpha =</span> <span class="fl">0.15</span>) <span class="sc">+</span></span>
+<span id="cb32-14"><a href="#cb32-14"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb32-15"><a href="#cb32-15"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb32-16"><a href="#cb32-16"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> n_sim, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-17"><a href="#cb32-17"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">unique</span>(summary_results2<span class="sc">$</span>df)) <span class="sc">+</span></span>
+<span id="cb32-18"><a href="#cb32-18"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Degrees of freedom (df)"</span>, <span class="at">y =</span> <span class="st">"Mean bias"</span>,</span>
+<span id="cb32-19"><a href="#cb32-19"></a>       <span class="at">title =</span> <span class="st">"Bias"</span>) <span class="sc">+</span></span>
+<span id="cb32-20"><a href="#cb32-20"></a>  theme_portfolio</span>
+<span id="cb32-21"><a href="#cb32-21"></a></span>
+<span id="cb32-22"><a href="#cb32-22"></a></span>
+<span id="cb32-23"><a href="#cb32-23"></a>p_rmse <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(summary_results2, <span class="fu">aes</span>(<span class="at">x =</span> df, <span class="at">y =</span> rmse_mean)) <span class="sc">+</span></span>
+<span id="cb32-24"><a href="#cb32-24"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> rmse_lo, <span class="at">ymax =</span> rmse_hi), <span class="at">alpha =</span> <span class="fl">0.15</span>) <span class="sc">+</span></span>
+<span id="cb32-25"><a href="#cb32-25"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb32-26"><a href="#cb32-26"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb32-27"><a href="#cb32-27"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> n_sim, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-28"><a href="#cb32-28"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">unique</span>(summary_results2<span class="sc">$</span>df)) <span class="sc">+</span></span>
+<span id="cb32-29"><a href="#cb32-29"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Degrees of freedom (df)"</span>, <span class="at">y =</span> <span class="st">"Mean RMSE"</span>,</span>
+<span id="cb32-30"><a href="#cb32-30"></a>       <span class="at">title =</span> <span class="st">"RMSE"</span>) <span class="sc">+</span></span>
+<span id="cb32-31"><a href="#cb32-31"></a>  theme_portfolio</span>
+<span id="cb32-32"><a href="#cb32-32"></a></span>
+<span id="cb32-33"><a href="#cb32-33"></a></span>
+<span id="cb32-34"><a href="#cb32-34"></a>p_cov <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(summary_results2, <span class="fu">aes</span>(<span class="at">x =</span> df, <span class="at">y =</span> coverage_rate)) <span class="sc">+</span></span>
+<span id="cb32-35"><a href="#cb32-35"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.95</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb32-36"><a href="#cb32-36"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> cov_lo, <span class="at">ymax =</span> cov_hi), <span class="at">alpha =</span> <span class="fl">0.15</span>) <span class="sc">+</span></span>
+<span id="cb32-37"><a href="#cb32-37"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb32-38"><a href="#cb32-38"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb32-39"><a href="#cb32-39"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> n_sim, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-40"><a href="#cb32-40"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">unique</span>(summary_results2<span class="sc">$</span>df)) <span class="sc">+</span></span>
+<span id="cb32-41"><a href="#cb32-41"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb32-42"><a href="#cb32-42"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Degrees of freedom (df)"</span>, <span class="at">y =</span> <span class="st">"Coverage rate"</span>,</span>
+<span id="cb32-43"><a href="#cb32-43"></a>       <span class="at">title =</span> <span class="st">"Coverage"</span>) <span class="sc">+</span></span>
+<span id="cb32-44"><a href="#cb32-44"></a>  theme_portfolio</span>
+<span id="cb32-45"><a href="#cb32-45"></a></span>
+<span id="cb32-46"><a href="#cb32-46"></a></span>
+<span id="cb32-47"><a href="#cb32-47"></a>p_power <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(summary_results2, <span class="fu">aes</span>(<span class="at">x =</span> df, <span class="at">y =</span> power_rate)) <span class="sc">+</span></span>
+<span id="cb32-48"><a href="#cb32-48"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> pow_lo, <span class="at">ymax =</span> pow_hi), <span class="at">alpha =</span> <span class="fl">0.15</span>) <span class="sc">+</span></span>
+<span id="cb32-49"><a href="#cb32-49"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb32-50"><a href="#cb32-50"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb32-51"><a href="#cb32-51"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> n_sim, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-52"><a href="#cb32-52"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">unique</span>(summary_results2<span class="sc">$</span>df)) <span class="sc">+</span></span>
+<span id="cb32-53"><a href="#cb32-53"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb32-54"><a href="#cb32-54"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Degrees of freedom (df)"</span>, <span class="at">y =</span> <span class="st">"Power"</span>,</span>
+<span id="cb32-55"><a href="#cb32-55"></a>       <span class="at">title =</span> <span class="st">"Power"</span>) <span class="sc">+</span></span>
+<span id="cb32-56"><a href="#cb32-56"></a>  theme_portfolio</span>
+<span id="cb32-57"><a href="#cb32-57"></a></span>
+<span id="cb32-58"><a href="#cb32-58"></a></span>
+<span id="cb32-59"><a href="#cb32-59"></a></span>
+<span id="cb32-60"><a href="#cb32-60"></a>(p_bias <span class="sc">|</span> p_rmse) <span class="sc">/</span></span>
+<span id="cb32-61"><a href="#cb32-61"></a>(p_cov  <span class="sc">|</span> p_power) <span class="sc">+</span></span>
+<span id="cb32-62"><a href="#cb32-62"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb32-63"><a href="#cb32-63"></a>    <span class="at">title =</span> <span class="st">"Effect of Heavy-Tailed Errors on OLS Inference"</span>,</span>
+<span id="cb32-64"><a href="#cb32-64"></a>    <span class="at">subtitle =</span> <span class="st">"Monte Carlo means with 95% uncertainty bands across degrees of freedom"</span>,</span>
+<span id="cb32-65"><a href="#cb32-65"></a>    <span class="at">theme =</span> <span class="fu">theme</span>(</span>
+<span id="cb32-66"><a href="#cb32-66"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">16</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb32-67"><a href="#cb32-67"></a>      <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
+<span id="cb32-68"><a href="#cb32-68"></a>    )</span>
+<span id="cb32-69"><a href="#cb32-69"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_1_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="6000"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In this set of simulations, I tested the effects of violating the normality assumption by generating data from a t-distribution with varying degrees of freedom (df). As the degrees of freedom increase, the t-distribution converges to the normal distribution, theoretically satisfying the normality assumption when df→∞.</p>
+<p>As we expected, due to the converges nature of T distribution to the normal distribution, as we increase the number of simulations to converge to the real value and when we increase the df the violation is eliminated. For example, when evaluating model coverage, with the true coverage rate set at 95%, the results from the simulation demonstrate that the estimated coverage rate converges to 95% as df increases. Additionally, both the bias and the root mean square error (RMSE) exhibit convergence; the bias tends towards 0, and the RMSE stabilizes at approximately 0.27.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

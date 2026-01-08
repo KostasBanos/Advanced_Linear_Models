@@ -1,0 +1,12 @@
+---
+title: "Advanced Linear Models"
+format: html
+---
+
+This site contains interactive versions of the projects.
+
+- [Project 1](Project_1.html)
+- [Project 2](Project_2.html)
+- [Project 3](Project_3.html)
+- [Project 4](Project_4.html)
+- [Project 5](Project_5.html)

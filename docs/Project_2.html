@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Konstantinos Banos">
+<meta name="dcterms.date" content="2024-10-11">
+
+<title>Project 2 – STATS 720 Portfolio — Konstantinos Banos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">STATS 720 Portfolio — Konstantinos Banos</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_1.pdf"> 
+<span class="menu-text">Project 1</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_2.pdf"> 
+<span class="menu-text">Project 2</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_3.pdf"> 
+<span class="menu-text">Project 3</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_4.html"> 
+<span class="menu-text">Project 4</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_5.pdf"> 
+<span class="menu-text">Project 5</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#question-1-analysis-of-contraception-data-from-the-package-mlmrev" id="toc-question-1-analysis-of-contraception-data-from-the-package-mlmrev" class="nav-link active" data-scroll-target="#question-1-analysis-of-contraception-data-from-the-package-mlmrev">Question 1: Analysis of Contraception Data from the Package mlmRev</a>
+  <ul class="collapse">
+  <li><a href="#a.-data-analysis-description" id="toc-a.-data-analysis-description" class="nav-link" data-scroll-target="#a.-data-analysis-description">a. Data Analysis Description</a>
+  <ul class="collapse">
+  <li><a href="#predictors" id="toc-predictors" class="nav-link" data-scroll-target="#predictors"><strong>Predictors:</strong></a></li>
+  </ul></li>
+  <li><a href="#b.-data-visualization" id="toc-b.-data-visualization" class="nav-link" data-scroll-target="#b.-data-visualization">b. Data Visualization</a>
+  <ul class="collapse">
+  <li><a href="#i-proportion-of-contraceptive-use-by-number-of-living-children" id="toc-i-proportion-of-contraceptive-use-by-number-of-living-children" class="nav-link" data-scroll-target="#i-proportion-of-contraceptive-use-by-number-of-living-children">i) Proportion of Contraceptive Use by Number of Living Children</a></li>
+  <li><a href="#ii-proportion-of-contraceptive-use-by-urban-or-rural-residence" id="toc-ii-proportion-of-contraceptive-use-by-urban-or-rural-residence" class="nav-link" data-scroll-target="#ii-proportion-of-contraceptive-use-by-urban-or-rural-residence">ii) Proportion of Contraceptive Use by Urban or Rural Residence</a></li>
+  <li><a href="#iii-proportion-of-contraceptive-use-by-district" id="toc-iii-proportion-of-contraceptive-use-by-district" class="nav-link" data-scroll-target="#iii-proportion-of-contraceptive-use-by-district">iii) Proportion of Contraceptive Use by District</a></li>
+  <li><a href="#iv-age-distribution-of-non-contraceptive-users" id="toc-iv-age-distribution-of-non-contraceptive-users" class="nav-link" data-scroll-target="#iv-age-distribution-of-non-contraceptive-users">iv) Age Distribution of Non-Contraceptive Users</a></li>
+  <li><a href="#vage-distribution-of-contraceptive-users" id="toc-vage-distribution-of-contraceptive-users" class="nav-link" data-scroll-target="#vage-distribution-of-contraceptive-users">v)Age Distribution of Contraceptive Users</a></li>
+  </ul></li>
+  <li><a href="#c.-model-fit" id="toc-c.-model-fit" class="nav-link" data-scroll-target="#c.-model-fit">c.&nbsp;Model Fit</a></li>
+  <li><a href="#d.-comparison-of-the-diagnostic-plots" id="toc-d.-comparison-of-the-diagnostic-plots" class="nav-link" data-scroll-target="#d.-comparison-of-the-diagnostic-plots">d.&nbsp;Comparison of the Diagnostic Plots</a>
+  <ul class="collapse">
+  <li><a href="#i-posterior-predictive-check" id="toc-i-posterior-predictive-check" class="nav-link" data-scroll-target="#i-posterior-predictive-check">i) <strong>Posterior Predictive Check:</strong></a></li>
+  <li><a href="#ii-binned-residuals" id="toc-ii-binned-residuals" class="nav-link" data-scroll-target="#ii-binned-residuals">ii) <strong>Binned Residuals:</strong></a></li>
+  <li><a href="#iii-influential-observations" id="toc-iii-influential-observations" class="nav-link" data-scroll-target="#iii-influential-observations">iii) <strong>Influential Observations:</strong></a></li>
+  <li><a href="#iv-collinearity" id="toc-iv-collinearity" class="nav-link" data-scroll-target="#iv-collinearity">iv) <strong>Collinearity:</strong></a></li>
+  <li><a href="#i-qq-plot-of-residuals" id="toc-i-qq-plot-of-residuals" class="nav-link" data-scroll-target="#i-qq-plot-of-residuals">i) <strong>QQ Plot of Residuals:</strong></a></li>
+  <li><a href="#ii-residual-vs.-predicted-rank-transformed" id="toc-ii-residual-vs.-predicted-rank-transformed" class="nav-link" data-scroll-target="#ii-residual-vs.-predicted-rank-transformed">ii) <strong>Residual vs.&nbsp;Predicted (Rank Transformed):</strong></a></li>
+  </ul></li>
+  <li><a href="#e.-results-interpretation-and-coefficienteffect-plots" id="toc-e.-results-interpretation-and-coefficienteffect-plots" class="nav-link" data-scroll-target="#e.-results-interpretation-and-coefficienteffect-plots">e. Results Interpretation and Coefficient/Effect Plots</a></li>
+  </ul></li>
+  <li><a href="#question-2-analysis-of-gopher-tortoise-data" id="toc-question-2-analysis-of-gopher-tortoise-data" class="nav-link" data-scroll-target="#question-2-analysis-of-gopher-tortoise-data">Question 2: Analysis of Gopher Tortoise Data</a>
+  <ul class="collapse">
+  <li><a href="#a.-data-visualization" id="toc-a.-data-visualization" class="nav-link" data-scroll-target="#a.-data-visualization">a. Data Visualization</a></li>
+  <li><a href="#b.-model-fit" id="toc-b.-model-fit" class="nav-link" data-scroll-target="#b.-model-fit">b. Model Fit</a></li>
+  <li><a href="#c.-model-fit-using-bbmle" id="toc-c.-model-fit-using-bbmle" class="nav-link" data-scroll-target="#c.-model-fit-using-bbmle">c.&nbsp;Model Fit Using bbmle</a></li>
+  <li><a href="#d.-creation-of-a-negative-log-likelihood-function" id="toc-d.-creation-of-a-negative-log-likelihood-function" class="nav-link" data-scroll-target="#d.-creation-of-a-negative-log-likelihood-function">d.&nbsp;Creation of a Negative Log-likelihood Function</a></li>
+  <li><a href="#e.-comparison-of-parameters-for-different-approaches" id="toc-e.-comparison-of-parameters-for-different-approaches" class="nav-link" data-scroll-target="#e.-comparison-of-parameters-for-different-approaches">e. Comparison of Parameters for Different Approaches</a></li>
+  <li><a href="#f.-wald-and-profile-cis" id="toc-f.-wald-and-profile-cis" class="nav-link" data-scroll-target="#f.-wald-and-profile-cis">f.&nbsp;Wald and profile CIs</a>
+  <ul class="collapse">
+  <li><a href="#wald-confidence-intervals-comparison" id="toc-wald-confidence-intervals-comparison" class="nav-link" data-scroll-target="#wald-confidence-intervals-comparison">Wald Confidence Intervals Comparison:</a></li>
+  <li><a href="#profile-confidence-intervals-for-bbmle" id="toc-profile-confidence-intervals-for-bbmle" class="nav-link" data-scroll-target="#profile-confidence-intervals-for-bbmle">Profile Confidence Intervals (for bbmle):</a></li>
+  <li><a href="#comparison-and-interpretation" id="toc-comparison-and-interpretation" class="nav-link" data-scroll-target="#comparison-and-interpretation">Comparison and Interpretation:</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#question-3-endometrial-data" id="toc-question-3-endometrial-data" class="nav-link" data-scroll-target="#question-3-endometrial-data">Question 3: Endometrial Data</a>
+  <ul class="collapse">
+  <li><a href="#comparison-of-estimates" id="toc-comparison-of-estimates" class="nav-link" data-scroll-target="#comparison-of-estimates">1. Comparison of Estimates:</a></li>
+  <li><a href="#wald-and-likelihood-profile-confidence-intervals" id="toc-wald-and-likelihood-profile-confidence-intervals" class="nav-link" data-scroll-target="#wald-and-likelihood-profile-confidence-intervals">2. Wald and likelihood profile confidence intervals</a></li>
+  <li><a href="#wald-and-likelihood-ratio-test-p-values-for-all-three-non-intercept-coefficients" id="toc-wald-and-likelihood-ratio-test-p-values-for-all-three-non-intercept-coefficients" class="nav-link" data-scroll-target="#wald-and-likelihood-ratio-test-p-values-for-all-three-non-intercept-coefficients">3. Wald and likelihood ratio-test p-values for all three (non-intercept) coefficients</a></li>
+  </ul></li>
+  <li><a href="#question-4-zero-inflation-by-simulation" id="toc-question-4-zero-inflation-by-simulation" class="nav-link" data-scroll-target="#question-4-zero-inflation-by-simulation">Question 4: Zero-inflation by simulation</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Project_2.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Project 2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Konstantinos Banos </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 11, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div style="page-break-after: always;"></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(mlmRev)           <span class="do">## LOADING OF THE NECESSARY PACKAGES ##</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(performance)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(DHARMa)</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">library</span>(dotwhisker)</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="fu">library</span>(coefplot)</span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">library</span>(bbmle)</span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">library</span>(brglm2)</span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">library</span>(brms)</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="fu">library</span>(arm)</span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="fu">library</span>(boot)</span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="fu">library</span>(effects)</span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="fu">library</span>(sjPlot)</span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="fu">library</span>(AER)</span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="fu">library</span>(pscl)</span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="fu">library</span>(patchwork)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="question-1-analysis-of-contraception-data-from-the-package-mlmrev" class="level1">
+<h1>Question 1: Analysis of Contraception Data from the Package mlmRev</h1>
+<p>Loading the Contraception data and creating a new column called “use_num”. Essentially, the new column is the column use a binary as factor</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Load data</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">data</span>(<span class="st">"Contraception"</span>, <span class="at">package =</span> <span class="st">"mlmRev"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># Creation of a new column called "u"</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>Contraception <span class="ot">&lt;-</span> <span class="fu">transform</span>(</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  Contraception,</span>
+<span id="cb2-7"><a href="#cb2-7"></a>  <span class="at">use_num =</span> <span class="fu">as.numeric</span>(use)<span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>  )</span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="fu">head</span>(Contraception,<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   woman district use livch      age urban use_num
+1      1        1   N    3+  18.4400     Y       0
+2      2        1   N     0  -5.5599     Y       0
+3      3        1   N     2   1.4400     Y       0
+4      4        1   N    3+   8.4400     Y       0
+5      5        1   N     0 -13.5590     Y       0
+6      6        1   N     0 -11.5600     Y       0
+7      7        1   N    3+  18.4400     Y       0
+8      8        1   N    3+  -3.5599     Y       0
+9      9        1   N     1  -5.5599     Y       0
+10    10        1   N    3+   1.4400     Y       0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="do">##?mlmRev::Contraception ## Data Description</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="a.-data-analysis-description" class="level2">
+<h2 class="anchored" data-anchor-id="a.-data-analysis-description">a. Data Analysis Description</h2>
+<p>This dataset originates from the 1988 Bangladesh Fertility Survey and includes a sub-sample of 1,934 women distributed across 60 districts.</p>
+<p>According to Harrell’s guidelines <span class="citation" data-cites="harrell">[@harrell]</span>, the optimal number of predictor variables in a logistic regression model should not exceed <span class="math inline">\(\frac{m}{15}\)</span>, where m represents the limiting sample size, defined as m = <code>nrow(Contraception)</code>. Given the current sample size, this criterion allows for the inclusion of the full number of predictor variables in the model.</p>
+<p>Furthermore, it is essential to establish a threshold for assessing the significance of predictor variables. In this analysis, a threshold of 5% for the variable age and 10% for the other predictors will be employed. Specifically, if a unit change in any predictor variable results a change greater than 5% or 10%, respectively in the response variable, this effect will be considered statistically significant. (I decided to use different thresholds in every predictor because the units are different and my sense telling me that it is not the same one year of change and an additional kid for example)</p>
+<p>My approach involves a basic logistic regression model, which utilizes the binomial family and a logit link function. This model is appropriate given the binary nature of the response variable, use_num, where a value of 1 indicates the use of contraception and 0 indicates non-use.</p>
+<section id="predictors" class="level3">
+<h3 class="anchored" data-anchor-id="predictors"><strong>Predictors:</strong></h3>
+<ol type="1">
+<li><p><strong>Centered Age of Women (age)</strong>:<br>
+The first predictor is the centered age of women. Based on intuitive reasoning, it is hypothesized that the relationship between women’s age and contraception use resembles an inverted U-shape. This suggests that both younger and older women are likely to use contraception less frequently than middle-aged women, making age a relevant predictor in the model.</p></li>
+<li><p><strong>Number of Living Children (livch)</strong>:<br>
+The second predictor is the number of living children. It is posited that as individuals find a permanent partner, they tend to use contraception less frequently. Therefore, the presence of children is expected to correlate with contraception usage, making this a reasonable predictor to include in the model.</p></li>
+<li><p><strong>Type of Residence (urban)</strong>:<br>
+The third and final predictor is the type of residence, categorized as urban or rural. Contraception use is strongly correlated with various socio-economic factors. For instance, urban areas that are wealthier tend to have higher levels of education. It is generally observed that individuals with higher educational attainment are more likely to use contraception. Thus, the type of residence is anticipated to be a significant predictor of contraception use.</p></li>
+</ol>
+<p>I decide not to include the district at the first model because I can save a lot of degrees of freedom by using only the type of residence. However, I may lose some important information and eventually, the model’s fit is not good enough</p>
+<p>If the first model is inadequate to fit the dataset properly, a second approach would possibly involves a two-level main effect logistic regression model by including a random intercept for each district. This model will capture the variability at the district level, providing more accurate estimates if there are significant differences in contraceptive use between districts. It is widely known that it is especially useful for hierarchical data structures. The model will utilize the binomial family and a logit link function (I am gonna use this model if the overall fit of the first one is not good).</p>
+</section>
+</section>
+<section id="b.-data-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="b.-data-visualization">b. Data Visualization</h2>
+<p>The visualizations include bar plots and histograms that elucidate the relationships between contraceptive use, number of living children, urban or rural residence, district, and the age of women.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Function to create bar plots for contraceptive use by a given categorical variable</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>create_bar_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(data, x_var, x_label) {</span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> .data[[x_var]], <span class="at">fill =</span> <span class="fu">factor</span>(use_num))) <span class="sc">+</span> </span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="fu">labs</span>(<span class="at">x =</span> x_label, </span>
+<span id="cb5-6"><a href="#cb5-6"></a>         <span class="at">y =</span> <span class="st">"Proportion of Contraceptive Use"</span>, </span>
+<span id="cb5-7"><a href="#cb5-7"></a>         <span class="at">fill =</span> <span class="st">"Contraceptive Use"</span>) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"0"</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"#56B4E9"</span>), </span>
+<span id="cb5-10"><a href="#cb5-10"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>)) <span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12"></a>}</span>
+<span id="cb5-13"><a href="#cb5-13"></a></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="do">## CONTRACEPTION  VS LIVING CHILDREN BAR PLOT</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="fu">create_bar_plot</span>(Contraception, <span class="st">"livch"</span>, <span class="st">"Number of Living Children"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="i-proportion-of-contraceptive-use-by-number-of-living-children" class="level3">
+<h3 class="anchored" data-anchor-id="i-proportion-of-contraceptive-use-by-number-of-living-children">i) Proportion of Contraceptive Use by Number of Living Children</h3>
+<p>The bar plot depicting the proportion of contraceptive use by the number of living children reveals a clear trend. As the number of living children increases, there is a noticeable variation in the proportion of women using contraception. Specifically, women with fewer children are less likely to use contraception compared to those with more children. This suggests that family size may influence contraceptive decisions, indicating a potential focus area for family planning programs.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="do">## CONTRACEPTION  VS URBAN BAR PLOT</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">create_bar_plot</span>(Contraception, <span class="st">"urban"</span>, <span class="st">"Residence (Urban/Rural)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="ii-proportion-of-contraceptive-use-by-urban-or-rural-residence" class="level3">
+<h3 class="anchored" data-anchor-id="ii-proportion-of-contraceptive-use-by-urban-or-rural-residence">ii) Proportion of Contraceptive Use by Urban or Rural Residence</h3>
+<p>The second bar plot compares contraceptive use between women residing in urban and rural areas. The results show that women living in urban areas have a higher proportion of contraceptive use compared to their rural counterparts.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="do">## CONTRACEPTION  VS DISTRICT BAR PLOT</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">create_bar_plot</span>(Contraception, <span class="st">"district"</span>, <span class="st">"District"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="iii-proportion-of-contraceptive-use-by-district" class="level3">
+<h3 class="anchored" data-anchor-id="iii-proportion-of-contraceptive-use-by-district">iii) Proportion of Contraceptive Use by District</h3>
+<p>The bar plot by district illustrates the variations in contraceptive use across different geographical regions. Each district exhibits unique patterns in contraceptive use, indicating that local policies, health services, and cultural factors may significantly influence these behaviors.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Function to create histograms for age distribution</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>create_histogram <span class="ot">&lt;-</span> <span class="cf">function</span>(data, use_num, color, title) {</span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">hist</span>(data<span class="sc">$</span>age[data<span class="sc">$</span>use_num <span class="sc">==</span> use_num], </span>
+<span id="cb8-4"><a href="#cb8-4"></a>       <span class="at">xlab =</span> <span class="st">"Age (Centered)"</span>, </span>
+<span id="cb8-5"><a href="#cb8-5"></a>       <span class="at">ylab =</span> <span class="st">"Frequency"</span>, </span>
+<span id="cb8-6"><a href="#cb8-6"></a>       <span class="at">main =</span> title, </span>
+<span id="cb8-7"><a href="#cb8-7"></a>       <span class="at">col =</span> color, </span>
+<span id="cb8-8"><a href="#cb8-8"></a>       <span class="at">border =</span> <span class="st">"white"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9"></a>}</span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co"># Create histograms for age distribution and Non-Contraceptive Users</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="fu">create_histogram</span>(Contraception, <span class="dv">0</span>, <span class="st">"#E69F00"</span>, <span class="st">"Age Distribution: Non-Contraceptive Users"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="iv-age-distribution-of-non-contraceptive-users" class="level3">
+<h3 class="anchored" data-anchor-id="iv-age-distribution-of-non-contraceptive-users">iv) Age Distribution of Non-Contraceptive Users</h3>
+<p>The histogram showing the age distribution of women who do not use contraception indicates a concentration of non-users in younger age groups. This suggests that younger women may either have limited knowledge about contraceptive options or may not yet feel the need for contraception. Addressing knowledge gaps.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Create histograms for age distribution for Contraceptive Users</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">create_histogram</span>(Contraception, <span class="dv">1</span>, <span class="st">"#56B4E9"</span>, <span class="st">"Age Distribution: Contraceptive Users"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="vage-distribution-of-contraceptive-users" class="level3">
+<h3 class="anchored" data-anchor-id="vage-distribution-of-contraceptive-users">v)Age Distribution of Contraceptive Users</h3>
+<p>This histogram showcases the age distribution for women who do use contraception, similar to the previous plot but focused on users. As we had anticipated the distribution appears to be more evenly spread across age groups, with a notable presence of users in the middle and older age groups.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>create_box_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">boxplot</span>(age <span class="sc">~</span> use_num, </span>
+<span id="cb10-3"><a href="#cb10-3"></a>          <span class="at">data =</span> data, </span>
+<span id="cb10-4"><a href="#cb10-4"></a>          <span class="at">xlab =</span> <span class="st">"Contraceptive Use (0 = Non-Users, 1 = Users)"</span>, </span>
+<span id="cb10-5"><a href="#cb10-5"></a>          <span class="at">ylab =</span> <span class="st">"Age (Centered)"</span>, </span>
+<span id="cb10-6"><a href="#cb10-6"></a>          <span class="at">main =</span> <span class="st">"Age Distribution by Contraceptive Use"</span>, </span>
+<span id="cb10-7"><a href="#cb10-7"></a>          <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>), </span>
+<span id="cb10-8"><a href="#cb10-8"></a>          <span class="at">border =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9"></a>}</span>
+<span id="cb10-10"><a href="#cb10-10"></a></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="co"># Create the box plot for age distribution</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="fu">create_box_plot</span>(Contraception)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="c.-model-fit" class="level2">
+<h2 class="anchored" data-anchor-id="c.-model-fit">c.&nbsp;Model Fit</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Fit the logistic regression model</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(use_num <span class="sc">~</span> age <span class="sc">+</span> livch <span class="sc">+</span> urban, </span>
+<span id="cb11-3"><a href="#cb11-3"></a>             <span class="at">data =</span> Contraception, </span>
+<span id="cb11-4"><a href="#cb11-4"></a>             <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb11-5"><a href="#cb11-5"></a></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = use_num ~ age + livch + urban, family = binomial(link = "logit"), 
+    data = Contraception)
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -1.568044   0.126229 -12.422  &lt; 2e-16 ***
+age         -0.023995   0.007536  -3.184  0.00145 ** 
+livch1       1.059186   0.151954   6.970 3.16e-12 ***
+livch2       1.287805   0.167241   7.700 1.36e-14 ***
+livch3+      1.216385   0.170593   7.130 1.00e-12 ***
+urbanY       0.797181   0.105186   7.579 3.49e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2590.9  on 1933  degrees of freedom
+Residual deviance: 2456.7  on 1928  degrees of freedom
+AIC: 2468.7
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+</section>
+<section id="d.-comparison-of-the-diagnostic-plots" class="level2">
+<h2 class="anchored" data-anchor-id="d.-comparison-of-the-diagnostic-plots">d.&nbsp;Comparison of the Diagnostic Plots</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(model, <span class="at">panel =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="i-posterior-predictive-check" class="level3">
+<h3 class="anchored" data-anchor-id="i-posterior-predictive-check">i) <strong>Posterior Predictive Check:</strong></h3>
+<p>The observed and model-predicted intervals seem close, suggesting a reasonable fit.</p>
+</section>
+<section id="ii-binned-residuals" class="level3">
+<h3 class="anchored" data-anchor-id="ii-binned-residuals">ii) <strong>Binned Residuals:</strong></h3>
+<p>The plot shows the model’s errors across the probability range, and most residuals fall within the bounds, meaning no strong deviations, but a few points (in red) indicate areas with potential under- or over-prediction. Looking at the graph, there is possibility for overfitting but not something terrible. A good practice to detect data overfitting is by applying Cross-Validation, Bootstrap Resampling etc.</p>
+<p>Below I am going test if there is an overfitting problem to my model by using a Bootstrap Resampling algorithm. This will give us a distribution of model coefficients across different resampled datasets, showing how much they vary.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb14-2"><a href="#cb14-2"></a>boot_fit <span class="ot">&lt;-</span> <span class="fu">boot</span>(<span class="at">data=</span>Contraception, <span class="at">statistic=</span><span class="cf">function</span>(data, indices) {</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  d <span class="ot">&lt;-</span> data[indices, ]</span>
+<span id="cb14-4"><a href="#cb14-4"></a>  fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(use_num <span class="sc">~</span> age <span class="sc">+</span> livch <span class="sc">+</span> urban, <span class="at">data=</span>d, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">return</span>(<span class="fu">coef</span>(fit))</span>
+<span id="cb14-6"><a href="#cb14-6"></a>}, <span class="at">R=</span><span class="dv">1000</span>)</span>
+<span id="cb14-7"><a href="#cb14-7"></a>boot_fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ORDINARY NONPARAMETRIC BOOTSTRAP
+
+
+Call:
+boot(data = Contraception, statistic = function(data, indices) {
+    d &lt;- data[indices, ]
+    fit &lt;- glm(use_num ~ age + livch + urban, data = d, family = binomial(link = "logit"))
+    return(coef(fit))
+}, R = 1000)
+
+
+Bootstrap Statistics :
+       original        bias    std. error
+t1* -1.56804374 -0.0067118991 0.123053057
+t2* -0.02399512 -0.0001941084 0.007193948
+t3*  1.05918582  0.0065718308 0.155691426
+t4*  1.28780501  0.0024604551 0.162848757
+t5*  1.21638466  0.0035732271 0.165559373
+t6*  0.79718138  0.0052819863 0.105728152</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>boot_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(boot_fit<span class="sc">$</span>t)</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">names</span>(boot_df) <span class="ot">&lt;-</span> <span class="fu">names</span>(boot_fit<span class="sc">$</span>t0)</span>
+<span id="cb16-3"><a href="#cb16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4"></a>boot_long <span class="ot">&lt;-</span> boot_df <span class="sc">%&gt;%</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"term"</span>, <span class="at">values_to =</span> <span class="st">"beta"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a>ci_df <span class="ot">&lt;-</span> boot_long <span class="sc">%&gt;%</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a>  <span class="fu">group_by</span>(term) <span class="sc">%&gt;%</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb16-10"><a href="#cb16-10"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(beta),</span>
+<span id="cb16-11"><a href="#cb16-11"></a>    <span class="at">lo =</span> <span class="fu">quantile</span>(beta, <span class="fl">0.025</span>),</span>
+<span id="cb16-12"><a href="#cb16-12"></a>    <span class="at">hi =</span> <span class="fu">quantile</span>(beta, <span class="fl">0.975</span>),</span>
+<span id="cb16-13"><a href="#cb16-13"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a>  )</span>
+<span id="cb16-15"><a href="#cb16-15"></a></span>
+<span id="cb16-16"><a href="#cb16-16"></a><span class="fu">ggplot</span>(boot_long, <span class="fu">aes</span>(<span class="at">x =</span> beta)) <span class="sc">+</span></span>
+<span id="cb16-17"><a href="#cb16-17"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">35</span>) <span class="sc">+</span></span>
+<span id="cb16-18"><a href="#cb16-18"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> term, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb16-19"><a href="#cb16-19"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> ci_df, <span class="fu">aes</span>(<span class="at">xintercept =</span> mean), <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb16-20"><a href="#cb16-20"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> ci_df, <span class="fu">aes</span>(<span class="at">xintercept =</span> lo), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb16-21"><a href="#cb16-21"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> ci_df, <span class="fu">aes</span>(<span class="at">xintercept =</span> hi), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb16-22"><a href="#cb16-22"></a>  <span class="fu">labs</span>(</span>
+<span id="cb16-23"><a href="#cb16-23"></a>    <span class="at">title =</span> <span class="st">"Bootstrap distributions of coefficient estimates"</span>,</span>
+<span id="cb16-24"><a href="#cb16-24"></a>    <span class="at">subtitle =</span> <span class="st">"Solid = mean; dashed = 95% percentile interval (R = 1000)"</span>,</span>
+<span id="cb16-25"><a href="#cb16-25"></a>    <span class="at">x =</span> <span class="st">"Coefficient estimate"</span>,</span>
+<span id="cb16-26"><a href="#cb16-26"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
+<span id="cb16-27"><a href="#cb16-27"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-28"><a href="#cb16-28"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb16-29"><a href="#cb16-29"></a>  <span class="fu">theme</span>(</span>
+<span id="cb16-30"><a href="#cb16-30"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb16-31"><a href="#cb16-31"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
+<span id="cb16-32"><a href="#cb16-32"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>The <strong>bias</strong> for all coefficients is relatively small, which is a good sign that the bootstrap estimates closely match the original estimates.</p></li>
+<li><p>The <strong>standard errors</strong> are also within reasonable ranges, indicating that the coefficients are relatively stable across the bootstrapped samples. However, <code>livch</code> and <code>urban</code> coefficients have somewhat higher variability compared to <code>age</code>.</p></li>
+</ul>
+<p>This result suggests that the model is <strong>not overfitting</strong>, as the coefficients appear stable with small bias and reasonable variability. I run that bootstrap algorithm in order to support the robustness of my model.</p>
+</section>
+<section id="iii-influential-observations" class="level3">
+<h3 class="anchored" data-anchor-id="iii-influential-observations">iii) <strong>Influential Observations:</strong></h3>
+<p>This plot identifies points with high leverage (potentially influential points) based on the distance of their leverage (horizontal axis) and standardized residuals (vertical axis).</p>
+</section>
+<section id="iv-collinearity" class="level3">
+<h3 class="anchored" data-anchor-id="iv-collinearity">iv) <strong>Collinearity:</strong></h3>
+<p>All predictors have a VIF below 5, which suggests no problematic collinearity that might affect model stability.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>simulated_residuals <span class="ot">&lt;-</span> <span class="fu">simulateResiduals</span>(</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="at">fittedModel =</span> model</span>
+<span id="cb17-3"><a href="#cb17-3"></a>  )</span>
+<span id="cb17-4"><a href="#cb17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="fu">plot</span>(simulated_residuals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="i-qq-plot-of-residuals" class="level3">
+<h3 class="anchored" data-anchor-id="i-qq-plot-of-residuals">i) <strong>QQ Plot of Residuals:</strong></h3>
+<p>Since the residuals fall almost perfectly along the line, this indicates that they are well-behaved and likely normally distributed. The Kolmogorov-Smirnov (KS) test shows no significant deviation from expectations (p-values &gt; 0.05).</p>
+</section>
+<section id="ii-residual-vs.-predicted-rank-transformed" class="level3">
+<h3 class="anchored" data-anchor-id="ii-residual-vs.-predicted-rank-transformed">ii) <strong>Residual vs.&nbsp;Predicted (Rank Transformed):</strong></h3>
+<p>The random scatter of residuals and lack of any clear pattern indicate that the model fits well, with no significant problems detected.</p>
+<p>Eventually, I am not going to use the second model or any adjustment to the model as the first one seems to have a reasonable good fit without violating the assumptions.</p>
+</section>
+</section>
+<section id="e.-results-interpretation-and-coefficienteffect-plots" class="level2">
+<h2 class="anchored" data-anchor-id="e.-results-interpretation-and-coefficienteffect-plots">e. Results Interpretation and Coefficient/Effect Plots</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Coefficient plot with `theme_minimal()`</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">plot_model</span>(model, </span>
+<span id="cb18-3"><a href="#cb18-3"></a>            <span class="at">show.values =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb18-4"><a href="#cb18-4"></a>            <span class="at">value.offset =</span> <span class="fl">0.3</span>,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>            <span class="at">title =</span> <span class="st">"Coefficient Plot of Logistic Regression"</span>) <span class="sc">+</span> </span>
+<span id="cb18-6"><a href="#cb18-6"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Plot the effects of the model</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(model), <span class="at">main =</span> <span class="st">"Effects of Predictors on Contraception Use"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The <strong>log-odds coefficients</strong> can be converted into <strong>odds ratios</strong> (OR) by exponentiating the coefficients. This helps in understanding the percentage change in the odds of the response variable. The odds ratio tells us the multiplicative change in the odds of the outcome for a one-unit change in the predictor. If the odds ratio is above 1, the odds of the event increase; if below 1, the odds decrease.</p>
+<ul>
+<li><p><strong>age</strong>: The odds ratio is exp⁡(−0.023995) = 0.976, meaning that for each additional year of age, the odds of using contraception decrease by about 2.4%. This is less than the 5% threshold, so while it’s statistically significant, it did not meet our criteria for a practically significant effect.</p></li>
+<li><p><strong>livch1</strong>: The odds ratio for having one child is exp⁡(1.059) = 2.884, meaning the odds of using contraception are 188.4% higher compared to women with no children and much higher from 10% (our threshold).</p></li>
+<li><p><strong>livch2</strong>: The odds ratio for having two children is exp⁡(1.288) = 3.626, meaning the odds of using contraception are 262.6% higher compared to women with no children and much higher from 10% (our threshold).</p></li>
+<li><p><strong>livch3+</strong>: The odds ratio for having three or more children is exp⁡(1.216) = 3.375, meaning the odds of using contraception are 237.5% higher compared to women with no children and much higher from 10% (our threshold).</p></li>
+<li><p><strong>urbanY</strong>: The odds ratio is exp⁡(0.797) = 2.219, meaning living in an urban area increases the odds of using contraception by 121.9% compared to rural areas and much higher from 10% (our threshold).</p></li>
+</ul>
+<p>The predictors <code>livch</code> and <code>urban</code> have strong and significant effects on the odds of using contraception, with odds ratios well above 1, meaning their effects are both statistically and practically significant based on our 10% threshold.</p>
+<p>In the logistic regression model examining the use of contraception (<code>use_num</code>) based on <code>age</code>, <code>livch</code> (number of living children), and <code>urban</code> (urban vs.&nbsp;non-urban), categorical predictors were automatically encoded by R into dummy variables. Specifically, <code>livch</code> and <code>urban</code> are categorical variables, and R created separate coefficients for each level of <code>livch</code> (e.g., <code>livch1</code>, <code>livch2</code>, <code>livch3+</code>), comparing each to a reference category (<code>livch = 0</code>). Similarly, for <code>urban</code>, the coefficient <code>urbanY</code> compares living in an urban area (<code>Y</code>) to the reference group living in a non-urban area (<code>N</code>). These coefficients reflect the change in the log-odds of using contraception compared to the reference categories. This encoding allows for a detailed understanding of how each level of the categorical variables affects the likelihood of using contraception.</p>
+</section>
+</section>
+<section id="question-2-analysis-of-gopher-tortoise-data" class="level1">
+<h1>Question 2: Analysis of Gopher Tortoise Data</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="do">## LOAD DATA</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>g_url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/bbolker/mm_workshops/master/data/gopherdat2.csv"</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>g_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(g_url)</span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="do">## Centering of the variable year</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a>g_data<span class="sc">$</span>year_c <span class="ot">&lt;-</span> g_data<span class="sc">$</span>year <span class="sc">-</span> <span class="fu">mean</span>(g_data<span class="sc">$</span>year)</span>
+<span id="cb20-7"><a href="#cb20-7"></a></span>
+<span id="cb20-8"><a href="#cb20-8"></a><span class="fu">head</span>(g_data,<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Site year shells  type Area density prev year_c
+1    BS 2004      0 Fresh 15.2     4.8  1.0     -1
+2    BS 2005      0 Fresh 15.2     4.8  1.0      0
+3    BS 2006      0 Fresh 15.2     4.8  1.0      1
+4    CB 2004      1 Fresh 16.0     2.8  4.3     -1
+5    CB 2005      0 Fresh 16.0     2.8  8.0      0
+6    CB 2006      1 Fresh 16.0     2.8 17.6      1
+7  Cent 2004      0 Fresh  6.9    29.1 28.6     -1
+8  Cent 2005      1 Fresh  6.9    29.1 51.9      0
+9  Cent 2006      1 Fresh  6.9    29.1 10.7      1
+10   CF 2004      9 Fresh 43.2     4.2 80.7     -1</code></pre>
+</div>
+</div>
+<section id="a.-data-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="a.-data-visualization">a. Data Visualization</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Line plot</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">ggplot</span>(g_data, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> shells, <span class="at">color =</span> Site, <span class="at">group =</span> Site)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span>  <span class="co"># Line size for visibility</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"black"</span>) <span class="sc">+</span>  <span class="co"># Points with white fill for better contrast</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="fu">labs</span>(</span>
+<span id="cb22-6"><a href="#cb22-6"></a>    <span class="at">title =</span> <span class="st">"Trends in Gopher Shell Counts Over Time by Site"</span>,</span>
+<span id="cb22-7"><a href="#cb22-7"></a>    <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb22-8"><a href="#cb22-8"></a>    <span class="at">y =</span> <span class="st">"Number of Shells"</span>,</span>
+<span id="cb22-9"><a href="#cb22-9"></a>    <span class="at">color =</span> <span class="st">"Site"</span>  <span class="co"># Legend title</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a>  ) <span class="sc">+</span></span>
+<span id="cb22-11"><a href="#cb22-11"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span>  <span class="co"># Clean theme</span></span>
+<span id="cb22-12"><a href="#cb22-12"></a>  <span class="fu">theme</span>(</span>
+<span id="cb22-13"><a href="#cb22-13"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,  <span class="co"># Legend positioning</span></span>
+<span id="cb22-14"><a href="#cb22-14"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>),  <span class="co"># Smaller centered title</span></span>
+<span id="cb22-15"><a href="#cb22-15"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),  <span class="co"># Axis title size</span></span>
+<span id="cb22-16"><a href="#cb22-16"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>)  <span class="co"># Axis text size</span></span>
+<span id="cb22-17"><a href="#cb22-17"></a>  ) <span class="sc">+</span></span>
+<span id="cb22-18"><a href="#cb22-18"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set3"</span>)  <span class="co"># Color palette</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The <strong>first plot</strong> shows the variability in shell numbers across different sites and years, with some showing increasing or decreasing trends.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># Scatterplot</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">ggplot</span>(g_data, <span class="fu">aes</span>(<span class="at">x =</span> prev, <span class="at">y =</span> shells, <span class="at">color =</span> type)) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"grey"</span>) <span class="sc">+</span>  <span class="co"># Points with transparency</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">labs</span>(</span>
+<span id="cb23-5"><a href="#cb23-5"></a>    <span class="at">title =</span> <span class="st">"Relationship Between Shell Counts and Seroprevalence"</span>,</span>
+<span id="cb23-6"><a href="#cb23-6"></a>    <span class="at">x =</span> <span class="st">"Seroprevalence"</span>,</span>
+<span id="cb23-7"><a href="#cb23-7"></a>    <span class="at">y =</span> <span class="st">"Number of Shells"</span>,</span>
+<span id="cb23-8"><a href="#cb23-8"></a>    <span class="at">color =</span> <span class="st">"Type"</span>  <span class="co"># Legend title</span></span>
+<span id="cb23-9"><a href="#cb23-9"></a>  ) <span class="sc">+</span></span>
+<span id="cb23-10"><a href="#cb23-10"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">color =</span> <span class="st">"lightblue"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span>  <span class="co"># Smooth line</span></span>
+<span id="cb23-11"><a href="#cb23-11"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span>  <span class="co"># Clean theme</span></span>
+<span id="cb23-12"><a href="#cb23-12"></a>  <span class="fu">theme</span>(</span>
+<span id="cb23-13"><a href="#cb23-13"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,  <span class="co"># Legend positioning</span></span>
+<span id="cb23-14"><a href="#cb23-14"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>),  <span class="co"># Smaller centered title</span></span>
+<span id="cb23-15"><a href="#cb23-15"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),  <span class="co"># Axis title size</span></span>
+<span id="cb23-16"><a href="#cb23-16"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>)  <span class="co"># Axis text size</span></span>
+<span id="cb23-17"><a href="#cb23-17"></a>  ) <span class="sc">+</span></span>
+<span id="cb23-18"><a href="#cb23-18"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>)  <span class="co"># Color palette</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The <strong>second plot</strong> suggests a positive correlation between seroprevalence and the number of shells, particularly when seroprevalence is high.</li>
+</ul>
+</section>
+<section id="b.-model-fit" class="level2">
+<h2 class="anchored" data-anchor-id="b.-model-fit">b. Model Fit</h2>
+<p>In this analysis, the response variable is the count of shells, making a Poisson Regression Model an appropriate choice given the nature of the data. To ensure robust estimation, we will adhere to the rule of requiring at least 10-20 observations per predictor. Therefore, the number of predictors will be minimized to meet this criterion, balancing model complexity and data sufficiency for accurate inference.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="do">## Model Fit</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>poisson_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(shells <span class="sc">~</span> year_c <span class="sc">+</span> prev <span class="sc">+</span> <span class="fu">offset</span>(<span class="fu">log</span>(Area)), <span class="at">data =</span> g_data, <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">"log"</span>))</span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="fu">summary</span>(poisson_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = shells ~ year_c + prev + offset(log(Area)), family = poisson(link = "log"), 
+    data = g_data)
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -3.557101   0.241276 -14.743  &lt; 2e-16 ***
+year_c      -0.229100   0.164966  -1.389    0.165    
+prev         0.021828   0.004326   5.045 4.52e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 49.800  on 29  degrees of freedom
+Residual deviance: 24.317  on 27  degrees of freedom
+AIC: 84.172
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="do">## Over-dispersion Check</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>dispersion <span class="ot">&lt;-</span> <span class="fu">summary</span>(poisson_model)<span class="sc">$</span>deviance <span class="sc">/</span> <span class="fu">summary</span>(poisson_model)<span class="sc">$</span>df.residual</span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="st">"Dispersion ="</span>, dispersion))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Dispersion ="      "0.900646372066475"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">dispersiontest</span>(poisson_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Overdispersion test
+
+data:  poisson_model
+z = -1.0315, p-value = 0.8488
+alternative hypothesis: true dispersion is greater than 1
+sample estimates:
+dispersion 
+ 0.7688125 </code></pre>
+</div>
+</div>
+<p>The dispersion statistic is calculated as <strong>0.901</strong>, which is less than 1, indicating that the model does not exhibit overdispersion (The results of the dispersion test further confirm this, with a test statistic of <strong>-1.0315</strong> and a p-value of <strong>0.8488</strong>), so Poisson-Regression is an appropriate model for the problem.</p>
+</section>
+<section id="c.-model-fit-using-bbmle" class="level2">
+<h2 class="anchored" data-anchor-id="c.-model-fit-using-bbmle">c.&nbsp;Model Fit Using bbmle</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="do">## Transforming year as a factor</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>g_data <span class="ot">&lt;-</span> <span class="fu">transform</span>(</span>
+<span id="cb30-3"><a href="#cb30-3"></a>  g_data,</span>
+<span id="cb30-4"><a href="#cb30-4"></a>  <span class="at">year =</span> <span class="fu">as.factor</span>(year)</span>
+<span id="cb30-5"><a href="#cb30-5"></a>  )</span>
+<span id="cb30-6"><a href="#cb30-6"></a></span>
+<span id="cb30-7"><a href="#cb30-7"></a><span class="co"># Fit the Poisson model using bbmle formula interface</span></span>
+<span id="cb30-8"><a href="#cb30-8"></a>poisson_model_bbmle <span class="ot">&lt;-</span>  <span class="fu">mle2</span>(shells <span class="sc">~</span> <span class="fu">dpois</span>(<span class="at">lambda =</span> <span class="fu">exp</span>(b0 <span class="sc">+</span> b1 <span class="sc">*</span> year_c                                  <span class="sc">+</span> b2 <span class="sc">*</span> prev <span class="sc">+</span> <span class="fu">log</span>(Area))),</span>
+<span id="cb30-9"><a href="#cb30-9"></a>                             <span class="at">start =</span> <span class="fu">list</span>(<span class="at">b0 =</span> <span class="dv">0</span>, <span class="at">b1 =</span> <span class="dv">0</span>, <span class="at">b2 =</span> <span class="dv">0</span>),</span>
+<span id="cb30-10"><a href="#cb30-10"></a>                             <span class="at">data =</span> g_data) </span>
+<span id="cb30-11"><a href="#cb30-11"></a></span>
+<span id="cb30-12"><a href="#cb30-12"></a><span class="fu">summary</span>(poisson_model_bbmle)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Maximum likelihood estimation
+
+Call:
+mle2(minuslogl = shells ~ dpois(lambda = exp(b0 + b1 * year_c + 
+    b2 * prev + log(Area))), start = list(b0 = 0, b1 = 0, b2 = 0), 
+    data = g_data)
+
+Coefficients:
+     Estimate Std. Error  z value     Pr(z)    
+b0 -3.5563450  0.2412167 -14.7434 &lt; 2.2e-16 ***
+b1 -0.2283314  0.1649610  -1.3842    0.1663    
+b2  0.0218136  0.0043262   5.0422 4.601e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+-2 log L: 78.17166 </code></pre>
+</div>
+</div>
+<p>The results obtained from the Poisson regression models fitted using the <code>glm()</code> function and the <code>bbmle::mle2()</code> function are notably similar, indicating consistency across both methodologies. Furthermore, if the original factor variable for <code>year</code> is employed in the <code>glm()</code> model, the estimates would closely align with those derived from the <code>bbmle</code> approach.</p>
+</section>
+<section id="d.-creation-of-a-negative-log-likelihood-function" class="level2">
+<h2 class="anchored" data-anchor-id="d.-creation-of-a-negative-log-likelihood-function">d.&nbsp;Creation of a Negative Log-likelihood Function</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># the Negative Log-Likelihood</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>NGLL <span class="ot">&lt;-</span> <span class="cf">function</span>(b0, b1, b2) {</span>
+<span id="cb32-3"><a href="#cb32-3"></a>  lamda <span class="ot">&lt;-</span> <span class="fu">exp</span>(b0 <span class="sc">+</span> b1 <span class="sc">*</span> g_data<span class="sc">$</span>year_c <span class="sc">+</span> b2 <span class="sc">*</span> g_data<span class="sc">$</span>prev <span class="sc">+</span> <span class="fu">log</span>(g_data<span class="sc">$</span>Area)) </span>
+<span id="cb32-4"><a href="#cb32-4"></a>  negative_log_likelihood <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">dpois</span>(g_data<span class="sc">$</span>shells, <span class="at">lambda =</span> lamda, <span class="at">log =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb32-5"><a href="#cb32-5"></a>  </span>
+<span id="cb32-6"><a href="#cb32-6"></a>  <span class="fu">return</span>(negative_log_likelihood)</span>
+<span id="cb32-7"><a href="#cb32-7"></a>}</span>
+<span id="cb32-8"><a href="#cb32-8"></a></span>
+<span id="cb32-9"><a href="#cb32-9"></a><span class="do">## NGLL(0,0,0)    ## Test</span></span>
+<span id="cb32-10"><a href="#cb32-10"></a></span>
+<span id="cb32-11"><a href="#cb32-11"></a><span class="co"># Using optim to Minimize the Negative Log-Likelihood</span></span>
+<span id="cb32-12"><a href="#cb32-12"></a>my_optim <span class="ot">&lt;-</span> <span class="fu">optim</span>(<span class="at">par =</span> <span class="fu">c</span>(<span class="at">b0 =</span> <span class="dv">0</span>, <span class="at">b1 =</span> <span class="dv">0</span>, <span class="at">b2 =</span> <span class="dv">0</span>), </span>
+<span id="cb32-13"><a href="#cb32-13"></a>                   <span class="at">fn =</span> <span class="cf">function</span>(params) </span>
+<span id="cb32-14"><a href="#cb32-14"></a>                     <span class="fu">NGLL</span>(params[<span class="dv">1</span>], params[<span class="dv">2</span>], params[<span class="dv">3</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="e.-comparison-of-parameters-for-different-approaches" class="level2">
+<h2 class="anchored" data-anchor-id="e.-comparison-of-parameters-for-different-approaches">e. Comparison of Parameters for Different Approaches</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="do">## Estimates from poisson_model</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>poisson_model_params <span class="ot">&lt;-</span> <span class="fu">coef</span>(poisson_model)</span>
+<span id="cb33-3"><a href="#cb33-3"></a>  </span>
+<span id="cb33-4"><a href="#cb33-4"></a><span class="do">## Estimates from poisson_model_bbmle</span></span>
+<span id="cb33-5"><a href="#cb33-5"></a>poisson_model_bbmle_params <span class="ot">&lt;-</span> <span class="fu">coef</span>(poisson_model_bbmle)</span>
+<span id="cb33-6"><a href="#cb33-6"></a>  </span>
+<span id="cb33-7"><a href="#cb33-7"></a><span class="do">## Estimates from my_optim</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a>my_optim_params <span class="ot">&lt;-</span> my_optim<span class="sc">$</span>par</span>
+<span id="cb33-9"><a href="#cb33-9"></a>  </span>
+<span id="cb33-10"><a href="#cb33-10"></a><span class="co"># Creation of a data frame</span></span>
+<span id="cb33-11"><a href="#cb33-11"></a>comparisons <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb33-12"><a href="#cb33-12"></a>    <span class="at">poisson_model =</span> poisson_model_params,</span>
+<span id="cb33-13"><a href="#cb33-13"></a>    <span class="at">poisson_model_bbmle =</span> poisson_model_bbmle_params,</span>
+<span id="cb33-14"><a href="#cb33-14"></a>    <span class="at">my_optim =</span> my_optim_params</span>
+<span id="cb33-15"><a href="#cb33-15"></a>  )</span>
+<span id="cb33-16"><a href="#cb33-16"></a><span class="fu">print</span>(comparisons)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            poisson_model poisson_model_bbmle    my_optim
+(Intercept)   -3.55710147         -3.55634500 -3.55661473
+year_c        -0.22909974         -0.22833145 -0.22926177
+prev           0.02182806          0.02181357  0.02182335</code></pre>
+</div>
+</div>
+<p>As we expected, the coefficients of all methods are nearly identical.</p>
+</section>
+<section id="f.-wald-and-profile-cis" class="level2">
+<h2 class="anchored" data-anchor-id="f.-wald-and-profile-cis">f.&nbsp;Wald and profile CIs</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="do">## WALD CIs for Poisson GLM</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="co"># Extract the standard errors and compute the Wald CI</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a>poisson_model_se <span class="ot">&lt;-</span> <span class="fu">summary</span>(poisson_model)<span class="sc">$</span>coefficients[, <span class="st">"Std. Error"</span>]</span>
+<span id="cb35-4"><a href="#cb35-4"></a>wald_ci_glm <span class="ot">&lt;-</span> <span class="fu">confint.default</span>(poisson_model, <span class="at">level =</span> <span class="fl">0.95</span>)  <span class="co"># Wald CI from GLM</span></span>
+<span id="cb35-5"><a href="#cb35-5"></a></span>
+<span id="cb35-6"><a href="#cb35-6"></a><span class="do">## WALD CIs for bbmle</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a><span class="co"># Get standard errors from bbmle fit</span></span>
+<span id="cb35-8"><a href="#cb35-8"></a>poisson_model_bbmle_se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(poisson_model_bbmle)))</span>
+<span id="cb35-9"><a href="#cb35-9"></a>wald_ci_bbmle <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
+<span id="cb35-10"><a href="#cb35-10"></a>  poisson_model_bbmle_params <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> poisson_model_bbmle_se,</span>
+<span id="cb35-11"><a href="#cb35-11"></a>  poisson_model_bbmle_params <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> poisson_model_bbmle_se</span>
+<span id="cb35-12"><a href="#cb35-12"></a>)</span>
+<span id="cb35-13"><a href="#cb35-13"></a></span>
+<span id="cb35-14"><a href="#cb35-14"></a><span class="do">## WALD CIs for custom optim fit</span></span>
+<span id="cb35-15"><a href="#cb35-15"></a><span class="co"># Assume that the Hessian matrix (returned by optim) is an approximation of the covariance matrix</span></span>
+<span id="cb35-16"><a href="#cb35-16"></a>hessian <span class="ot">&lt;-</span> <span class="fu">optimHess</span>(<span class="at">par =</span> my_optim<span class="sc">$</span>par, <span class="at">fn =</span> <span class="cf">function</span>(params) <span class="fu">NGLL</span>(params[<span class="dv">1</span>], params[<span class="dv">2</span>], params[<span class="dv">3</span>]))</span>
+<span id="cb35-17"><a href="#cb35-17"></a>cov_matrix <span class="ot">&lt;-</span> <span class="fu">solve</span>(hessian)</span>
+<span id="cb35-18"><a href="#cb35-18"></a>optim_se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(cov_matrix))</span>
+<span id="cb35-19"><a href="#cb35-19"></a></span>
+<span id="cb35-20"><a href="#cb35-20"></a><span class="co"># Compute the Wald CIs for optim estimates</span></span>
+<span id="cb35-21"><a href="#cb35-21"></a>wald_ci_optim <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
+<span id="cb35-22"><a href="#cb35-22"></a>  my_optim_params <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> optim_se,</span>
+<span id="cb35-23"><a href="#cb35-23"></a>  my_optim_params <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> optim_se</span>
+<span id="cb35-24"><a href="#cb35-24"></a>)</span>
+<span id="cb35-25"><a href="#cb35-25"></a></span>
+<span id="cb35-26"><a href="#cb35-26"></a><span class="do">## PROFILE CIs for bbmle</span></span>
+<span id="cb35-27"><a href="#cb35-27"></a>profile_ci_bbmle <span class="ot">&lt;-</span> <span class="fu">confint</span>(poisson_model_bbmle)</span>
+<span id="cb35-28"><a href="#cb35-28"></a></span>
+<span id="cb35-29"><a href="#cb35-29"></a><span class="do">## Print Wald CIs and compare</span></span>
+<span id="cb35-30"><a href="#cb35-30"></a>wald_comparison <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb35-31"><a href="#cb35-31"></a>  <span class="at">Parameter =</span> <span class="fu">names</span>(poisson_model_params),</span>
+<span id="cb35-32"><a href="#cb35-32"></a>  <span class="at">Wald_CI_GLM =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(wald_ci_glm[, <span class="dv">1</span>], <span class="dv">4</span>), <span class="st">" to "</span>, <span class="fu">round</span>(wald_ci_glm[, <span class="dv">2</span>], <span class="dv">4</span>)),</span>
+<span id="cb35-33"><a href="#cb35-33"></a>  <span class="at">Wald_CI_bbmle =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(wald_ci_bbmle[, <span class="dv">1</span>], <span class="dv">4</span>), <span class="st">" to "</span>, <span class="fu">round</span>(wald_ci_bbmle[, <span class="dv">2</span>], <span class="dv">4</span>)),</span>
+<span id="cb35-34"><a href="#cb35-34"></a>  <span class="at">Wald_CI_optim =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(wald_ci_optim[, <span class="dv">1</span>], <span class="dv">4</span>), <span class="st">" to "</span>, <span class="fu">round</span>(wald_ci_optim[, <span class="dv">2</span>], <span class="dv">4</span>))</span>
+<span id="cb35-35"><a href="#cb35-35"></a>)</span>
+<span id="cb35-36"><a href="#cb35-36"></a></span>
+<span id="cb35-37"><a href="#cb35-37"></a><span class="fu">print</span>(wald_comparison)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Parameter       Wald_CI_GLM      Wald_CI_bbmle      Wald_CI_optim
+1 (Intercept)  -4.03 to -3.0842 -4.0291 to -3.0836 -4.0293 to -3.0839
+2      year_c -0.5524 to 0.0942   -0.5517 to 0.095   -0.5526 to 0.094
+3        prev  0.0133 to 0.0303   0.0133 to 0.0303   0.0134 to 0.0303</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="do">## Compare Profile CIs for bbmle</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>profile_ci_comparison <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb37-3"><a href="#cb37-3"></a>  <span class="at">Parameter =</span> <span class="fu">names</span>(poisson_model_bbmle_params),</span>
+<span id="cb37-4"><a href="#cb37-4"></a>  <span class="at">Profile_CI_bbmle =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(profile_ci_bbmle[, <span class="dv">1</span>], <span class="dv">4</span>), <span class="st">" to "</span>, <span class="fu">round</span>(profile_ci_bbmle[, <span class="dv">2</span>], <span class="dv">4</span>))</span>
+<span id="cb37-5"><a href="#cb37-5"></a>)</span>
+<span id="cb37-6"><a href="#cb37-6"></a></span>
+<span id="cb37-7"><a href="#cb37-7"></a><span class="fu">print</span>(profile_ci_comparison)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Parameter   Profile_CI_bbmle
+1        b0 -4.0618 to -3.1126
+2        b1  -0.5554 to 0.0943
+3        b2   0.0134 to 0.0304</code></pre>
+</div>
+</div>
+<section id="wald-confidence-intervals-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="wald-confidence-intervals-comparison">Wald Confidence Intervals Comparison:</h3>
+<ul>
+<li><p><strong>Wald CI for GLM</strong>: These were calculated based on the standard errors from the GLM output. For example, for the intercept (b0​), the Wald CI ranges from -4.03 to -3.08.</p></li>
+<li><p><strong>Wald CI for bbmle</strong>: Similarly calculated using the standard errors from the <code>bbmle</code> model fit, yielding a very similar CI for b0 ​ (-4.0291 to -3.0836), showing that both methods are almost identical in their results.</p></li>
+<li><p><strong>Wald CI for optim</strong>: Using the Hessian matrix from <code>optim</code> as an estimate for the covariance matrix, the Wald CI for the intercept (b0​) was again very close to the previous estimates, ranging from -4.0293 to -3.0839.</p></li>
+</ul>
+<p><strong>Conclusion</strong>: The Wald CIs are very consistent across all three approaches, indicating that the parameter estimates are robust regardless of the method used to fit the model.</p>
+</section>
+<section id="profile-confidence-intervals-for-bbmle" class="level3">
+<h3 class="anchored" data-anchor-id="profile-confidence-intervals-for-bbmle">Profile Confidence Intervals (for bbmle):</h3>
+<ul>
+<li><p>These CIs were calculated using profile likelihood, which often provides more accurate confidence intervals, particularly for non-linear models or when the parameters are near the boundary of their possible range.</p></li>
+<li><p>For the intercept (b0​), the profile CI ranges from -4.0618 to -3.1126, which is slightly wider than the Wald CIs. Similarly, the CIs for the other parameters (b1​ and b2) are also slightly broader compared to the Wald CIs.</p></li>
+</ul>
+</section>
+<section id="comparison-and-interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="comparison-and-interpretation">Comparison and Interpretation:</h3>
+<ul>
+<li><p><strong>Wald vs Profile CIs</strong>: Wald CIs assume normality of the estimates and may be narrower, especially when the model is highly non-linear. Profile CIs are generally considered more accurate as they account for the curvature of the likelihood surface. In our case, the profile CIs are slightly wider, suggesting a more conservative estimate of uncertainty around the parameters.</p></li>
+<li><p><strong>Consistency across methods</strong>: The similarity in Wald CIs from GLM, bbmle, and optim suggests that all methods are implemented correctly and are producing nearly identical parameter estimates.</p></li>
+</ul>
+<p>This shows that both Wald and profile CIs are in good agreement, though the profile CIs provide a slightly more conservative interval, as expected. These comparisons also confirm that your implementations across different methods are consistent.</p>
+</section>
+</section>
+</section>
+<section id="question-3-endometrial-data" class="level1">
+<h1>Question 3: Endometrial Data</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="do">## LOAD DATA</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="fu">data</span>(<span class="st">"endometrial"</span>, <span class="at">package =</span> <span class="st">"brglm2"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3"></a><span class="fu">head</span>(endometrial,<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   NV PI   EH HG
+1   0 13 1.64  0
+2   0 16 2.26  0
+3   0  8 3.14  0
+4   0 34 2.68  0
+5   0 20 1.28  0
+6   0  5 2.31  0
+7   0 17 1.80  0
+8   0 10 1.68  0
+9   0 26 1.56  0
+10  0 17 2.31  0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">summary</span>(endometrial)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       NV               PI              EH              HG        
+ Min.   :0.0000   Min.   : 0.00   Min.   :0.270   Min.   :0.0000  
+ 1st Qu.:0.0000   1st Qu.:11.00   1st Qu.:1.180   1st Qu.:0.0000  
+ Median :0.0000   Median :16.00   Median :1.640   Median :0.0000  
+ Mean   :0.1646   Mean   :17.38   Mean   :1.662   Mean   :0.3797  
+ 3rd Qu.:0.0000   3rd Qu.:21.00   3rd Qu.:2.015   3rd Qu.:1.0000  
+ Max.   :1.0000   Max.   :49.00   Max.   :3.610   Max.   :1.0000  </code></pre>
+</div>
+</div>
+<p>In this analysis, the response variable is the Hyperplasia Grade (NG), which is modeled as a binary outcome. The predictors used in the model are the number of vessels (NV), the Progesterone Index, and the Endometrial Index (EH). Based on Harrell’s guidelines for binary logistic regression models [@harrell], the number of observations in the dataset is sufficient to include all selected predictors, ensuring that the model avoids overfitting while maintaining adequate statistical power.</p>
+<p>To evaluate the relationship between NG and the predictors, three different modeling approaches will be employed:</p>
+<ol type="1">
+<li><p><strong>Standard Generalized Linear Model (GLM)</strong>: A logistic regression model will be fitted using the canonical logit link function to estimate the probability of a high hyperplasia grade given the predictor variables.</p></li>
+<li><p><strong>Bayesian Logistic Regression</strong>: A Bayesian approach will be applied to incorporate prior distributions for the model parameters, allowing for the integration of prior knowledge and uncertainty in the parameter estimates.</p></li>
+<li><p><strong>Bias-Reduced Logistic Regression</strong>: This approach will use Firth’s correction or another bias-reduction method to mitigate the small-sample bias often encountered in maximum likelihood estimates in logistic regression, particularly when rare events are present in the binary response.</p></li>
+</ol>
+<p>By comparing these methods, the aim is to assess their performance and suitability for modeling hyperplasia grade under different statistical frameworks, while ensuring robust inference.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="do">##HG vs Number of Vessels (NV)</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="fu">ggplot</span>(endometrial, <span class="fu">aes</span>(<span class="at">x =</span> NV, <span class="at">y =</span> HG)) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="#cb43-3"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="fl">0.05</span>, <span class="at">width =</span> <span class="dv">0</span>) <span class="sc">+</span>  <span class="co"># Add some jitter to separate the binary points</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"glm"</span>, <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"binomial"</span>), <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">formula =</span> <span class="st">"y ~ x"</span>) <span class="sc">+</span>  <span class="co"># Add logistic regression line</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"HG vs Number of Vessels"</span>,</span>
+<span id="cb43-6"><a href="#cb43-6"></a>       <span class="at">x =</span> <span class="st">"Number of Vessels (NV)"</span>,</span>
+<span id="cb43-7"><a href="#cb43-7"></a>       <span class="at">y =</span> <span class="st">"Hyperplasia Grade (HG)"</span>) <span class="sc">+</span></span>
+<span id="cb43-8"><a href="#cb43-8"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span>  </span>
+<span id="cb43-9"><a href="#cb43-9"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>))  <span class="co"># Adjust text size for clarity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="do">##HG vs Progesterone Index (PI)</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="fu">ggplot</span>(endometrial, <span class="fu">aes</span>(<span class="at">x =</span> PI, <span class="at">y =</span> HG)) <span class="sc">+</span></span>
+<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="fl">0.05</span>, <span class="at">width =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb44-4"><a href="#cb44-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"glm"</span>, <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"binomial"</span>), <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"green"</span>, <span class="at">formula =</span> <span class="st">"y ~ x"</span>) <span class="sc">+</span></span>
+<span id="cb44-5"><a href="#cb44-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"HG vs Progesterone Index"</span>,</span>
+<span id="cb44-6"><a href="#cb44-6"></a>       <span class="at">x =</span> <span class="st">"Progesterone Index (PI)"</span>,</span>
+<span id="cb44-7"><a href="#cb44-7"></a>       <span class="at">y =</span> <span class="st">"Hyperplasia Grade (HG)"</span>) <span class="sc">+</span></span>
+<span id="cb44-8"><a href="#cb44-8"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb44-9"><a href="#cb44-9"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="do">##HG vs Endometrial Height (EH)</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="fu">ggplot</span>(endometrial, <span class="fu">aes</span>(<span class="at">x =</span> EH, <span class="at">y =</span> HG)) <span class="sc">+</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="fl">0.05</span>, <span class="at">width =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb45-4"><a href="#cb45-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"glm"</span>, <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"binomial"</span>), <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">formula =</span> <span class="st">"y ~ x"</span>) <span class="sc">+</span></span>
+<span id="cb45-5"><a href="#cb45-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"HG vs Endometrial Height"</span>,</span>
+<span id="cb45-6"><a href="#cb45-6"></a>       <span class="at">x =</span> <span class="st">"Endometrial Height (EH)"</span>,</span>
+<span id="cb45-7"><a href="#cb45-7"></a>       <span class="at">y =</span> <span class="st">"Hyperplasia Grade (HG)"</span>) <span class="sc">+</span></span>
+<span id="cb45-8"><a href="#cb45-8"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Number of Vessels (NV)</strong> and <strong>Endometrial Height (EH)</strong> have strong, nonlinear relationships with hyperplasia grade (HG). On the other hand, <strong>Progesterone Index (PI)</strong> shows a much weaker and more linear relationship with HG, suggesting that it may be less influential in predicting hyperplasia compared to NV and EH.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="do">## Regular GLM Fit</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a>model_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(HG <span class="sc">~</span> NV <span class="sc">+</span> PI <span class="sc">+</span> EH, <span class="at">data =</span> endometrial, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb46-3"><a href="#cb46-3"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(model_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="do">## Bayesian Logistic Regression Fit</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a>model_bayesglm <span class="ot">&lt;-</span> <span class="fu">bayesglm</span>(HG <span class="sc">~</span> NV <span class="sc">+</span> PI <span class="sc">+</span> EH, <span class="at">data =</span> endometrial, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb47-3"><a href="#cb47-3"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(model_bayesglm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-25-2.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="do">## Bias-Reduced Logistic Regression Fit</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>model_brglmFit <span class="ot">&lt;-</span> <span class="fu">glm</span>(HG <span class="sc">~</span> NV <span class="sc">+</span> PI <span class="sc">+</span> EH, <span class="at">data =</span> endometrial, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>), <span class="at">method =</span> <span class="st">"brglmFit"</span>)</span>
+<span id="cb48-3"><a href="#cb48-3"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(model_brglmFit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-25-3.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">summary</span>(model_glm)      </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = HG ~ NV + PI + EH, family = binomial(link = "logit"), 
+    data = endometrial)
+
+Coefficients:
+              Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)    4.30452    1.63730   2.629 0.008563 ** 
+NV            18.18556 1715.75089   0.011 0.991543    
+PI            -0.04218    0.04433  -0.952 0.341333    
+EH            -2.90261    0.84555  -3.433 0.000597 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 104.903  on 78  degrees of freedom
+Residual deviance:  55.393  on 75  degrees of freedom
+AIC: 63.393
+
+Number of Fisher Scoring iterations: 17</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">summary</span>(model_bayesglm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+bayesglm(formula = HG ~ NV + PI + EH, family = binomial(link = "logit"), 
+    data = endometrial)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  3.71159    1.38954   2.671 0.007560 ** 
+NV           3.29816    1.58068   2.087 0.036929 *  
+PI          -0.02904    0.03657  -0.794 0.427261    
+EH          -2.62865    0.73865  -3.559 0.000373 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 104.903  on 78  degrees of freedom
+Residual deviance:  56.254  on 75  degrees of freedom
+AIC: 64.254
+
+Number of Fisher Scoring iterations: 20</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">summary</span>(model_brglmFit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = HG ~ NV + PI + EH, family = binomial(link = "logit"), 
+    data = endometrial, method = "brglmFit")
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.4740  -0.6706  -0.3411   0.3252   2.6123  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  3.77456    1.48869   2.535 0.011229 *  
+NV           2.92927    1.55076   1.889 0.058902 .  
+PI          -0.03475    0.03958  -0.878 0.379915    
+EH          -2.60416    0.77602  -3.356 0.000791 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 104.903  on 78  degrees of freedom
+Residual deviance:  56.575  on 75  degrees of freedom
+AIC:  64.575
+
+Type of estimator: AS_mixed (mixed bias-reducing adjusted score equations)
+Number of Fisher Scoring iterations: 6</code></pre>
+</div>
+</div>
+<section id="comparison-of-estimates" class="level3">
+<h3 class="anchored" data-anchor-id="comparison-of-estimates">1. Comparison of Estimates:</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>glm_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(model_glm)</span>
+<span id="cb55-2"><a href="#cb55-2"></a>bayesglm_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(model_bayesglm)</span>
+<span id="cb55-3"><a href="#cb55-3"></a>brglmFit_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(model_brglmFit)</span>
+<span id="cb55-4"><a href="#cb55-4"></a></span>
+<span id="cb55-5"><a href="#cb55-5"></a><span class="co"># Create a comparison data frame</span></span>
+<span id="cb55-6"><a href="#cb55-6"></a>comparison_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb55-7"><a href="#cb55-7"></a>  <span class="at">Coefficient =</span> <span class="fu">names</span>(glm_coefs),</span>
+<span id="cb55-8"><a href="#cb55-8"></a>  <span class="at">GLM =</span> <span class="fu">round</span>(glm_coefs, <span class="dv">4</span>),</span>
+<span id="cb55-9"><a href="#cb55-9"></a>  <span class="at">BayesGLM =</span> <span class="fu">round</span>(bayesglm_coefs, <span class="dv">4</span>),</span>
+<span id="cb55-10"><a href="#cb55-10"></a>  <span class="at">BRGLM =</span> <span class="fu">round</span>(brglmFit_coefs, <span class="dv">4</span>)</span>
+<span id="cb55-11"><a href="#cb55-11"></a>)</span>
+<span id="cb55-12"><a href="#cb55-12"></a></span>
+<span id="cb55-13"><a href="#cb55-13"></a><span class="co"># Print the comparison</span></span>
+<span id="cb55-14"><a href="#cb55-14"></a><span class="fu">print</span>(comparison_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Coefficient     GLM BayesGLM   BRGLM
+(Intercept) (Intercept)  4.3045   3.7116  3.7746
+NV                   NV 18.1856   3.2982  2.9293
+PI                   PI -0.0422  -0.0290 -0.0348
+EH                   EH -2.9026  -2.6286 -2.6042</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="co"># Long format</span></span>
+<span id="cb57-2"><a href="#cb57-2"></a>plot_df <span class="ot">&lt;-</span> comparison_df <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="#cb57-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(GLM, BayesGLM, BRGLM),</span>
+<span id="cb57-4"><a href="#cb57-4"></a>               <span class="at">names_to =</span> <span class="st">"Method"</span>,</span>
+<span id="cb57-5"><a href="#cb57-5"></a>               <span class="at">values_to =</span> <span class="st">"Estimate"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb57-6"><a href="#cb57-6"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb57-7"><a href="#cb57-7"></a>    <span class="at">Method =</span> <span class="fu">factor</span>(Method, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"GLM"</span>, <span class="st">"BayesGLM"</span>, <span class="st">"BRGLM"</span>)),</span>
+<span id="cb57-8"><a href="#cb57-8"></a>    <span class="at">Coefficient =</span> <span class="fu">factor</span>(Coefficient, <span class="at">levels =</span> <span class="fu">unique</span>(Coefficient))</span>
+<span id="cb57-9"><a href="#cb57-9"></a>  )</span>
+<span id="cb57-10"><a href="#cb57-10"></a></span>
+<span id="cb57-11"><a href="#cb57-11"></a><span class="co"># Portfolio theme (centered titles)</span></span>
+<span id="cb57-12"><a href="#cb57-12"></a>theme_portfolio <span class="ot">&lt;-</span> <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb57-13"><a href="#cb57-13"></a>  <span class="fu">theme</span>(</span>
+<span id="cb57-14"><a href="#cb57-14"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb57-15"><a href="#cb57-15"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb57-16"><a href="#cb57-16"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">8</span>)),</span>
+<span id="cb57-17"><a href="#cb57-17"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb57-18"><a href="#cb57-18"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb57-19"><a href="#cb57-19"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb57-20"><a href="#cb57-20"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb57-21"><a href="#cb57-21"></a>  )</span>
+<span id="cb57-22"><a href="#cb57-22"></a></span>
+<span id="cb57-23"><a href="#cb57-23"></a><span class="co"># Plot 1: Faceted coefficient comparison (one panel per coefficient)</span></span>
+<span id="cb57-24"><a href="#cb57-24"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_df, <span class="fu">aes</span>(<span class="at">x =</span> Estimate, <span class="at">y =</span> Method)) <span class="sc">+</span></span>
+<span id="cb57-25"><a href="#cb57-25"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb57-26"><a href="#cb57-26"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.6</span>) <span class="sc">+</span></span>
+<span id="cb57-27"><a href="#cb57-27"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb57-28"><a href="#cb57-28"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, Estimate)),</span>
+<span id="cb57-29"><a href="#cb57-29"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>,</span>
+<span id="cb57-30"><a href="#cb57-30"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
+<span id="cb57-31"><a href="#cb57-31"></a>  ) <span class="sc">+</span></span>
+<span id="cb57-32"><a href="#cb57-32"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Coefficient, <span class="at">scales =</span> <span class="st">"free_x"</span>, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb57-33"><a href="#cb57-33"></a>  <span class="fu">labs</span>(</span>
+<span id="cb57-34"><a href="#cb57-34"></a>    <span class="at">title =</span> <span class="st">"Coefficient estimates across methods"</span>,</span>
+<span id="cb57-35"><a href="#cb57-35"></a>    <span class="at">subtitle =</span> <span class="st">"GLM vs BayesGLM vs BRGLM"</span>,</span>
+<span id="cb57-36"><a href="#cb57-36"></a>    <span class="at">x =</span> <span class="st">"Estimate"</span>,</span>
+<span id="cb57-37"><a href="#cb57-37"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb57-38"><a href="#cb57-38"></a>  ) <span class="sc">+</span></span>
+<span id="cb57-39"><a href="#cb57-39"></a>  theme_portfolio</span>
+<span id="cb57-40"><a href="#cb57-40"></a></span>
+<span id="cb57-41"><a href="#cb57-41"></a></span>
+<span id="cb57-42"><a href="#cb57-42"></a><span class="co"># Plot 2: Slope chart per coefficient (separate facets, not mixed)</span></span>
+<span id="cb57-43"><a href="#cb57-43"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_df, <span class="fu">aes</span>(<span class="at">x =</span> Method, <span class="at">y =</span> Estimate, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb57-44"><a href="#cb57-44"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb57-45"><a href="#cb57-45"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb57-46"><a href="#cb57-46"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.4</span>) <span class="sc">+</span></span>
+<span id="cb57-47"><a href="#cb57-47"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Coefficient, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb57-48"><a href="#cb57-48"></a>  <span class="fu">labs</span>(</span>
+<span id="cb57-49"><a href="#cb57-49"></a>    <span class="at">title =</span> <span class="st">"Coefficient profiles by method"</span>,</span>
+<span id="cb57-50"><a href="#cb57-50"></a>    <span class="at">subtitle =</span> <span class="st">"Each panel shows one coefficient; dashed line marks zero"</span>,</span>
+<span id="cb57-51"><a href="#cb57-51"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb57-52"><a href="#cb57-52"></a>    <span class="at">y =</span> <span class="st">"Estimate"</span></span>
+<span id="cb57-53"><a href="#cb57-53"></a>  ) <span class="sc">+</span></span>
+<span id="cb57-54"><a href="#cb57-54"></a>  theme_portfolio <span class="sc">+</span></span>
+<span id="cb57-55"><a href="#cb57-55"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>))</span>
+<span id="cb57-56"><a href="#cb57-56"></a></span>
+<span id="cb57-57"><a href="#cb57-57"></a><span class="co"># Combine into ONE figure (two rows) without mixing plots</span></span>
+<span id="cb57-58"><a href="#cb57-58"></a>(p1 <span class="sc">/</span> p2) <span class="sc">+</span></span>
+<span id="cb57-59"><a href="#cb57-59"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb57-60"><a href="#cb57-60"></a>    <span class="at">title =</span> <span class="st">"Comparison of coefficient estimates across estimation methods"</span>,</span>
+<span id="cb57-61"><a href="#cb57-61"></a>    <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">16</span>))</span>
+<span id="cb57-62"><a href="#cb57-62"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The comparison of coefficient estimates from the <code>GLM</code>, <code>BayesGLM</code>, and <code>BRGLM</code> models shows notable differences, particularly for the <code>Intercept</code> and the predictor <code>NV</code>. The <code>GLM</code> model produced a very high estimate for <code>NV</code> (18.1856), suggesting a strong positive effect, while both the <code>BayesGLM</code> (3.2982) and <code>BRGLM</code> (2.9293) models showed much lower estimates, indicating they may mitigate the extreme influence of this predictor. For <code>PI</code>, all models yielded negative estimates, with <code>GLM</code> at -0.0422 and the Bayesian methods being slightly more consistent around -0.0290 and -0.0348. The <code>EH</code> variable also had negative estimates across all models, with <code>GLM</code> showing the most negative effect at -2.9026. Overall, the Bayesian and bias-reduced methods provide more stable and less extreme estimates compared to the traditional <code>GLM</code>, which may be prone to overfitting.</p>
+</section>
+<section id="wald-and-likelihood-profile-confidence-intervals" class="level3">
+<h3 class="anchored" data-anchor-id="wald-and-likelihood-profile-confidence-intervals">2. Wald and likelihood profile confidence intervals</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="co"># Calculate Wald Confidence Intervals for GLM</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a>wald_ci_glm <span class="ot">&lt;-</span> <span class="fu">confint.default</span>(model_glm, <span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb58-3"><a href="#cb58-3"></a>wald_ci_glm <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(wald_ci_glm)</span>
+<span id="cb58-4"><a href="#cb58-4"></a><span class="fu">colnames</span>(wald_ci_glm) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lower"</span>, <span class="st">"upper"</span>)</span>
+<span id="cb58-5"><a href="#cb58-5"></a></span>
+<span id="cb58-6"><a href="#cb58-6"></a><span class="co"># Calculate Profile Likelihood Confidence Intervals for GLM</span></span>
+<span id="cb58-7"><a href="#cb58-7"></a>profile_ci_glm <span class="ot">&lt;-</span> <span class="fu">confint</span>(model_glm)</span>
+<span id="cb58-8"><a href="#cb58-8"></a>profile_ci_glm <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(profile_ci_glm)</span>
+<span id="cb58-9"><a href="#cb58-9"></a><span class="fu">colnames</span>(profile_ci_glm) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lower"</span>, <span class="st">"upper"</span>)</span>
+<span id="cb58-10"><a href="#cb58-10"></a></span>
+<span id="cb58-11"><a href="#cb58-11"></a><span class="co"># Calculate Wald Confidence Intervals for bayesglm</span></span>
+<span id="cb58-12"><a href="#cb58-12"></a>wald_ci_bayesglm <span class="ot">&lt;-</span> <span class="fu">confint.default</span>(model_bayesglm, <span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb58-13"><a href="#cb58-13"></a>wald_ci_bayesglm <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(wald_ci_bayesglm)</span>
+<span id="cb58-14"><a href="#cb58-14"></a><span class="fu">colnames</span>(wald_ci_bayesglm) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lower"</span>, <span class="st">"upper"</span>)</span>
+<span id="cb58-15"><a href="#cb58-15"></a></span>
+<span id="cb58-16"><a href="#cb58-16"></a><span class="co"># Profile CI for bayesglm may not be straightforward, use the posterior predictive intervals</span></span>
+<span id="cb58-17"><a href="#cb58-17"></a><span class="co"># Instead, we will stick to the Wald for bayesglm as it is commonly used</span></span>
+<span id="cb58-18"><a href="#cb58-18"></a></span>
+<span id="cb58-19"><a href="#cb58-19"></a><span class="co"># Calculate Wald Confidence Intervals for brglmFit</span></span>
+<span id="cb58-20"><a href="#cb58-20"></a>wald_ci_brglmFit <span class="ot">&lt;-</span> <span class="fu">confint.default</span>(model_brglmFit, <span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb58-21"><a href="#cb58-21"></a>wald_ci_brglmFit <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(wald_ci_brglmFit)</span>
+<span id="cb58-22"><a href="#cb58-22"></a><span class="fu">colnames</span>(wald_ci_brglmFit) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lower"</span>, <span class="st">"upper"</span>)</span>
+<span id="cb58-23"><a href="#cb58-23"></a></span>
+<span id="cb58-24"><a href="#cb58-24"></a><span class="co"># Calculate Profile Likelihood Confidence Intervals for brglmFit</span></span>
+<span id="cb58-25"><a href="#cb58-25"></a>profile_ci_brglmFit <span class="ot">&lt;-</span> <span class="fu">confint</span>(model_brglmFit)</span>
+<span id="cb58-26"><a href="#cb58-26"></a>profile_ci_brglmFit <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(profile_ci_brglmFit)</span>
+<span id="cb58-27"><a href="#cb58-27"></a><span class="fu">colnames</span>(profile_ci_brglmFit) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lower"</span>, <span class="st">"upper"</span>)</span>
+<span id="cb58-28"><a href="#cb58-28"></a></span>
+<span id="cb58-29"><a href="#cb58-29"></a><span class="co"># Create a summary comparison data frame</span></span>
+<span id="cb58-30"><a href="#cb58-30"></a>comparison <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb58-31"><a href="#cb58-31"></a>  <span class="at">Parameter =</span> <span class="fu">rownames</span>(wald_ci_glm),</span>
+<span id="cb58-32"><a href="#cb58-32"></a>  <span class="at">Wald_CI_GLM =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(wald_ci_glm<span class="sc">$</span>lower, <span class="dv">4</span>), <span class="st">" to "</span>, <span class="fu">round</span>(wald_ci_glm<span class="sc">$</span>upper, <span class="dv">4</span>)),</span>
+<span id="cb58-33"><a href="#cb58-33"></a>  <span class="at">Profile_CI_GLM =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(profile_ci_glm<span class="sc">$</span>lower, <span class="dv">4</span>), <span class="st">" to "</span>, <span class="fu">round</span>(profile_ci_glm<span class="sc">$</span>upper, <span class="dv">4</span>)),</span>
+<span id="cb58-34"><a href="#cb58-34"></a>  <span class="at">Wald_CI_BayesGLM =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(wald_ci_bayesglm<span class="sc">$</span>lower, <span class="dv">4</span>), <span class="st">" to "</span>, <span class="fu">round</span>(wald_ci_bayesglm<span class="sc">$</span>upper, <span class="dv">4</span>)),</span>
+<span id="cb58-35"><a href="#cb58-35"></a>  <span class="at">Wald_CI_brglmFit =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(wald_ci_brglmFit<span class="sc">$</span>lower, <span class="dv">4</span>), <span class="st">" to "</span>, <span class="fu">round</span>(wald_ci_brglmFit<span class="sc">$</span>upper, <span class="dv">4</span>)),</span>
+<span id="cb58-36"><a href="#cb58-36"></a>  <span class="at">Profile_CI_brglmFit =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(profile_ci_brglmFit<span class="sc">$</span>lower, <span class="dv">4</span>), <span class="st">" to "</span>, <span class="fu">round</span>(profile_ci_brglmFit<span class="sc">$</span>upper, <span class="dv">4</span>))</span>
+<span id="cb58-37"><a href="#cb58-37"></a>)</span>
+<span id="cb58-38"><a href="#cb58-38"></a></span>
+<span id="cb58-39"><a href="#cb58-39"></a><span class="co"># Print the comparison table</span></span>
+<span id="cb58-40"><a href="#cb58-40"></a><span class="fu">print</span>(comparison)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Parameter             Wald_CI_GLM       Profile_CI_GLM   Wald_CI_BayesGLM
+1 (Intercept)        1.0955 to 7.5136      1.4332 to 7.955    0.9881 to 6.435
+2          NV -3344.6244 to 3380.9955 -69.2281 to 506.1938   0.2001 to 6.3962
+3          PI       -0.1291 to 0.0447    -0.1371 to 0.0382  -0.1007 to 0.0426
+4          EH      -4.5599 to -1.2454    -4.786 to -1.4366 -4.0764 to -1.1809
+    Wald_CI_brglmFit Profile_CI_brglmFit
+1   0.8568 to 6.6923    0.8568 to 6.6923
+2  -0.1102 to 5.9687   -0.1102 to 5.9687
+3  -0.1123 to 0.0428   -0.1123 to 0.0428
+4 -4.1251 to -1.0832  -4.1251 to -1.0832</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>ci_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb60-2"><a href="#cb60-2"></a>  <span class="co"># GLM</span></span>
+<span id="cb60-3"><a href="#cb60-3"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb60-4"><a href="#cb60-4"></a>    <span class="at">Parameter =</span> <span class="fu">rownames</span>(wald_ci_glm),</span>
+<span id="cb60-5"><a href="#cb60-5"></a>    <span class="at">lower =</span> wald_ci_glm<span class="sc">$</span>lower,</span>
+<span id="cb60-6"><a href="#cb60-6"></a>    <span class="at">upper =</span> wald_ci_glm<span class="sc">$</span>upper,</span>
+<span id="cb60-7"><a href="#cb60-7"></a>    <span class="at">Method =</span> <span class="st">"GLM"</span>,</span>
+<span id="cb60-8"><a href="#cb60-8"></a>    <span class="at">CI_Type =</span> <span class="st">"Wald"</span></span>
+<span id="cb60-9"><a href="#cb60-9"></a>  ),</span>
+<span id="cb60-10"><a href="#cb60-10"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb60-11"><a href="#cb60-11"></a>    <span class="at">Parameter =</span> <span class="fu">rownames</span>(profile_ci_glm),</span>
+<span id="cb60-12"><a href="#cb60-12"></a>    <span class="at">lower =</span> profile_ci_glm<span class="sc">$</span>lower,</span>
+<span id="cb60-13"><a href="#cb60-13"></a>    <span class="at">upper =</span> profile_ci_glm<span class="sc">$</span>upper,</span>
+<span id="cb60-14"><a href="#cb60-14"></a>    <span class="at">Method =</span> <span class="st">"GLM"</span>,</span>
+<span id="cb60-15"><a href="#cb60-15"></a>    <span class="at">CI_Type =</span> <span class="st">"Profile"</span></span>
+<span id="cb60-16"><a href="#cb60-16"></a>  ),</span>
+<span id="cb60-17"><a href="#cb60-17"></a>  <span class="co"># BayesGLM (Wald only)</span></span>
+<span id="cb60-18"><a href="#cb60-18"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb60-19"><a href="#cb60-19"></a>    <span class="at">Parameter =</span> <span class="fu">rownames</span>(wald_ci_bayesglm),</span>
+<span id="cb60-20"><a href="#cb60-20"></a>    <span class="at">lower =</span> wald_ci_bayesglm<span class="sc">$</span>lower,</span>
+<span id="cb60-21"><a href="#cb60-21"></a>    <span class="at">upper =</span> wald_ci_bayesglm<span class="sc">$</span>upper,</span>
+<span id="cb60-22"><a href="#cb60-22"></a>    <span class="at">Method =</span> <span class="st">"BayesGLM"</span>,</span>
+<span id="cb60-23"><a href="#cb60-23"></a>    <span class="at">CI_Type =</span> <span class="st">"Wald"</span></span>
+<span id="cb60-24"><a href="#cb60-24"></a>  ),</span>
+<span id="cb60-25"><a href="#cb60-25"></a>  <span class="co"># brglmFit</span></span>
+<span id="cb60-26"><a href="#cb60-26"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb60-27"><a href="#cb60-27"></a>    <span class="at">Parameter =</span> <span class="fu">rownames</span>(wald_ci_brglmFit),</span>
+<span id="cb60-28"><a href="#cb60-28"></a>    <span class="at">lower =</span> wald_ci_brglmFit<span class="sc">$</span>lower,</span>
+<span id="cb60-29"><a href="#cb60-29"></a>    <span class="at">upper =</span> wald_ci_brglmFit<span class="sc">$</span>upper,</span>
+<span id="cb60-30"><a href="#cb60-30"></a>    <span class="at">Method =</span> <span class="st">"BRGLM"</span>,</span>
+<span id="cb60-31"><a href="#cb60-31"></a>    <span class="at">CI_Type =</span> <span class="st">"Wald"</span></span>
+<span id="cb60-32"><a href="#cb60-32"></a>  ),</span>
+<span id="cb60-33"><a href="#cb60-33"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb60-34"><a href="#cb60-34"></a>    <span class="at">Parameter =</span> <span class="fu">rownames</span>(profile_ci_brglmFit),</span>
+<span id="cb60-35"><a href="#cb60-35"></a>    <span class="at">lower =</span> profile_ci_brglmFit<span class="sc">$</span>lower,</span>
+<span id="cb60-36"><a href="#cb60-36"></a>    <span class="at">upper =</span> profile_ci_brglmFit<span class="sc">$</span>upper,</span>
+<span id="cb60-37"><a href="#cb60-37"></a>    <span class="at">Method =</span> <span class="st">"BRGLM"</span>,</span>
+<span id="cb60-38"><a href="#cb60-38"></a>    <span class="at">CI_Type =</span> <span class="st">"Profile"</span></span>
+<span id="cb60-39"><a href="#cb60-39"></a>  )</span>
+<span id="cb60-40"><a href="#cb60-40"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-41"><a href="#cb60-41"></a>  <span class="fu">filter</span>(Parameter <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-42"><a href="#cb60-42"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb60-43"><a href="#cb60-43"></a>    <span class="at">Parameter =</span> <span class="fu">factor</span>(Parameter, <span class="at">levels =</span> <span class="fu">rev</span>(<span class="fu">unique</span>(Parameter))),</span>
+<span id="cb60-44"><a href="#cb60-44"></a>    <span class="at">CI_Type =</span> <span class="fu">factor</span>(CI_Type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Wald"</span>, <span class="st">"Profile"</span>))</span>
+<span id="cb60-45"><a href="#cb60-45"></a>  )</span>
+<span id="cb60-46"><a href="#cb60-46"></a></span>
+<span id="cb60-47"><a href="#cb60-47"></a></span>
+<span id="cb60-48"><a href="#cb60-48"></a></span>
+<span id="cb60-49"><a href="#cb60-49"></a><span class="fu">ggplot</span>(ci_df, <span class="fu">aes</span>(<span class="at">x =</span> (lower <span class="sc">+</span> upper) <span class="sc">/</span> <span class="dv">2</span>, <span class="at">y =</span> Parameter)) <span class="sc">+</span></span>
+<span id="cb60-50"><a href="#cb60-50"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb60-51"><a href="#cb60-51"></a>  <span class="fu">geom_errorbarh</span>(</span>
+<span id="cb60-52"><a href="#cb60-52"></a>    <span class="fu">aes</span>(<span class="at">xmin =</span> lower, <span class="at">xmax =</span> upper, <span class="at">color =</span> CI_Type),</span>
+<span id="cb60-53"><a href="#cb60-53"></a>    <span class="at">height =</span> <span class="fl">0.25</span>,</span>
+<span id="cb60-54"><a href="#cb60-54"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.6</span>)</span>
+<span id="cb60-55"><a href="#cb60-55"></a>  ) <span class="sc">+</span></span>
+<span id="cb60-56"><a href="#cb60-56"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb60-57"><a href="#cb60-57"></a>    <span class="fu">aes</span>(<span class="at">color =</span> CI_Type),</span>
+<span id="cb60-58"><a href="#cb60-58"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.6</span>),</span>
+<span id="cb60-59"><a href="#cb60-59"></a>    <span class="at">size =</span> <span class="dv">2</span></span>
+<span id="cb60-60"><a href="#cb60-60"></a>  ) <span class="sc">+</span></span>
+<span id="cb60-61"><a href="#cb60-61"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Method, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb60-62"><a href="#cb60-62"></a>  <span class="fu">labs</span>(</span>
+<span id="cb60-63"><a href="#cb60-63"></a>    <span class="at">title =</span> <span class="st">"Comparison of confidence intervals across estimation methods"</span>,</span>
+<span id="cb60-64"><a href="#cb60-64"></a>    <span class="at">subtitle =</span> <span class="st">"Wald vs profile likelihood intervals for logistic regression coefficients"</span>,</span>
+<span id="cb60-65"><a href="#cb60-65"></a>    <span class="at">x =</span> <span class="st">"Coefficient estimate"</span>,</span>
+<span id="cb60-66"><a href="#cb60-66"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb60-67"><a href="#cb60-67"></a>    <span class="at">color =</span> <span class="st">"CI type"</span></span>
+<span id="cb60-68"><a href="#cb60-68"></a>  ) <span class="sc">+</span></span>
+<span id="cb60-69"><a href="#cb60-69"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb60-70"><a href="#cb60-70"></a>  <span class="fu">theme</span>(</span>
+<span id="cb60-71"><a href="#cb60-71"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb60-72"><a href="#cb60-72"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb60-73"><a href="#cb60-73"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb60-74"><a href="#cb60-74"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb60-75"><a href="#cb60-75"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The comparison of the Wald and profile likelihood confidence intervals (CIs) across the three logistic regression models reveals important insights into the parameter estimates’ uncertainty. For the <strong>GLM model</strong>, the Wald CIs are notably wider for the NV parameter, suggesting significant uncertainty, while the profile CIs are narrower, indicating a more concentrated estimate around the true parameter value. The profile CIs for both models show that the lower bound for NV is negative, raising concerns about potential non-identifiability in this parameter. In contrast, the <strong>bayesglm model</strong> presents relatively consistent Wald CIs, indicating robustness, though it lacks a profile CI due to complexities in Bayesian frameworks. For the <strong>brglmFit model</strong>, both the Wald and profile CIs provide nearly identical ranges, reflecting the model’s stability in estimating the parameters. Overall, the profile likelihood CIs generally offer a more refined estimate compared to the Wald CIs, particularly for the NV parameter, emphasizing the value of profiling in models with potential non-linearity or parameter constraints.</p>
+</section>
+<section id="wald-and-likelihood-ratio-test-p-values-for-all-three-non-intercept-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="wald-and-likelihood-ratio-test-p-values-for-all-three-non-intercept-coefficients">3. Wald and likelihood ratio-test p-values for all three (non-intercept) coefficients</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="co"># Function to extract Wald p-values</span></span>
+<span id="cb61-2"><a href="#cb61-2"></a>wald_p_values <span class="ot">&lt;-</span> <span class="cf">function</span>(model) {</span>
+<span id="cb61-3"><a href="#cb61-3"></a>  coefs <span class="ot">&lt;-</span> <span class="fu">summary</span>(model)<span class="sc">$</span>coefficients</span>
+<span id="cb61-4"><a href="#cb61-4"></a>  p_values <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(coefs[, <span class="st">"Estimate"</span>] <span class="sc">/</span> coefs[, <span class="st">"Std. Error"</span>])))</span>
+<span id="cb61-5"><a href="#cb61-5"></a>  <span class="fu">return</span>(p_values[<span class="sc">-</span><span class="dv">1</span>])  <span class="co"># Exclude the intercept</span></span>
+<span id="cb61-6"><a href="#cb61-6"></a>}</span>
+<span id="cb61-7"><a href="#cb61-7"></a></span>
+<span id="cb61-8"><a href="#cb61-8"></a><span class="co"># Extract Wald p-values</span></span>
+<span id="cb61-9"><a href="#cb61-9"></a>wald_p_glm <span class="ot">&lt;-</span> <span class="fu">wald_p_values</span>(model_glm)</span>
+<span id="cb61-10"><a href="#cb61-10"></a>wald_p_bayesglm <span class="ot">&lt;-</span> <span class="fu">wald_p_values</span>(model_bayesglm)</span>
+<span id="cb61-11"><a href="#cb61-11"></a>wald_p_brglmFit <span class="ot">&lt;-</span> <span class="fu">wald_p_values</span>(model_brglmFit)</span>
+<span id="cb61-12"><a href="#cb61-12"></a></span>
+<span id="cb61-13"><a href="#cb61-13"></a><span class="co"># Likelihood Ratio Tests</span></span>
+<span id="cb61-14"><a href="#cb61-14"></a>lrt_glm <span class="ot">&lt;-</span> <span class="fu">anova</span>(model_glm, <span class="at">test =</span> <span class="st">"LRT"</span>)</span>
+<span id="cb61-15"><a href="#cb61-15"></a>lrt_bayesglm <span class="ot">&lt;-</span> <span class="fu">anova</span>(model_bayesglm, <span class="at">test =</span> <span class="st">"LRT"</span>)</span>
+<span id="cb61-16"><a href="#cb61-16"></a>lrt_brglmFit <span class="ot">&lt;-</span> <span class="fu">anova</span>(model_brglmFit, <span class="at">test =</span> <span class="st">"LRT"</span>)</span>
+<span id="cb61-17"><a href="#cb61-17"></a></span>
+<span id="cb61-18"><a href="#cb61-18"></a><span class="co"># Extract LRT p-values</span></span>
+<span id="cb61-19"><a href="#cb61-19"></a>lrt_p_glm <span class="ot">&lt;-</span> lrt_glm<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;Chi)</span><span class="st">`</span>[<span class="sc">-</span><span class="dv">1</span>]  <span class="co"># Exclude the intercept</span></span>
+<span id="cb61-20"><a href="#cb61-20"></a>lrt_p_bayesglm <span class="ot">&lt;-</span> lrt_bayesglm<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;Chi)</span><span class="st">`</span>[<span class="sc">-</span><span class="dv">1</span>]  <span class="co"># Exclude the intercept</span></span>
+<span id="cb61-21"><a href="#cb61-21"></a>lrt_p_brglmFit <span class="ot">&lt;-</span> lrt_brglmFit<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;Chi)</span><span class="st">`</span>[<span class="sc">-</span><span class="dv">1</span>]  <span class="co"># Exclude the intercept</span></span>
+<span id="cb61-22"><a href="#cb61-22"></a></span>
+<span id="cb61-23"><a href="#cb61-23"></a><span class="co"># Combine Wald and LRT p-values</span></span>
+<span id="cb61-24"><a href="#cb61-24"></a>comparison <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb61-25"><a href="#cb61-25"></a>  <span class="at">Coefficient =</span> <span class="fu">names</span>(wald_p_glm),</span>
+<span id="cb61-26"><a href="#cb61-26"></a>  <span class="at">Wald_p_GLM =</span> wald_p_glm,</span>
+<span id="cb61-27"><a href="#cb61-27"></a>  <span class="at">Wald_p_BayesGLM =</span> wald_p_bayesglm,</span>
+<span id="cb61-28"><a href="#cb61-28"></a>  <span class="at">Wald_p_BrglmFit =</span> wald_p_brglmFit,</span>
+<span id="cb61-29"><a href="#cb61-29"></a>  <span class="at">LRT_p_GLM =</span> lrt_p_glm,</span>
+<span id="cb61-30"><a href="#cb61-30"></a>  <span class="at">LRT_p_BayesGLM =</span> lrt_p_bayesglm,</span>
+<span id="cb61-31"><a href="#cb61-31"></a>  <span class="at">LRT_p_BrglmFit =</span> lrt_p_brglmFit</span>
+<span id="cb61-32"><a href="#cb61-32"></a>)</span>
+<span id="cb61-33"><a href="#cb61-33"></a></span>
+<span id="cb61-34"><a href="#cb61-34"></a><span class="co"># Print the comparison table</span></span>
+<span id="cb61-35"><a href="#cb61-35"></a><span class="fu">print</span>(comparison)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Coefficient   Wald_p_GLM Wald_p_BayesGLM Wald_p_BrglmFit    LRT_p_GLM
+NV          NV 0.9915432347    0.0369292945    0.0589021443 5.322163e-08
+PI          PI 0.3413329906    0.4272605796    0.3799145349 6.957899e-01
+EH          EH 0.0005973924    0.0003726778    0.0007913435 8.777197e-06
+   LRT_p_BayesGLM LRT_p_BrglmFit
+NV   5.322163e-08   8.687300e-08
+PI   6.957899e-01   8.219755e-01
+EH   1.377741e-05   9.394201e-06</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="co"># Tidy p-values</span></span>
+<span id="cb63-2"><a href="#cb63-2"></a>pval_df <span class="ot">&lt;-</span> comparison <span class="sc">%&gt;%</span></span>
+<span id="cb63-3"><a href="#cb63-3"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb63-4"><a href="#cb63-4"></a>    <span class="at">cols =</span> <span class="sc">-</span>Coefficient,</span>
+<span id="cb63-5"><a href="#cb63-5"></a>    <span class="at">names_to =</span> <span class="st">"Test"</span>,</span>
+<span id="cb63-6"><a href="#cb63-6"></a>    <span class="at">values_to =</span> <span class="st">"p_value"</span></span>
+<span id="cb63-7"><a href="#cb63-7"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb63-8"><a href="#cb63-8"></a>  <span class="fu">separate</span>(Test, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Type"</span>, <span class="st">"Method"</span>), <span class="at">sep =</span> <span class="st">"_p_"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb63-9"><a href="#cb63-9"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb63-10"><a href="#cb63-10"></a>    <span class="at">Method =</span> <span class="fu">factor</span>(Method, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"GLM"</span>, <span class="st">"BayesGLM"</span>, <span class="st">"BrglmFit"</span>)),</span>
+<span id="cb63-11"><a href="#cb63-11"></a>    <span class="at">Type =</span> <span class="fu">factor</span>(Type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Wald"</span>, <span class="st">"LRT"</span>)),</span>
+<span id="cb63-12"><a href="#cb63-12"></a>    <span class="at">Coefficient =</span> <span class="fu">factor</span>(Coefficient, <span class="at">levels =</span> <span class="fu">rev</span>(<span class="fu">unique</span>(Coefficient))),</span>
+<span id="cb63-13"><a href="#cb63-13"></a>    <span class="co"># Label formatting: scientific for very small p-values</span></span>
+<span id="cb63-14"><a href="#cb63-14"></a>    <span class="at">p_label =</span> <span class="fu">ifelse</span>(p_value <span class="sc">&lt;</span> <span class="fl">0.001</span>, <span class="fu">format</span>(p_value, <span class="at">scientific =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb63-15"><a href="#cb63-15"></a>                     <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, p_value))</span>
+<span id="cb63-16"><a href="#cb63-16"></a>  )</span>
+<span id="cb63-17"><a href="#cb63-17"></a></span>
+<span id="cb63-18"><a href="#cb63-18"></a><span class="co"># Portfolio theme (centered title)</span></span>
+<span id="cb63-19"><a href="#cb63-19"></a>theme_portfolio <span class="ot">&lt;-</span> <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb63-20"><a href="#cb63-20"></a>  <span class="fu">theme</span>(</span>
+<span id="cb63-21"><a href="#cb63-21"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb63-22"><a href="#cb63-22"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb63-23"><a href="#cb63-23"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">8</span>)),</span>
+<span id="cb63-24"><a href="#cb63-24"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb63-25"><a href="#cb63-25"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb63-26"><a href="#cb63-26"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb63-27"><a href="#cb63-27"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb63-28"><a href="#cb63-28"></a>  )</span>
+<span id="cb63-29"><a href="#cb63-29"></a></span>
+<span id="cb63-30"><a href="#cb63-30"></a><span class="fu">ggplot</span>(pval_df, <span class="fu">aes</span>(<span class="at">x =</span> p_value, <span class="at">y =</span> Coefficient, <span class="at">color =</span> Type)) <span class="sc">+</span></span>
+<span id="cb63-31"><a href="#cb63-31"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.05</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb63-32"><a href="#cb63-32"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.7</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.6</span>)) <span class="sc">+</span></span>
+<span id="cb63-33"><a href="#cb63-33"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb63-34"><a href="#cb63-34"></a>    <span class="fu">aes</span>(<span class="at">label =</span> p_label),</span>
+<span id="cb63-35"><a href="#cb63-35"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.6</span>),</span>
+<span id="cb63-36"><a href="#cb63-36"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.9</span>,</span>
+<span id="cb63-37"><a href="#cb63-37"></a>    <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb63-38"><a href="#cb63-38"></a>    <span class="at">show.legend =</span> <span class="cn">FALSE</span></span>
+<span id="cb63-39"><a href="#cb63-39"></a>  ) <span class="sc">+</span></span>
+<span id="cb63-40"><a href="#cb63-40"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Method, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb63-41"><a href="#cb63-41"></a>  <span class="fu">scale_x_log10</span>(</span>
+<span id="cb63-42"><a href="#cb63-42"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.01</span>, <span class="fl">0.001</span>, <span class="fl">1e-4</span>),</span>
+<span id="cb63-43"><a href="#cb63-43"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"0.1"</span>, <span class="st">"0.01"</span>, <span class="st">"0.001"</span>, <span class="st">"1e-4"</span>),</span>
+<span id="cb63-44"><a href="#cb63-44"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">1e-5</span>, <span class="dv">1</span>)</span>
+<span id="cb63-45"><a href="#cb63-45"></a>  ) <span class="sc">+</span></span>
+<span id="cb63-46"><a href="#cb63-46"></a>  <span class="fu">labs</span>(</span>
+<span id="cb63-47"><a href="#cb63-47"></a>    <span class="at">title =</span> <span class="st">"Wald vs Likelihood Ratio Test p-values"</span>,</span>
+<span id="cb63-48"><a href="#cb63-48"></a>    <span class="at">subtitle =</span> <span class="st">"Dashed line indicates the 0.05 significance threshold"</span>,</span>
+<span id="cb63-49"><a href="#cb63-49"></a>    <span class="at">x =</span> <span class="st">"p-value"</span>,</span>
+<span id="cb63-50"><a href="#cb63-50"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb63-51"><a href="#cb63-51"></a>    <span class="at">color =</span> <span class="st">"Test"</span></span>
+<span id="cb63-52"><a href="#cb63-52"></a>  ) <span class="sc">+</span></span>
+<span id="cb63-53"><a href="#cb63-53"></a>  theme_portfolio</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The comparison of Wald and likelihood ratio test (LRT) p-values for the coefficients of the models reveals some significant insights. For the variable <strong>NV</strong>, the Wald p-values across the three models (GLM: 0.992, BayesGLM: 0.037, BrglmFit: 0.059) indicate that NV is not statistically significant in the GLM, while it shows significance in the other two models, particularly in BayesGLM. However, the LRT p-values confirm NV’s strong significance across all models, with values close to zero (e.g., GLM: 5.32×10−85.32, BayesGLM: 5.32×10−85.32, BrglmFit: 8.69×10−88.69. For the <strong>PI</strong> variable, all models yield high Wald p-values (ranging from 0.341 to 0.427), indicating non-significance, which is corroborated by the LRT p-values (GLM: 0.696, BayesGLM: 0.696, BrglmFit: 0.822). In contrast, <strong>EH</strong> shows a notable discrepancy, with Wald p-values suggesting significance (ranging from 0.0006 to 0.0008), while LRT p-values reinforce this finding with values below 0.0001, affirming EH as a significant predictor in all three models. Overall, the LRT p-values provide a more consistent measure of significance across the models, particularly for NV and EH, while the Wald p-values indicate variability in significance for NV depending on the modeling approach used.</p>
+<p>Differences in results arise from the estimation techniques used, how each method handles sample size and data characteristics, the incorporation of prior information in Bayesian approaches, and the robustness of the confidence intervals and p-values generated by each method.</p>
+</section>
+</section>
+<section id="question-4-zero-inflation-by-simulation" class="level1">
+<h1>Question 4: Zero-inflation by simulation</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="do">## LOAD DATA</span></span>
+<span id="cb64-2"><a href="#cb64-2"></a><span class="fu">data</span>(<span class="st">"bioChemists"</span>, <span class="at">package=</span><span class="st">"pscl"</span>)</span>
+<span id="cb64-3"><a href="#cb64-3"></a></span>
+<span id="cb64-4"><a href="#cb64-4"></a><span class="co"># Fit a negative binomial model</span></span>
+<span id="cb64-5"><a href="#cb64-5"></a>nb_model <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(art <span class="sc">~</span> fem <span class="sc">+</span> mar <span class="sc">+</span> kid5 <span class="sc">+</span> phd <span class="sc">+</span> ment, <span class="at">data =</span> bioChemists)</span>
+<span id="cb64-6"><a href="#cb64-6"></a></span>
+<span id="cb64-7"><a href="#cb64-7"></a><span class="co"># Display summary of the model</span></span>
+<span id="cb64-8"><a href="#cb64-8"></a><span class="fu">summary</span>(nb_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm.nb(formula = art ~ fem + mar + kid5 + phd + ment, data = bioChemists, 
+    init.theta = 2.264387695, link = log)
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  0.256144   0.137348   1.865 0.062191 .  
+femWomen    -0.216418   0.072636  -2.979 0.002887 ** 
+marMarried   0.150489   0.082097   1.833 0.066791 .  
+kid5        -0.176415   0.052813  -3.340 0.000837 ***
+phd          0.015271   0.035873   0.426 0.670326    
+ment         0.029082   0.003214   9.048  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for Negative Binomial(2.2644) family taken to be 1)
+
+    Null deviance: 1109.0  on 914  degrees of freedom
+Residual deviance: 1004.3  on 909  degrees of freedom
+AIC: 3135.9
+
+Number of Fisher Scoring iterations: 1
+
+              Theta:  2.264 
+          Std. Err.:  0.271 
+
+ 2 x log-likelihood:  -3121.917 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="co"># Check model performance</span></span>
+<span id="cb66-2"><a href="#cb66-2"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(nb_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb67-2"><a href="#cb67-2"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb67-3"><a href="#cb67-3"></a></span>
+<span id="cb67-4"><a href="#cb67-4"></a><span class="co"># Simulate new responses from the negative binomial model</span></span>
+<span id="cb67-5"><a href="#cb67-5"></a>sim_vals <span class="ot">&lt;-</span> <span class="fu">simulate</span>(nb_model, <span class="at">nsim =</span> <span class="dv">1000</span>)</span>
+<span id="cb67-6"><a href="#cb67-6"></a></span>
+<span id="cb67-7"><a href="#cb67-7"></a><span class="co"># Calculate the number of zeros in each simulation and in the observed data</span></span>
+<span id="cb67-8"><a href="#cb67-8"></a>zeros_sim <span class="ot">&lt;-</span> <span class="fu">colSums</span>(sim_vals <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb67-9"><a href="#cb67-9"></a>zeros_obs <span class="ot">&lt;-</span> <span class="fu">sum</span>(bioChemists<span class="sc">$</span>art <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb67-10"><a href="#cb67-10"></a></span>
+<span id="cb67-11"><a href="#cb67-11"></a><span class="co"># Create a histogram of the number of zeros in the simulated data</span></span>
+<span id="cb67-12"><a href="#cb67-12"></a><span class="fu">hist</span>(zeros_sim, <span class="at">breaks =</span> <span class="dv">30</span>, <span class="at">main =</span> <span class="st">"Distribution of Simulated Zeros"</span>,</span>
+<span id="cb67-13"><a href="#cb67-13"></a>     <span class="at">xlab =</span> <span class="st">"Number of Zeros"</span>, <span class="at">col =</span> <span class="st">"skyblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>,</span>
+<span id="cb67-14"><a href="#cb67-14"></a>     <span class="at">xlim =</span> <span class="fu">range</span>(<span class="fu">c</span>(zeros_sim, zeros_obs), <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb67-15"><a href="#cb67-15"></a>     <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb67-16"><a href="#cb67-16"></a></span>
+<span id="cb67-17"><a href="#cb67-17"></a><span class="co"># Add a vertical line representing the observed number of zeros</span></span>
+<span id="cb67-18"><a href="#cb67-18"></a><span class="fu">abline</span>(<span class="at">v =</span> zeros_obs, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb67-19"><a href="#cb67-19"></a></span>
+<span id="cb67-20"><a href="#cb67-20"></a><span class="co"># Overlay the normal distribution curve for reference</span></span>
+<span id="cb67-21"><a href="#cb67-21"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="fu">mean</span>(zeros_sim), <span class="at">sd =</span> <span class="fu">sd</span>(zeros_sim)), </span>
+<span id="cb67-22"><a href="#cb67-22"></a>      <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>After simulating 1000 new responses from your fitted model, the distribution of zeros in the simulated datasets closely follows a normal curve. The vertical red line shows the actual number of zeros in the observed data. The fact that the observed zeros align well with the center of the distribution suggests that the model captures the number of zeros in the data quite well.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="co"># Calculate p-value based on simulation results</span></span>
+<span id="cb68-2"><a href="#cb68-2"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(zeros_sim <span class="sc">&gt;=</span> zeros_obs)</span>
+<span id="cb68-3"><a href="#cb68-3"></a><span class="fu">cat</span>(<span class="st">"P-value from simulation: "</span>, p_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P-value from simulation:  0.6 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="co"># Perform DHARMa test for zero-inflation</span></span>
+<span id="cb70-2"><a href="#cb70-2"></a>simulation_output <span class="ot">&lt;-</span> <span class="fu">simulateResiduals</span>(<span class="at">fittedModel =</span> nb_model)</span>
+<span id="cb70-3"><a href="#cb70-3"></a>dh_test <span class="ot">&lt;-</span> <span class="fu">testZeroInflation</span>(simulation_output)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="fu">cat</span>(<span class="st">"P-value from DHARMa test: "</span>, dh_test<span class="sc">$</span>p.value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P-value from DHARMa test:  0.856 </code></pre>
+</div>
+</div>
+<p>The calculated p-value based on the simulated zeros is 0.6. This indicates that the observed number of zeros is not unusually high or low compared to the simulated datasets, further confirming that the model appropriately accounts for the zeros in the data.</p>
+<p>The calculated p-value based on the simulated zeros is 0.6. This indicates that the observed number of zeros is not unusually high or low compared to the simulated datasets, further confirming that the model appropriately accounts for the zeros in the data. The test returns a <strong>p-value of 0.856</strong>, which is well above the typical 0.05 threshold. This high p-value strongly suggests that there is no evidence of zero-inflation in the data. In other words, the number of zeros predicted by the model is consistent with what was observed, and there is no need for a more complex model (like a zero-inflated model).</p>
+<p>Therefore, our model appropriately explains the factors influencing article production among biochemistry students, with <code>gender</code>, <code>number of kids under 5</code>, and <code>mentorship</code> being the key drivers.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
