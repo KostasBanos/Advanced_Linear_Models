@@ -6,6 +6,8 @@ website:
   title: "STATS 720 Portfolio — Konstantinos Banos"
   navbar:
     left:
+      - text: "Home"
+        href: index.qmd
       - text: "Project 1"
         href: Project_1.qmd
       - text: "Project 2"
@@ -31,5 +33,6 @@ execute:
   message: false
 
 editor: visual
+
 
 
