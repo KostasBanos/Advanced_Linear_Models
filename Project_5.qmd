@@ -1,14 +1,16 @@
 ---
-title: "STATS 720 Project"
+title: "Project 5"
 format: pdf
 css: style.css
-author: "Konstantinos Banos 400609120"
+author: "Konstantinos Banos"
 date: "Dec/20/2024"
 editor: visual
 execute: 
   echo: true
   message: false
 ---
+
+\newpage
 
 ```{r}
 #| warning: false
