@@ -1,9 +1,9 @@
 ---
-title: "STATS 720 Assignment 4 "
+title: "Project 4 "
 format: 
-  pdf:
+  html:
     code-line-numbers: true
-author: "Konstantinos Banos 400609120"
+author: "Konstantinos Banos"
 date: "Dec/05/2024"
 editor: visual
 execute: 
@@ -51,6 +51,7 @@ library(ggeffects)
 library(HSAUR3)
 library(viridisLite)
 library(viridis)
+library(webshot2)
 ```
 
 # Introduction
