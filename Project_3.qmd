@@ -1,8 +1,7 @@
 ---
 title: "Project 3"
-format: 
-  pdf:
-    code-line-numbers: true
+format: html
+css: style.css
 author: "Konstantinos Banos"
 date: "Nov/05/2024"
 editor: visual
