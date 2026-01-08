@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Konstantinos Banos">
+<meta name="dcterms.date" content="2024-11-05">
+
+<title>Project 3 – STATS 720 Portfolio — Konstantinos Banos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">STATS 720 Portfolio — Konstantinos Banos</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_1.html"> 
+<span class="menu-text">Project 1</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_2.html"> 
+<span class="menu-text">Project 2</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./Project_3.html" aria-current="page"> 
+<span class="menu-text">Project 3</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_4.html"> 
+<span class="menu-text">Project 4</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Project_5.html"> 
+<span class="menu-text">Project 5</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#data-description" id="toc-data-description" class="nav-link" data-scroll-target="#data-description">Data Description</a></li>
+  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data Visualization:</a></li>
+  </ul></li>
+  <li><a href="#a-model-fit" id="toc-a-model-fit" class="nav-link" data-scroll-target="#a-model-fit">a) Model Fit</a></li>
+  <li><a href="#b-model-simplification" id="toc-b-model-simplification" class="nav-link" data-scroll-target="#b-model-simplification">b) Model Simplification</a>
+  <ul class="collapse">
+  <li><a href="#singular-fit" id="toc-singular-fit" class="nav-link" data-scroll-target="#singular-fit">Singular Fit:</a></li>
+  </ul></li>
+  <li><a href="#c-model-evaluation" id="toc-c-model-evaluation" class="nav-link" data-scroll-target="#c-model-evaluation">c) Model Evaluation</a>
+  <ul class="collapse">
+  <li><a href="#analysis-and-conclusions" id="toc-analysis-and-conclusions" class="nav-link" data-scroll-target="#analysis-and-conclusions">Analysis and Conclusions</a></li>
+  <li><a href="#overall-conclusion" id="toc-overall-conclusion" class="nav-link" data-scroll-target="#overall-conclusion">Overall Conclusion</a></li>
+  </ul></li>
+  <li><a href="#d-model-fit-using-different-functions" id="toc-d-model-fit-using-different-functions" class="nav-link" data-scroll-target="#d-model-fit-using-different-functions">d) Model Fit Using Different Functions</a></li>
+  <li><a href="#e-model-comparison" id="toc-e-model-comparison" class="nav-link" data-scroll-target="#e-model-comparison">e) Model Comparison</a></li>
+  <li><a href="#f-qualitative-comparison-of-the-estimates-standard-errors-df-and-p-values-among-packages" id="toc-f-qualitative-comparison-of-the-estimates-standard-errors-df-and-p-values-among-packages" class="nav-link" data-scroll-target="#f-qualitative-comparison-of-the-estimates-standard-errors-df-and-p-values-among-packages">f) Qualitative Comparison of the Estimates, Standard Errors, Df, and p-values Among Packages</a></li>
+  <li><a href="#g-coefficient-plot-of-the-fixed-effects" id="toc-g-coefficient-plot-of-the-fixed-effects" class="nav-link" data-scroll-target="#g-coefficient-plot-of-the-fixed-effects">g) Coefficient Plot of the Fixed Effects</a></li>
+  <li><a href="#h-comparison-between-satterthwaite-and-kenward-roger-and-lme" id="toc-h-comparison-between-satterthwaite-and-kenward-roger-and-lme" class="nav-link" data-scroll-target="#h-comparison-between-satterthwaite-and-kenward-roger-and-lme">h) Comparison Between Satterthwaite and Kenward-Roger and lme</a></li>
+  <li><a href="#i-plot-of-the-random-effect-of-sex-for-each-school" id="toc-i-plot-of-the-random-effect-of-sex-for-each-school" class="nav-link" data-scroll-target="#i-plot-of-the-random-effect-of-sex-for-each-school">i) Plot of the Random Effect of Sex for Each school</a></li>
+  <li><a href="#j-why-it-does-not-make-sense-to-treat-social-as-a-random-effect-grouping-variable" id="toc-j-why-it-does-not-make-sense-to-treat-social-as-a-random-effect-grouping-variable" class="nav-link" data-scroll-target="#j-why-it-does-not-make-sense-to-treat-social-as-a-random-effect-grouping-variable">j) Why It Does Not Make Sense to Treat “social” as a Random-Effect Grouping Variable</a></li>
+  <li><a href="#k-some-weird-parametrization" id="toc-k-some-weird-parametrization" class="nav-link" data-scroll-target="#k-some-weird-parametrization">k) Some Weird Parametrization</a></li>
+  <li><a href="#l-evaluating-random-effects-in-linear-mixed-effects-models-a-comparison-of-standard-likelihood-ratio-tests-and-parametric-bootstrapping-techniques" id="toc-l-evaluating-random-effects-in-linear-mixed-effects-models-a-comparison-of-standard-likelihood-ratio-tests-and-parametric-bootstrapping-techniques" class="nav-link" data-scroll-target="#l-evaluating-random-effects-in-linear-mixed-effects-models-a-comparison-of-standard-likelihood-ratio-tests-and-parametric-bootstrapping-techniques">l) <strong>Evaluating Random Effects in Linear Mixed-Effects Models: A Comparison of Standard Likelihood Ratio Tests and Parametric Bootstrapping Techniques</strong></a>
+  <ul class="collapse">
+  <li><a href="#conclusion-discussion" id="toc-conclusion-discussion" class="nav-link" data-scroll-target="#conclusion-discussion">Conclusion / Discussion</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><strong>References</strong></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Project 3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Konstantinos Banos </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 5, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div style="page-break-after: always;"></div>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>This assignment focuses on analyzing the ScotsSec dataset from the <code>mlmRev</code> package using linear mixed models to investigate the influence of educational attainment (attain) on various factors, including social and verbal skills, while accounting for variations across primary schools (primary) and differences between genders (sex). The task involves fitting a linear mixed model with both fixed and random effects, simplifying the model to avoid singular fits, and conducting diagnostics using <code>performance::check_model()</code> and <code>DHARMa</code>. Additionally, the assignment requires comparisons of model fits and coefficients across different modeling approaches using <code>lme4</code>, <code>nlme</code>, and <code>glmmTMB</code>, and visualizing fixed effect estimates. The analysis also involves comparing denominator degrees of freedom methods for model evaluation, examining random effects, and understanding the implications of modeling choices, particularly regarding the treatment of fixed and random effects. Finally, likelihood ratio tests and the parametric bootstrap will be used to compare reduced models, highlighting the challenges of standard testing in mixed models due to their complexity and the potential for overparameterization.</p>
+<section id="data-description" class="level2">
+<h2 class="anchored" data-anchor-id="data-description">Data Description</h2>
+<p>The <strong>ScotsSec</strong> dataset comprises scores attained by 3,435 Scottish secondary school students on a standardized test taken at age 16. The data is structured as a data frame with six variables, each representing different aspects of the students’ backgrounds and test performance. The dataset includes:</p>
+<ul>
+<li><p><strong>verbal</strong>: This variable represents the verbal reasoning score achieved by each student on a test administered upon their entry to secondary school. It is measured on a continuous scale, reflecting the students’ verbal reasoning abilities prior to secondary education.</p></li>
+<li><p><strong>attain</strong>: The attainment score indicates the result of the standardized test taken by students at age 16. This continuous variable serves as the primary response variable in analyses focusing on educational outcomes.</p></li>
+<li><p><strong>primary</strong>: A categorical variable (factor) that identifies the primary school attended by each student. This variable allows for the exploration of variations in attainment based on primary school affiliation.</p></li>
+<li><p><strong>sex</strong>: This factor variable represents the gender of the students, with levels designated as <strong>M</strong> (male) and <strong>F</strong> (female). It enables the examination of potential gender disparities in test scores.</p></li>
+<li><p><strong>social</strong>: A numeric variable that quantifies the student’s social class on a scale from low to high. This variable captures the socioeconomic background of students, which may influence educational attainment. However, we are going to use this variable as a factor.</p></li>
+<li><p><strong>second</strong>: A categorical variable (factor) indicating the secondary school attended by each student. Like the primary variable, it allows for analysis of attainment differences across various secondary schools.</p></li>
+</ul>
+<p>This dataset is instrumental for investigating the educational performance of Scottish students, analyzing the influences of demographic factors, and exploring the relationships between social class, school type, and test scores.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">data</span>(ScotsSec , <span class="at">package =</span> <span class="st">"mlmRev"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>ScotsSec<span class="sc">$</span>social <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(ScotsSec<span class="sc">$</span>social)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">head</span>(ScotsSec, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   verbal attain primary sex social second
+1      11     10       1   M      0      9
+2       0      3       1   F      0      9
+3     -14      2       1   M      0      9
+4      -6      3       1   M     20      9
+5     -30      2       1   F      0      9
+6     -17      2       1   F      0      9
+7     -17      4       1   F      0      1
+8     -11      6       1   M      0      1
+9      -9      4       1   M      0      9
+10    -19      2       1   M      0      9</code></pre>
+</div>
+</div>
+</section>
+<section id="data-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="data-visualization">Data Visualization:</h2>
+<p>The provided graphs depict the relationship between social status (on the left graph) and verbal ability (on the right graph) with educational attainment, categorized by sex and group size. In each graph, educational attainment (attain) is displayed on the y-axis, while the x-axis represents social status levels and verbal ability scores, respectively. Each data point represents individuals grouped by social status or verbal ability, with connecting lines linking points within each sex category, indicated by distinct colors (red for males and blue for females). The sizes of the points signify group sizes, as shown by the scale indicating values from 5 to 300 in the legend on the right.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>gg0 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ScotsSec, <span class="fu">aes</span>(<span class="at">y =</span> attain, <span class="at">colour =</span> sex)) <span class="sc">+</span> </span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="fu">stat_sum</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="fu">stat_summary</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">interaction</span>(sex, primary)), <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">fun =</span> mean)</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>gg1 <span class="ot">&lt;-</span> gg0 <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(social))</span>
+<span id="cb3-6"><a href="#cb3-6"></a>gg2 <span class="ot">&lt;-</span> gg0 <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x =</span> verbal)</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># Display the plots side by side</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>gg1 <span class="sc">+</span> gg2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_3_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="3600"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The graphs reveal some patterns in educational attainment across both social and verbal dimensions. In the social status plot, educational attainment varies widely across social levels, with males and females following similar distribution patterns. Larger group sizes are concentrated around mid to high levels of social status, indicating more data points in these social categories. In the verbal ability plot, educational attainment generally increases with higher verbal ability scores, suggesting a positive correlation. Males and females demonstrate overlapping patterns in verbal ability and attainment levels, with some variability at lower scores. The plot highlights a trend of higher attainment with increasing verbal ability, regardless of sex.</p>
+</section>
+</section>
+<section id="a-model-fit" class="level1">
+<h1>a) Model Fit</h1>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: attain ~ social + sex + verbal + (1 + social + sex + verbal |  
+    primary)
+   Data: ScotsSec
+
+REML criterion at convergence: 14664.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.0672 -0.6790 -0.0003  0.6807  4.0121 
+
+Random effects:
+ Groups   Name        Variance  Std.Dev. Corr                         
+ primary  (Intercept) 0.3644464 0.60369                               
+          social1     0.1078781 0.32845  -0.88                        
+          social20    0.3265122 0.57141  -0.56  0.89                  
+          social31    0.4183900 0.64683  -0.37  0.43  0.39            
+          sexF        0.3172506 0.56325  -0.63  0.43  0.15 -0.19      
+          verbal      0.0001153 0.01074   0.77 -0.92 -0.86 -0.74 -0.21
+ Residual             3.9462499 1.98652                               
+Number of obs: 3435, groups:  primary, 148
+
+Fixed effects:
+             Estimate Std. Error        df t value Pr(&gt;|t|)    
+(Intercept) 5.536e+00  8.147e-02 1.049e+02  67.950  &lt; 2e-16 ***
+social1     1.412e+00  1.633e-01 1.071e+03   8.645  &lt; 2e-16 ***
+social20    1.183e+00  1.071e-01 1.076e+02  11.051  &lt; 2e-16 ***
+social31    5.476e-01  1.451e-01 8.689e+01   3.773 0.000294 ***
+sexF        1.484e-01  8.816e-02 9.702e+01   1.683 0.095523 .  
+verbal      1.515e-01  2.964e-03 2.379e+02  51.117  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+         (Intr) socil1 socl20 socl31 sexF  
+social1  -0.303                            
+social20 -0.461  0.247                     
+social31 -0.300  0.147  0.225              
+sexF     -0.626  0.053  0.069 -0.022       
+verbal    0.380 -0.251 -0.307 -0.222 -0.124
+optimizer (nloptwrap) convergence code: 0 (OK)
+boundary (singular) fit: see help('isSingular')</code></pre>
+</div>
+</div>
+<p>In the analysis of the linear mixed model fitted to the ScotsSec dataset, a warning regarding singularity was encountered. Specifically, the model displayed a boundary (singular) fit, indicating potential issues with model convergence. This is evidenced by the presence of negative eigenvalues during the fitting process, suggesting that the model may not have sufficient variability in the random effects structure. It is necessary thought to simplify the model in order to get some reliable results.</p>
+</section>
+<section id="b-model-simplification" class="level1">
+<h1>b) Model Simplification</h1>
+<section id="singular-fit" class="level2">
+<h2 class="anchored" data-anchor-id="singular-fit">Singular Fit:</h2>
+<p>Complex mixed-effect models, particularly those characterized by a high number of variance-covariance parameters, often encounter issues related to singularity. This phenomenon occurs when the estimated variance-covariance matrices do not achieve full rank, indicating that certain dimensions within the matrix have been estimated as exactly zero.</p>
+<p>In simpler terms, singularity implies that the model may have insufficient variability captured in its random effects. For models with scalar random effects, such as those containing only intercepts, or those with two dimensions (e.g., intercept and slope), identifying singularity is relatively straightforward. In these cases, singularity manifests as variance estimates that are nearly zero or as correlations that approach -1 or 1.</p>
+<p>However, detecting singularity in more complex models, which possess variance-covariance matrices of three or more dimensions, can be significantly more challenging. These models can exhibit singularity even when individual variance estimates are not close to zero, and correlation estimates do not necessarily converge to extreme values of +/-1. Therefore, careful attention is required in the interpretation of such models to ensure reliable conclusions and to address potential issues related to model fit.<br>
+<br>
+By looking at the summary of the “full” model the variable with the smallest estimated variance is the variable “verbal”. Hence, from now on I wont treat “verbal” as a random effect. The revised model is as follows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">VarCorr</span>(model_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Groups   Name        Std.Dev. Corr                              
+ primary  (Intercept) 0.60369                                    
+          social1     0.32845  -0.879                            
+          social20    0.57141  -0.565  0.890                     
+          social31    0.64683  -0.368  0.433  0.388              
+          sexF        0.56325  -0.631  0.434  0.145 -0.186       
+          verbal      0.01074   0.767 -0.924 -0.861 -0.737 -0.215
+ Residual             1.98652                                    </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>model_revised <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(attain <span class="sc">~</span> social <span class="sc">+</span> sex <span class="sc">+</span> verbal <span class="sc">+</span> </span>
+<span id="cb7-2"><a href="#cb7-2"></a>              (<span class="dv">1</span> <span class="sc">+</span> social <span class="sc">+</span> sex <span class="sc">|</span> primary), <span class="at">REML=</span><span class="cn">TRUE</span>, </span>
+<span id="cb7-3"><a href="#cb7-3"></a>              <span class="at">data =</span> ScotsSec)</span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="fu">summary</span>(model_revised)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: attain ~ social + sex + verbal + (1 + social + sex | primary)
+   Data: ScotsSec
+
+REML criterion at convergence: 14672
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.1243 -0.6825 -0.0060  0.6810  4.0783 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr                   
+ primary  (Intercept) 0.29603  0.5441                          
+          social1     0.02381  0.1543   -0.88                  
+          social20    0.21015  0.4584   -0.43  0.74            
+          social31    0.28245  0.5315   -0.20  0.18 -0.02      
+          sexF        0.30351  0.5509   -0.61  0.27  0.03 -0.33
+ Residual             3.97404  1.9935                          
+Number of obs: 3435, groups:  primary, 148
+
+Fixed effects:
+             Estimate Std. Error        df t value Pr(&gt;|t|)    
+(Intercept) 5.552e+00  7.755e-02 1.125e+02  71.596  &lt; 2e-16 ***
+social1     1.366e+00  1.609e-01 1.837e+03   8.491  &lt; 2e-16 ***
+social20    1.162e+00  1.019e-01 1.180e+02  11.406  &lt; 2e-16 ***
+social31    5.341e-01  1.403e-01 7.957e+01   3.807 0.000275 ***
+sexF        1.509e-01  8.755e-02 9.958e+01   1.724 0.087854 .  
+verbal      1.520e-01  2.778e-03 3.383e+03  54.708  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+         (Intr) socil1 socl20 socl31 sexF  
+social1  -0.248                            
+social20 -0.407  0.195                     
+social31 -0.253  0.122  0.146              
+sexF     -0.618  0.015  0.033 -0.048       
+verbal    0.209 -0.202 -0.165 -0.119 -0.082
+optimizer (nloptwrap) convergence code: 0 (OK)
+boundary (singular) fit: see help('isSingular')</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="do">## ?convergence</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="do">## modelfit.all &lt;- lme4::allFit(model_revised)</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="do">## ss &lt;- summary(modelfit.all)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The analysis of the linear mixed model fitted to the ScotsSec dataset revealed several convergence issues, as indicated by multiple warnings. Specifically, the model experienced a degenerate Hessian with two negative eigenvalues, suggesting that the optimization algorithm struggled to find a stable solution. Additionally, warnings related to the inability to evaluate the scaled gradient further highlight potential difficulties in estimating the model parameters. Such convergence problems can indicate issues with the model’s complexity, possibly due to multicollinearity among predictors or inadequate data for the specified random effects structure.</p>
+<p>By using the same method as before, I am going to create a new model using only sex as random effect. Moreover, it does not make sense to treat “social” as random-effect as its levels are not exchangeable (I am going to discuss that later).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">VarCorr</span>(model_revised)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Groups   Name        Std.Dev. Corr                       
+ primary  (Intercept) 0.54409                             
+          social1     0.15431  -0.883                     
+          social20    0.45842  -0.428  0.738              
+          social31    0.53146  -0.197  0.178 -0.015       
+          sexF        0.55092  -0.609  0.274  0.034 -0.333
+ Residual             1.99350                             </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>model_final <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(attain <span class="sc">~</span> social <span class="sc">+</span> sex <span class="sc">+</span> verbal <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>              (<span class="dv">1</span> <span class="sc">+</span> sex <span class="sc">|</span> primary), <span class="at">REML =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb12-3"><a href="#cb12-3"></a>              <span class="at">data =</span> ScotsSec)</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="fu">summary</span>(model_final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: attain ~ social + sex + verbal + (1 + sex | primary)
+   Data: ScotsSec
+
+REML criterion at convergence: 14680.4
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.2075 -0.6886 -0.0024  0.6880  3.9931 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr 
+ primary  (Intercept) 0.2405   0.4904        
+          sexF        0.2868   0.5355   -0.66
+ Residual             4.0306   2.0076        
+Number of obs: 3435, groups:  primary, 148
+
+Fixed effects:
+             Estimate Std. Error        df t value Pr(&gt;|t|)    
+(Intercept) 5.553e+00  7.436e-02 1.646e+02  74.677  &lt; 2e-16 ***
+social1     1.331e+00  1.619e-01 3.366e+03   8.217 2.95e-16 ***
+social20    1.130e+00  9.105e-02 3.368e+03  12.410  &lt; 2e-16 ***
+social31    5.182e-01  1.279e-01 3.405e+03   4.052 5.19e-05 ***
+sexF        1.468e-01  8.689e-02 1.002e+02   1.690   0.0941 .  
+verbal      1.521e-01  2.780e-03 3.390e+03  54.721  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+         (Intr) socil1 socl20 socl31 sexF  
+social1  -0.203                            
+social20 -0.335  0.191                     
+social31 -0.241  0.129  0.201              
+sexF     -0.642  0.000  0.025  0.036       
+verbal    0.219 -0.198 -0.182 -0.128 -0.083</code></pre>
+</div>
+</div>
+<p>Finally, we got a “regular” fit using attain as a response variable, social, sex, verbal as (additive) fixed effects, where sex varying among primary schools.</p>
+</section>
+</section>
+<section id="c-model-evaluation" class="level1">
+<h1>c) Model Evaluation</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Check the model diagnostics</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(model_final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_3_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Create a DHARMa residuals object</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>residuals_dharma <span class="ot">&lt;-</span> <span class="fu">simulateResiduals</span>(model_final)</span>
+<span id="cb15-3"><a href="#cb15-3"></a></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co"># Plot the residuals</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="fu">plot</span>(residuals_dharma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_3_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="do">## model &lt;- lm(attain ~ social + sex + verbal, </span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="do">##              data = ScotsSec)</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="do">## Check the model diagnostics</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="do">## performance::check_model(model)</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="do">## Create a DHARMa residuals object</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="do">## residuals_dharma &lt;- simulateResiduals(model)</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="do">## Plot the residuals</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="do">## plot(residuals_dharma)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="analysis-and-conclusions" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-and-conclusions">Analysis and Conclusions</h3>
+<p>Our model diagnostics were performed using both <code>performance::check_model()</code> and the DHARMa package, each providing insights into model fit and assumptions.</p>
+<section id="results-using-performancecheck_model" class="level4">
+<h4 class="anchored" data-anchor-id="results-using-performancecheck_model">Results using <code>performance::check_model()</code></h4>
+<ol type="1">
+<li><p><strong>Posterior Predictive Check</strong>: The model-predicted data does not resemble the observed data, indicating a non reasonable model fit.</p></li>
+<li><p><strong>Linearity</strong>: The residuals vs.&nbsp;fitted values plot shows some deviations from the horizontal line, suggesting potential non-linearity. However, the deviations do not appear severe.</p></li>
+<li><p><strong>Homogeneity of Variance</strong>: The spread of standardized residuals varies slightly across fitted values, showing some heteroscedasticity. This indicates that the assumption of constant variance may not be fully met.</p></li>
+<li><p><strong>Influential Observations</strong>: It seem like we dont have problems from influential observations</p></li>
+<li><p><strong>Collinearity</strong>: The Variance Inflation Factor (VIF) for all variables is below the threshold of 5, suggesting low multicollinearity.</p></li>
+<li><p><strong>Normality of Residuals</strong>: The residual Q-Q plot shows minor deviations from normality. This deviation could impact inference, but the effect may be small, given the overall alignment with the reference line.</p></li>
+<li><p><strong>Normality of Random Effects</strong>: Additional Q-Q plots for random effects are shown, which would not typically appear in a fixed-effects-only model. Here, these plots check the normality assumption for the random intercept and slope associated with the <code>primary</code> grouping. Deviations from the line are minimal, suggesting that the random effects meet the normality assumption reasonably well.</p></li>
+</ol>
+</section>
+<section id="dharma-diagnostics" class="level4">
+<h4 class="anchored" data-anchor-id="dharma-diagnostics">DHARMa Diagnostics</h4>
+<ol type="1">
+<li><p><strong>QQ Plot Residuals</strong>: The Kolmogorov-Smirnov (KS) test for uniformity is significant (p = 0.04934), indicating a deviation from the expected residual distribution. While this suggests some issues with model fit, the significance is marginal, so it may not drastically affect inference.</p></li>
+<li><p><strong>Residual vs.&nbsp;Predicted Plot</strong>: The red trend line shows a nonlinear pattern, hinting at potential misspecification of fixed effects or variance structure in the model. Additionally, the residuals have some structure, especially near the boundaries, suggesting the model may not fully capture the data pattern.</p></li>
+<li><p><strong>Dispersion and Outlier Tests</strong>: The dispersion test is non-significant (p = 0.944), indicating no substantial overdispersion. However, the outlier test is significant (p = 0.04362), suggesting that some observations may be poorly predicted.</p></li>
+</ol>
+</section>
+<section id="key-differences-from-a-fixed-effects-only-linear-model" class="level4">
+<h4 class="anchored" data-anchor-id="key-differences-from-a-fixed-effects-only-linear-model">Key Differences from a Fixed-Effects-Only Linear Model</h4>
+<p>Compared to a fixed-effects-only linear model, the <code>check_model()</code> output for this mixed-effects model includes:</p>
+<ul>
+<li><strong>Normality of Random Effects</strong>: Additional Q-Q plots for the random intercept and slope are unique to mixed models, where random effect assumptions are tested.</li>
+</ul>
+</section>
+</section>
+<section id="overall-conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="overall-conclusion">Overall Conclusion</h3>
+<p>The model generally meets assumptions, but there are minor issues with linearity, homogeneity of variance, and outliers. The DHARMa tests suggest possible minor deviations from the assumptions, especially in the residual distribution and the presence of outliers. These issues may slightly affect model accuracy but do not appear severe. Further investigation via simulation is needed to access the predictability of the model.</p>
+</section>
+</section>
+<section id="d-model-fit-using-different-functions" class="level1">
+<h1>d) Model Fit Using Different Functions</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="do">## Fitting the model using lme</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>model_nlme <span class="ot">&lt;-</span> nlme<span class="sc">::</span><span class="fu">lme</span>(<span class="at">fixed =</span> attain <span class="sc">~</span> social <span class="sc">+</span> sex <span class="sc">+</span> verbal, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sex <span class="sc">|</span> primary, <span class="at">data =</span> ScotsSec, <span class="at">method =</span> <span class="st">'REML'</span>, <span class="at">control =</span> <span class="fu">lmeControl</span>(<span class="at">opt =</span> <span class="st">"optim"</span>))</span>
+<span id="cb17-3"><a href="#cb17-3"></a></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="fu">summary</span>(model_nlme)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed-effects model fit by REML
+  Data: ScotsSec 
+       AIC      BIC    logLik
+  14700.43 14761.83 -7340.216
+
+Random effects:
+ Formula: ~1 + sex | primary
+ Structure: General positive-definite, Log-Cholesky parametrization
+            StdDev    Corr  
+(Intercept) 0.4893337 (Intr)
+sexF        0.5371628 -0.644
+Residual    2.0069560       
+
+Fixed effects:  attain ~ social + sex + verbal 
+               Value  Std.Error   DF  t-value p-value
+(Intercept) 5.553656 0.07428654 3282 74.75992  0.0000
+social1     1.327503 0.16197030 3282  8.19597  0.0000
+social20    1.127906 0.09105860 3282 12.38659  0.0000
+social31    0.517737 0.12787447 3282  4.04879  0.0001
+sexF        0.145719 0.08698351 3282  1.67525  0.0940
+verbal      0.152083 0.00278044 3282 54.69726  0.0000
+ Correlation: 
+         (Intr) socil1 socl20 socl31 sexF  
+social1  -0.203                            
+social20 -0.335  0.192                     
+social31 -0.241  0.129  0.201              
+sexF     -0.634  0.000  0.025  0.036       
+verbal    0.219 -0.198 -0.181 -0.128 -0.083
+
+Standardized Within-Group Residuals:
+         Min           Q1          Med           Q3          Max 
+-3.209699436 -0.689458965 -0.002364182  0.686943687  4.000271515 
+
+Number of Observations: 3435
+Number of Groups: 148 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="do">## Fitting the model using glmmTMB</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>model_glmmTMB <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(attain <span class="sc">~</span> social <span class="sc">+</span> sex <span class="sc">+</span> verbal <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> sex <span class="sc">|</span> primary), <span class="at">data =</span> ScotsSec, <span class="at">REML =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-3"><a href="#cb19-3"></a></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="fu">summary</span>(model_glmmTMB)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: gaussian  ( identity )
+Formula:          attain ~ social + sex + verbal + (1 + sex | primary)
+Data: ScotsSec
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+  14700.4   14761.8   -7340.2   14680.4      3425 
+
+Random effects:
+
+Conditional model:
+ Groups   Name        Variance Std.Dev. Corr  
+ primary  (Intercept) 0.2404   0.4904         
+          sexF        0.2868   0.5355   -0.66 
+ Residual             4.0306   2.0076         
+Number of obs: 3435, groups:  primary, 148
+
+Dispersion estimate for gaussian family (sigma^2): 4.03 
+
+Conditional model:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) 5.553259   0.074498   74.54  &lt; 2e-16 ***
+social1     1.330514   0.163595    8.13 4.19e-16 ***
+social20    1.129925   0.092598   12.20  &lt; 2e-16 ***
+social31    0.518215   0.128340    4.04 5.39e-05 ***
+sexF        0.146847   0.087377    1.68   0.0928 .  
+verbal      0.152123   0.002793   54.46  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="e-model-comparison" class="level1">
+<h1>e) Model Comparison</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Define the models (assuming you've already fitted them as model_final, model_nlme, and model_glmmTMB)</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>mod_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="at">lmer_model =</span> model_final,</span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="at">nlme_model =</span> model_nlme,</span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="at">glmmTMB_model =</span> model_glmmTMB</span>
+<span id="cb21-6"><a href="#cb21-6"></a>)</span>
+<span id="cb21-7"><a href="#cb21-7"></a></span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="co"># Use purrr::map_dfr to compare model fits</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a>model_comparison <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dfr</span>(mod_list, broom.mixed<span class="sc">::</span>glance, <span class="at">.id =</span> <span class="st">"model"</span>)</span>
+<span id="cb21-10"><a href="#cb21-10"></a></span>
+<span id="cb21-11"><a href="#cb21-11"></a><span class="co"># View the comparison</span></span>
+<span id="cb21-12"><a href="#cb21-12"></a>model_comparison</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 9
+  model          nobs sigma logLik    AIC    BIC REMLcrit df.residual deviance
+  &lt;chr&gt;         &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;    &lt;dbl&gt;
+1 lmer_model     3435  2.01 -7340. 14700. 14762.   14680.        3425      NA 
+2 nlme_model     3435  2.01 -7340. 14700. 14762.      NA           NA      NA 
+3 glmmTMB_model  3435  2.01 -7340. 14700. 14762.      NA         3425   13445.</code></pre>
+</div>
+</div>
+<p>Using the log-likelihood as a criterion, we observe that the model fits obtained through the <code>lmerTest</code> and <code>glmmTMB</code> packages are indeed “identical or practically identical” with a log-likelihood of -7340.201 in both cases. In contrast, the fit from the <code>nlme</code> package, with a log-likelihood of -7340.216, is “slightly worse,” as it is marginally lower than the other two fits. Although this difference is minor (0.015), it suggests that the <code>lmerTest</code> and <code>glmmTMB</code> models achieve a marginally better fit compared to the <code>nlme</code> model.</p>
+</section>
+<section id="f-qualitative-comparison-of-the-estimates-standard-errors-df-and-p-values-among-packages" class="level1">
+<h1>f) Qualitative Comparison of the Estimates, Standard Errors, Df, and p-values Among Packages</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># Extract and arrange fixed effect coefficients for comparison</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>fixed_effects_comparison <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dfr</span>(mod_list, <span class="sc">~</span><span class="fu">tidy</span>(., <span class="at">effects =</span> <span class="st">"fixed"</span>), <span class="at">.id =</span> <span class="st">"model"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(term)</span>
+<span id="cb23-4"><a href="#cb23-4"></a></span>
+<span id="cb23-5"><a href="#cb23-5"></a><span class="co"># View the comparison</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a>fixed_effects_comparison</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 9
+   model     effect term  estimate std.error statistic    df   p.value component
+   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;    
+ 1 lmer_mod… fixed  (Int…    5.55    0.0744      74.7   165. 7.37e-129 &lt;NA&gt;     
+ 2 nlme_mod… fixed  (Int…    5.55    0.0743      74.8  3282  0         &lt;NA&gt;     
+ 3 glmmTMB_… fixed  (Int…    5.55    0.0745      74.5    NA  0         cond     
+ 4 lmer_mod… fixed  sexF     0.147   0.0869       1.69  100. 9.41e-  2 &lt;NA&gt;     
+ 5 nlme_mod… fixed  sexF     0.146   0.0870       1.68 3282  9.40e-  2 &lt;NA&gt;     
+ 6 glmmTMB_… fixed  sexF     0.147   0.0874       1.68   NA  9.28e-  2 cond     
+ 7 lmer_mod… fixed  soci…    1.33    0.162        8.22 3366. 2.95e- 16 &lt;NA&gt;     
+ 8 nlme_mod… fixed  soci…    1.33    0.162        8.20 3282  3.52e- 16 &lt;NA&gt;     
+ 9 glmmTMB_… fixed  soci…    1.33    0.164        8.13   NA  4.19e- 16 cond     
+10 lmer_mod… fixed  soci…    1.13    0.0910      12.4  3368. 1.30e- 34 &lt;NA&gt;     
+11 nlme_mod… fixed  soci…    1.13    0.0911      12.4  3282  1.80e- 34 &lt;NA&gt;     
+12 glmmTMB_… fixed  soci…    1.13    0.0926      12.2    NA  3.02e- 34 cond     
+13 lmer_mod… fixed  soci…    0.518   0.128        4.05 3405. 5.19e-  5 &lt;NA&gt;     
+14 nlme_mod… fixed  soci…    0.518   0.128        4.05 3282  5.27e-  5 &lt;NA&gt;     
+15 glmmTMB_… fixed  soci…    0.518   0.128        4.04   NA  5.39e-  5 cond     
+16 lmer_mod… fixed  verb…    0.152   0.00278     54.7  3390. 0         &lt;NA&gt;     
+17 nlme_mod… fixed  verb…    0.152   0.00278     54.7  3282  0         &lt;NA&gt;     
+18 glmmTMB_… fixed  verb…    0.152   0.00279     54.5    NA  0         cond     </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>fe_plot_df <span class="ot">&lt;-</span> fixed_effects_comparison <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">%&gt;%</span>                 <span class="co"># optional: drop intercept if you prefer</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-4"><a href="#cb25-4"></a>    <span class="at">model =</span> <span class="fu">factor</span>(model),</span>
+<span id="cb25-5"><a href="#cb25-5"></a>    <span class="at">term  =</span> <span class="fu">factor</span>(term, <span class="at">levels =</span> <span class="fu">rev</span>(<span class="fu">sort</span>(<span class="fu">unique</span>(term))))</span>
+<span id="cb25-6"><a href="#cb25-6"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7"></a>  <span class="co"># ensure p-values exist; broom outputs may use "p.value"</span></span>
+<span id="cb25-8"><a href="#cb25-8"></a>  <span class="fu">rename</span>(<span class="at">p_value =</span> p.value) <span class="sc">%&gt;%</span></span>
+<span id="cb25-9"><a href="#cb25-9"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-10"><a href="#cb25-10"></a>    <span class="at">p_value =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(p_value), <span class="cn">NA_real_</span>, p_value),</span>
+<span id="cb25-11"><a href="#cb25-11"></a>    <span class="at">p_floor =</span> <span class="fl">1e-16</span>,</span>
+<span id="cb25-12"><a href="#cb25-12"></a>    <span class="at">p_plot  =</span> <span class="fu">pmax</span>(p_value, p_floor),               <span class="co"># avoids log(0) issues</span></span>
+<span id="cb25-13"><a href="#cb25-13"></a>    <span class="at">p_label =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(p_value), <span class="cn">NA_character_</span>,</span>
+<span id="cb25-14"><a href="#cb25-14"></a>                     <span class="fu">ifelse</span>(p_value <span class="sc">&lt;</span> <span class="fl">0.001</span>, <span class="fu">format</span>(p_value, <span class="at">scientific =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb25-15"><a href="#cb25-15"></a>                            <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, p_value)))</span>
+<span id="cb25-16"><a href="#cb25-16"></a>  )</span>
+<span id="cb25-17"><a href="#cb25-17"></a></span>
+<span id="cb25-18"><a href="#cb25-18"></a>theme_portfolio <span class="ot">&lt;-</span> <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb25-19"><a href="#cb25-19"></a>  <span class="fu">theme</span>(</span>
+<span id="cb25-20"><a href="#cb25-20"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb25-21"><a href="#cb25-21"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb25-22"><a href="#cb25-22"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">8</span>)),</span>
+<span id="cb25-23"><a href="#cb25-23"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb25-24"><a href="#cb25-24"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb25-25"><a href="#cb25-25"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb25-26"><a href="#cb25-26"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb25-27"><a href="#cb25-27"></a>  )</span>
+<span id="cb25-28"><a href="#cb25-28"></a></span>
+<span id="cb25-29"><a href="#cb25-29"></a>p_est <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fe_plot_df, <span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> term)) <span class="sc">+</span></span>
+<span id="cb25-30"><a href="#cb25-30"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb25-31"><a href="#cb25-31"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.6</span>) <span class="sc">+</span></span>
+<span id="cb25-32"><a href="#cb25-32"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb25-33"><a href="#cb25-33"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"%.4f"</span>, estimate)),</span>
+<span id="cb25-34"><a href="#cb25-34"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>,</span>
+<span id="cb25-35"><a href="#cb25-35"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
+<span id="cb25-36"><a href="#cb25-36"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-37"><a href="#cb25-37"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> model, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb25-38"><a href="#cb25-38"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb25-39"><a href="#cb25-39"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-40"><a href="#cb25-40"></a>    <span class="at">title =</span> <span class="st">"Fixed-effect estimates across packages"</span>,</span>
+<span id="cb25-41"><a href="#cb25-41"></a>    <span class="at">subtitle =</span> <span class="st">"Each panel corresponds to one package; dashed line marks zero"</span>,</span>
+<span id="cb25-42"><a href="#cb25-42"></a>    <span class="at">x =</span> <span class="st">"Estimate"</span>,</span>
+<span id="cb25-43"><a href="#cb25-43"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb25-44"><a href="#cb25-44"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-45"><a href="#cb25-45"></a>  theme_portfolio</span>
+<span id="cb25-46"><a href="#cb25-46"></a></span>
+<span id="cb25-47"><a href="#cb25-47"></a></span>
+<span id="cb25-48"><a href="#cb25-48"></a></span>
+<span id="cb25-49"><a href="#cb25-49"></a>p_se <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fe_plot_df, <span class="fu">aes</span>(<span class="at">x =</span> std.error, <span class="at">y =</span> term)) <span class="sc">+</span></span>
+<span id="cb25-50"><a href="#cb25-50"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.6</span>) <span class="sc">+</span></span>
+<span id="cb25-51"><a href="#cb25-51"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb25-52"><a href="#cb25-52"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"%.4f"</span>, std.error)),</span>
+<span id="cb25-53"><a href="#cb25-53"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>,</span>
+<span id="cb25-54"><a href="#cb25-54"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
+<span id="cb25-55"><a href="#cb25-55"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-56"><a href="#cb25-56"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> model, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb25-57"><a href="#cb25-57"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb25-58"><a href="#cb25-58"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-59"><a href="#cb25-59"></a>    <span class="at">title =</span> <span class="st">"Standard errors across packages"</span>,</span>
+<span id="cb25-60"><a href="#cb25-60"></a>    <span class="at">subtitle =</span> <span class="st">"Comparison of uncertainty estimates for fixed effects"</span>,</span>
+<span id="cb25-61"><a href="#cb25-61"></a>    <span class="at">x =</span> <span class="st">"Standard error"</span>,</span>
+<span id="cb25-62"><a href="#cb25-62"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb25-63"><a href="#cb25-63"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-64"><a href="#cb25-64"></a>  theme_portfolio</span>
+<span id="cb25-65"><a href="#cb25-65"></a></span>
+<span id="cb25-66"><a href="#cb25-66"></a></span>
+<span id="cb25-67"><a href="#cb25-67"></a></span>
+<span id="cb25-68"><a href="#cb25-68"></a>p_pval <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fe_plot_df, <span class="fu">aes</span>(<span class="at">x =</span> p_plot, <span class="at">y =</span> term)) <span class="sc">+</span></span>
+<span id="cb25-69"><a href="#cb25-69"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.05</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb25-70"><a href="#cb25-70"></a>             <span class="at">linewidth =</span> <span class="fl">0.6</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb25-71"><a href="#cb25-71"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.6</span>) <span class="sc">+</span></span>
+<span id="cb25-72"><a href="#cb25-72"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb25-73"><a href="#cb25-73"></a>    <span class="fu">aes</span>(<span class="at">label =</span> p_label),</span>
+<span id="cb25-74"><a href="#cb25-74"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>,</span>
+<span id="cb25-75"><a href="#cb25-75"></a>    <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb25-76"><a href="#cb25-76"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb25-77"><a href="#cb25-77"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-78"><a href="#cb25-78"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> model, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb25-79"><a href="#cb25-79"></a>  <span class="fu">scale_x_log10</span>(</span>
+<span id="cb25-80"><a href="#cb25-80"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">1e-16</span>, <span class="dv">1</span>),</span>
+<span id="cb25-81"><a href="#cb25-81"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1e-2</span>, <span class="fl">1e-4</span>, <span class="fl">1e-6</span>, <span class="fl">1e-8</span>, <span class="fl">1e-12</span>, <span class="fl">1e-16</span>),</span>
+<span id="cb25-82"><a href="#cb25-82"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"1e-2"</span>, <span class="st">"1e-4"</span>, <span class="st">"1e-6"</span>, <span class="st">"1e-8"</span>, <span class="st">"1e-12"</span>, <span class="st">"1e-16"</span>),</span>
+<span id="cb25-83"><a href="#cb25-83"></a>    <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.02</span>, <span class="fl">0.12</span>))</span>
+<span id="cb25-84"><a href="#cb25-84"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-85"><a href="#cb25-85"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-86"><a href="#cb25-86"></a>    <span class="at">title =</span> <span class="st">"p-values across packages"</span>,</span>
+<span id="cb25-87"><a href="#cb25-87"></a>    <span class="at">subtitle =</span> <span class="st">"Log scale; dashed line indicates the 0.05 significance threshold"</span>,</span>
+<span id="cb25-88"><a href="#cb25-88"></a>    <span class="at">x =</span> <span class="st">"p-value (log scale)"</span>,</span>
+<span id="cb25-89"><a href="#cb25-89"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb25-90"><a href="#cb25-90"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-91"><a href="#cb25-91"></a>  theme_portfolio</span>
+<span id="cb25-92"><a href="#cb25-92"></a></span>
+<span id="cb25-93"><a href="#cb25-93"></a></span>
+<span id="cb25-94"><a href="#cb25-94"></a></span>
+<span id="cb25-95"><a href="#cb25-95"></a></span>
+<span id="cb25-96"><a href="#cb25-96"></a>(p_est <span class="sc">/</span> p_se <span class="sc">/</span> p_pval) <span class="sc">+</span></span>
+<span id="cb25-97"><a href="#cb25-97"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb25-98"><a href="#cb25-98"></a>    <span class="at">title =</span> <span class="st">"Qualitative comparison of fixed effects across mixed-model packages"</span>,</span>
+<span id="cb25-99"><a href="#cb25-99"></a>    <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">16</span>))</span>
+<span id="cb25-100"><a href="#cb25-100"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_3_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Based on the extracted coefficients from the three models (<code>lmer_model</code>, <code>nlme_model</code>, and <code>glmmTMB_model</code>), the fixed effects show strong consistency across packages. The intercept estimates are practically identical, with differences well within a tolerance of 10^-4, indicating robustness in the intercept term across these models. The <code>sexF</code> term also displays nearly identical estimates and very similar standard errors, suggesting consistency in the estimated effect of this predictor. For the <code>social</code> terms (<code>social1</code>, <code>social20</code>, and <code>social31</code>), the estimates and standard errors are very similar across models, with variations generally within a tolerance of 0.01, although <code>social31</code> has slightly more variation in the standard error, which remains within acceptable bounds. The <code>verbal</code> term shows practically identical estimates and standard errors across all three models, further supporting the stability of this effect across packages. The degrees of freedom vary among models, likely due to differing estimation methods; however, p-values are consistently significant across models (often &lt;2e-16), making them identical or practically identical in terms of statistical significance.</p>
+</section>
+<section id="g-coefficient-plot-of-the-fixed-effects" class="level1">
+<h1>g) Coefficient Plot of the Fixed Effects</h1>
+<p>I decided to create two versions of the coefficient plot for fixed effects to provide a clearer understanding of the model estimates and their variances. The first plot is a straightforward visualization of the fixed effect estimates with their confidence intervals, helping to convey the direction and relative magnitude of each predictor’s effect. However, to give more insight into the variability of each estimate, I created a second plot that includes additional enhancements: I increased the point size, added a dashed vertical line at zero to help identify significant effects, and included the exact estimate values above each point for clarity. The second plot also includes a bit of padding on the x-axis to avoid any crowding of estimates near the plot edges. These changes make it easier to distinguish differences in variance between fixed effects, as well as to quickly see which estimates are both positive and statistically significant.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># Plot 1 (your first version)</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fixed_effects_comparison, <span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> model, <span class="at">color =</span> model)) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> estimate <span class="sc">-</span> std.error, <span class="at">xmax =</span> estimate <span class="sc">+</span> std.error), <span class="at">height =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>term, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a>  <span class="fu">labs</span>(</span>
+<span id="cb26-7"><a href="#cb26-7"></a>    <span class="at">title =</span> <span class="st">"Coefficient Plot of Fixed Effects (basic)"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8"></a>    <span class="at">x =</span> <span class="st">"Estimate"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9"></a>    <span class="at">y =</span> <span class="st">"Model"</span></span>
+<span id="cb26-10"><a href="#cb26-10"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-11"><a href="#cb26-11"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb26-12"><a href="#cb26-12"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span>
+<span id="cb26-13"><a href="#cb26-13"></a></span>
+<span id="cb26-14"><a href="#cb26-14"></a><span class="co"># Plot 2 (your enhanced version)</span></span>
+<span id="cb26-15"><a href="#cb26-15"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fixed_effects_comparison, <span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> model, <span class="at">color =</span> model)) <span class="sc">+</span></span>
+<span id="cb26-16"><a href="#cb26-16"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb26-17"><a href="#cb26-17"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> estimate <span class="sc">-</span> std.error, <span class="at">xmax =</span> estimate <span class="sc">+</span> std.error), <span class="at">height =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb26-18"><a href="#cb26-18"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>term, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb26-19"><a href="#cb26-19"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb26-20"><a href="#cb26-20"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb26-21"><a href="#cb26-21"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"%.4f"</span>, estimate)),</span>
+<span id="cb26-22"><a href="#cb26-22"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb26-23"><a href="#cb26-23"></a>    <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb26-24"><a href="#cb26-24"></a>    <span class="at">color =</span> <span class="st">"black"</span></span>
+<span id="cb26-25"><a href="#cb26-25"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-26"><a href="#cb26-26"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>))) <span class="sc">+</span></span>
+<span id="cb26-27"><a href="#cb26-27"></a>  <span class="fu">labs</span>(</span>
+<span id="cb26-28"><a href="#cb26-28"></a>    <span class="at">title =</span> <span class="st">"Coefficient Plot of Fixed Effects (labeled)"</span>,</span>
+<span id="cb26-29"><a href="#cb26-29"></a>    <span class="at">x =</span> <span class="st">"Estimate"</span>,</span>
+<span id="cb26-30"><a href="#cb26-30"></a>    <span class="at">y =</span> <span class="st">"Model"</span></span>
+<span id="cb26-31"><a href="#cb26-31"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-32"><a href="#cb26-32"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb26-33"><a href="#cb26-33"></a>  <span class="fu">theme</span>(</span>
+<span id="cb26-34"><a href="#cb26-34"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb26-35"><a href="#cb26-35"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span></span>
+<span id="cb26-36"><a href="#cb26-36"></a>  )</span>
+<span id="cb26-37"><a href="#cb26-37"></a></span>
+<span id="cb26-38"><a href="#cb26-38"></a><span class="co"># Combine into ONE figure (two rows, not mixed)</span></span>
+<span id="cb26-39"><a href="#cb26-39"></a>(p1 <span class="sc">/</span> p2) <span class="sc">+</span></span>
+<span id="cb26-40"><a href="#cb26-40"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb26-41"><a href="#cb26-41"></a>    <span class="at">title =</span> <span class="st">"Fixed Effects Coefficient Plots"</span>,</span>
+<span id="cb26-42"><a href="#cb26-42"></a>    <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">16</span>))</span>
+<span id="cb26-43"><a href="#cb26-43"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_3_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="5600"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="h-comparison-between-satterthwaite-and-kenward-roger-and-lme" class="level1">
+<h1>h) Comparison Between Satterthwaite and Kenward-Roger and lme</h1>
+<p>The table compares the Satterthwaite and Kenward-Roger approaches for computing denominator degrees of freedom (df) and p-values for a linear mixed-effects model. The effects considered include the intercept, social factors, sex, and verbal ability.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="do">## Assuming model_final was fitted as:</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="do">## model_final &lt;- lmer(attain ~ social + sex + verbal + (1 + sex | primary), data = ScotsSec)</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="do">## model_nlme &lt;- nlme::lme(fixed = attain ~ social + sex + verbal, random = ~ 1 + sex | primary, data = ScotsSec, method = 'REML', control = lmeControl(opt = "optim"))</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a></span>
+<span id="cb27-5"><a href="#cb27-5"></a></span>
+<span id="cb27-6"><a href="#cb27-6"></a><span class="do">## Get summary with Satterthwaite approximation</span></span>
+<span id="cb27-7"><a href="#cb27-7"></a>satt_summary <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(model_final, <span class="at">ddf =</span> <span class="st">"Satterthwaite"</span>))</span>
+<span id="cb27-8"><a href="#cb27-8"></a></span>
+<span id="cb27-9"><a href="#cb27-9"></a><span class="do">## Get summary with Kenward-Roger approximation</span></span>
+<span id="cb27-10"><a href="#cb27-10"></a>kr_summary <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(model_final, <span class="at">ddf =</span> <span class="st">"Kenward-Roger"</span>))</span>
+<span id="cb27-11"><a href="#cb27-11"></a></span>
+<span id="cb27-12"><a href="#cb27-12"></a><span class="do">## Get summary from lme </span></span>
+<span id="cb27-13"><a href="#cb27-13"></a>lme_summary  <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(model_nlme))</span>
+<span id="cb27-14"><a href="#cb27-14"></a></span>
+<span id="cb27-15"><a href="#cb27-15"></a></span>
+<span id="cb27-16"><a href="#cb27-16"></a><span class="do">## Compare the degrees of freedom and p-values</span></span>
+<span id="cb27-17"><a href="#cb27-17"></a>comparison <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb27-18"><a href="#cb27-18"></a>  <span class="at">Satt_df =</span> satt_summary[, <span class="st">"df"</span>],</span>
+<span id="cb27-19"><a href="#cb27-19"></a>  <span class="at">Satt_p =</span> satt_summary[, <span class="st">"Pr(&gt;|t|)"</span>],</span>
+<span id="cb27-20"><a href="#cb27-20"></a>  <span class="at">KR_df =</span> kr_summary[, <span class="st">"df"</span>],</span>
+<span id="cb27-21"><a href="#cb27-21"></a>  <span class="at">KR_p =</span> kr_summary[, <span class="st">"Pr(&gt;|t|)"</span>],</span>
+<span id="cb27-22"><a href="#cb27-22"></a>  <span class="at">lme_df =</span> lme_summary[, <span class="st">"DF"</span>],</span>
+<span id="cb27-23"><a href="#cb27-23"></a>  <span class="at">lme_p =</span> lme_summary[, <span class="st">"p-value"</span>]</span>
+<span id="cb27-24"><a href="#cb27-24"></a>)</span>
+<span id="cb27-25"><a href="#cb27-25"></a><span class="fu">print</span>(comparison)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Satt_df        Satt_p     KR_df          KR_p lme_df        lme_p
+(Intercept)  164.5601 7.369728e-129  163.8634 2.793661e-128   3282 0.000000e+00
+social1     3365.7651  2.952727e-16 3373.6117  3.347148e-16   3282 3.524638e-16
+social20    3367.5014  1.295222e-34 3374.0254  1.660076e-34   3282 1.798810e-34
+social31    3405.3106  5.187761e-05 3408.5651  5.309445e-05   3282 5.267246e-05
+sexF         100.2033  9.414403e-02  111.6036  9.501857e-02   3282 9.398137e-02
+verbal      3390.0592  0.000000e+00 3394.5626  0.000000e+00   3282 0.000000e+00</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="do">## Calculate absolute differences</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>comparison<span class="sc">$</span>df_diff_Satt_KR <span class="ot">&lt;-</span> <span class="fu">abs</span>(comparison<span class="sc">$</span>Satt_df <span class="sc">-</span> comparison<span class="sc">$</span>KR_df)</span>
+<span id="cb29-3"><a href="#cb29-3"></a>comparison<span class="sc">$</span>p_diff_Satt_KR <span class="ot">&lt;-</span> <span class="fu">abs</span>(comparison<span class="sc">$</span>Satt_p <span class="sc">-</span> comparison<span class="sc">$</span>KR_p)</span>
+<span id="cb29-4"><a href="#cb29-4"></a>comparison<span class="sc">$</span>df_diff_Satt_lme <span class="ot">&lt;-</span> <span class="fu">abs</span>(comparison<span class="sc">$</span>Satt_df <span class="sc">-</span> comparison<span class="sc">$</span>lme_df)</span>
+<span id="cb29-5"><a href="#cb29-5"></a>comparison<span class="sc">$</span>p_diff_Satt_lme <span class="ot">&lt;-</span> <span class="fu">abs</span>(comparison<span class="sc">$</span>Satt_p <span class="sc">-</span> comparison<span class="sc">$</span>lme_p)</span>
+<span id="cb29-6"><a href="#cb29-6"></a>comparison<span class="sc">$</span>df_diff_lme_KR <span class="ot">&lt;-</span> <span class="fu">abs</span>(comparison<span class="sc">$</span>lme_df <span class="sc">-</span> comparison<span class="sc">$</span>KR_df)</span>
+<span id="cb29-7"><a href="#cb29-7"></a>comparison<span class="sc">$</span>p_diff_lme_KR <span class="ot">&lt;-</span> <span class="fu">abs</span>(comparison<span class="sc">$</span>lme_p <span class="sc">-</span> comparison<span class="sc">$</span>KR_p)</span>
+<span id="cb29-8"><a href="#cb29-8"></a></span>
+<span id="cb29-9"><a href="#cb29-9"></a></span>
+<span id="cb29-10"><a href="#cb29-10"></a><span class="fu">print</span>(comparison[, <span class="fu">c</span>( <span class="st">"df_diff_Satt_KR"</span>, <span class="st">"p_diff_Satt_KR"</span>, <span class="st">"df_diff_Satt_lme"</span>, <span class="st">"p_diff_Satt_lme"</span>, <span class="st">"df_diff_lme_KR"</span>, <span class="st">"p_diff_lme_KR"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            df_diff_Satt_KR p_diff_Satt_KR df_diff_Satt_lme p_diff_Satt_lme
+(Intercept)       0.6966424  2.056688e-128       3117.43993   7.369728e-129
+social1           7.8465400   3.944211e-17         83.76511    5.719112e-17
+social20          6.5239218   3.648544e-35         85.50144    5.035877e-35
+social31          3.2545016   1.216838e-06        123.31056    7.948454e-07
+sexF             11.4003083   8.745395e-04       3181.79667    1.626613e-04
+verbal            4.5033569   0.000000e+00        108.05923    0.000000e+00
+            df_diff_lme_KR p_diff_lme_KR
+(Intercept)     3118.13657 2.793661e-128
+social1           91.61165  1.774902e-17
+social20          92.02537  1.387333e-35
+social31         126.56506  4.219924e-07
+sexF            3170.39636  1.037201e-03
+verbal           112.56258  0.000000e+00</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Build comparable tables (term, estimate, se, p, df)</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>satt_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="at">term =</span> <span class="fu">rownames</span>(satt_summary),</span>
+<span id="cb31-4"><a href="#cb31-4"></a>  <span class="at">estimate =</span> satt_summary[, <span class="st">"Estimate"</span>],</span>
+<span id="cb31-5"><a href="#cb31-5"></a>  <span class="at">std.error =</span> satt_summary[, <span class="st">"Std. Error"</span>],</span>
+<span id="cb31-6"><a href="#cb31-6"></a>  <span class="at">p.value =</span> satt_summary[, <span class="st">"Pr(&gt;|t|)"</span>],</span>
+<span id="cb31-7"><a href="#cb31-7"></a>  <span class="at">df =</span> satt_summary[, <span class="st">"df"</span>],</span>
+<span id="cb31-8"><a href="#cb31-8"></a>  <span class="at">method =</span> <span class="st">"Satterthwaite"</span>,</span>
+<span id="cb31-9"><a href="#cb31-9"></a>  <span class="at">row.names =</span> <span class="cn">NULL</span></span>
+<span id="cb31-10"><a href="#cb31-10"></a>)</span>
+<span id="cb31-11"><a href="#cb31-11"></a></span>
+<span id="cb31-12"><a href="#cb31-12"></a>kr_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb31-13"><a href="#cb31-13"></a>  <span class="at">term =</span> <span class="fu">rownames</span>(kr_summary),</span>
+<span id="cb31-14"><a href="#cb31-14"></a>  <span class="at">estimate =</span> kr_summary[, <span class="st">"Estimate"</span>],</span>
+<span id="cb31-15"><a href="#cb31-15"></a>  <span class="at">std.error =</span> kr_summary[, <span class="st">"Std. Error"</span>],</span>
+<span id="cb31-16"><a href="#cb31-16"></a>  <span class="at">p.value =</span> kr_summary[, <span class="st">"Pr(&gt;|t|)"</span>],</span>
+<span id="cb31-17"><a href="#cb31-17"></a>  <span class="at">df =</span> kr_summary[, <span class="st">"df"</span>],</span>
+<span id="cb31-18"><a href="#cb31-18"></a>  <span class="at">method =</span> <span class="st">"Kenward-Roger"</span>,</span>
+<span id="cb31-19"><a href="#cb31-19"></a>  <span class="at">row.names =</span> <span class="cn">NULL</span></span>
+<span id="cb31-20"><a href="#cb31-20"></a>)</span>
+<span id="cb31-21"><a href="#cb31-21"></a></span>
+<span id="cb31-22"><a href="#cb31-22"></a>lme_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb31-23"><a href="#cb31-23"></a>  <span class="at">term =</span> <span class="fu">rownames</span>(lme_summary),</span>
+<span id="cb31-24"><a href="#cb31-24"></a>  <span class="at">estimate =</span> lme_summary[, <span class="st">"Value"</span>],</span>
+<span id="cb31-25"><a href="#cb31-25"></a>  <span class="at">std.error =</span> lme_summary[, <span class="st">"Std.Error"</span>],</span>
+<span id="cb31-26"><a href="#cb31-26"></a>  <span class="at">p.value =</span> lme_summary[, <span class="st">"p-value"</span>],</span>
+<span id="cb31-27"><a href="#cb31-27"></a>  <span class="at">df =</span> lme_summary[, <span class="st">"DF"</span>],</span>
+<span id="cb31-28"><a href="#cb31-28"></a>  <span class="at">method =</span> <span class="st">"nlme::lme"</span>,</span>
+<span id="cb31-29"><a href="#cb31-29"></a>  <span class="at">row.names =</span> <span class="cn">NULL</span></span>
+<span id="cb31-30"><a href="#cb31-30"></a>)</span>
+<span id="cb31-31"><a href="#cb31-31"></a></span>
+<span id="cb31-32"><a href="#cb31-32"></a>comp_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(satt_df, kr_df, lme_df) <span class="sc">%&gt;%</span></span>
+<span id="cb31-33"><a href="#cb31-33"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb31-34"><a href="#cb31-34"></a>    <span class="at">method =</span> <span class="fu">factor</span>(method, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Satterthwaite"</span>, <span class="st">"Kenward-Roger"</span>, <span class="st">"nlme::lme"</span>)),</span>
+<span id="cb31-35"><a href="#cb31-35"></a>    <span class="at">term =</span> <span class="fu">factor</span>(term, <span class="at">levels =</span> <span class="fu">rev</span>(<span class="fu">unique</span>(term))),</span>
+<span id="cb31-36"><a href="#cb31-36"></a>    <span class="co"># safe p-values for log scale</span></span>
+<span id="cb31-37"><a href="#cb31-37"></a>    <span class="at">p_floor =</span> <span class="fl">1e-16</span>,</span>
+<span id="cb31-38"><a href="#cb31-38"></a>    <span class="at">p_plot  =</span> <span class="fu">pmax</span>(p.value, p_floor),</span>
+<span id="cb31-39"><a href="#cb31-39"></a>    <span class="co"># labels</span></span>
+<span id="cb31-40"><a href="#cb31-40"></a>    <span class="at">est_lab =</span> <span class="fu">sprintf</span>(<span class="st">"%.4f"</span>, estimate),</span>
+<span id="cb31-41"><a href="#cb31-41"></a>    <span class="at">se_lab  =</span> <span class="fu">sprintf</span>(<span class="st">"%.4f"</span>, std.error),</span>
+<span id="cb31-42"><a href="#cb31-42"></a>    <span class="at">p_lab   =</span> <span class="fu">ifelse</span>(p.value <span class="sc">&lt;</span> <span class="fl">0.001</span>, <span class="fu">format</span>(p.value, <span class="at">scientific =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb31-43"><a href="#cb31-43"></a>                     <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, p.value))</span>
+<span id="cb31-44"><a href="#cb31-44"></a>  )</span>
+<span id="cb31-45"><a href="#cb31-45"></a></span>
+<span id="cb31-46"><a href="#cb31-46"></a>theme_portfolio <span class="ot">&lt;-</span> <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb31-47"><a href="#cb31-47"></a>  <span class="fu">theme</span>(</span>
+<span id="cb31-48"><a href="#cb31-48"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb31-49"><a href="#cb31-49"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb31-50"><a href="#cb31-50"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">8</span>)),</span>
+<span id="cb31-51"><a href="#cb31-51"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb31-52"><a href="#cb31-52"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb31-53"><a href="#cb31-53"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb31-54"><a href="#cb31-54"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb31-55"><a href="#cb31-55"></a>  )</span>
+<span id="cb31-56"><a href="#cb31-56"></a></span>
+<span id="cb31-57"><a href="#cb31-57"></a>p_est <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(comp_df, <span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> term)) <span class="sc">+</span></span>
+<span id="cb31-58"><a href="#cb31-58"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb31-59"><a href="#cb31-59"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.6</span>) <span class="sc">+</span></span>
+<span id="cb31-60"><a href="#cb31-60"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> est_lab), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb31-61"><a href="#cb31-61"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> method, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb31-62"><a href="#cb31-62"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb31-63"><a href="#cb31-63"></a>  <span class="fu">labs</span>(</span>
+<span id="cb31-64"><a href="#cb31-64"></a>    <span class="at">title =</span> <span class="st">"Fixed-effect estimates"</span>,</span>
+<span id="cb31-65"><a href="#cb31-65"></a>    <span class="at">subtitle =</span> <span class="st">"Satterthwaite vs Kenward–Roger vs nlme"</span>,</span>
+<span id="cb31-66"><a href="#cb31-66"></a>    <span class="at">x =</span> <span class="st">"Estimate"</span>,</span>
+<span id="cb31-67"><a href="#cb31-67"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb31-68"><a href="#cb31-68"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-69"><a href="#cb31-69"></a>  theme_portfolio</span>
+<span id="cb31-70"><a href="#cb31-70"></a></span>
+<span id="cb31-71"><a href="#cb31-71"></a>p_se <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(comp_df, <span class="fu">aes</span>(<span class="at">x =</span> std.error, <span class="at">y =</span> term)) <span class="sc">+</span></span>
+<span id="cb31-72"><a href="#cb31-72"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.6</span>) <span class="sc">+</span></span>
+<span id="cb31-73"><a href="#cb31-73"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> se_lab), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb31-74"><a href="#cb31-74"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> method, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb31-75"><a href="#cb31-75"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb31-76"><a href="#cb31-76"></a>  <span class="fu">labs</span>(</span>
+<span id="cb31-77"><a href="#cb31-77"></a>    <span class="at">title =</span> <span class="st">"Standard errors"</span>,</span>
+<span id="cb31-78"><a href="#cb31-78"></a>    <span class="at">subtitle =</span> <span class="st">"Comparison of uncertainty estimates across approaches"</span>,</span>
+<span id="cb31-79"><a href="#cb31-79"></a>    <span class="at">x =</span> <span class="st">"Std. error"</span>,</span>
+<span id="cb31-80"><a href="#cb31-80"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb31-81"><a href="#cb31-81"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-82"><a href="#cb31-82"></a>  theme_portfolio</span>
+<span id="cb31-83"><a href="#cb31-83"></a></span>
+<span id="cb31-84"><a href="#cb31-84"></a>p_pval <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(comp_df, <span class="fu">aes</span>(<span class="at">x =</span> p_plot, <span class="at">y =</span> term)) <span class="sc">+</span></span>
+<span id="cb31-85"><a href="#cb31-85"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.05</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb31-86"><a href="#cb31-86"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.6</span>) <span class="sc">+</span></span>
+<span id="cb31-87"><a href="#cb31-87"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> p_lab), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb31-88"><a href="#cb31-88"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> method, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb31-89"><a href="#cb31-89"></a>  <span class="fu">scale_x_log10</span>(</span>
+<span id="cb31-90"><a href="#cb31-90"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">1e-16</span>, <span class="dv">1</span>),</span>
+<span id="cb31-91"><a href="#cb31-91"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1e-2</span>, <span class="fl">1e-4</span>, <span class="fl">1e-6</span>, <span class="fl">1e-8</span>, <span class="fl">1e-12</span>, <span class="fl">1e-16</span>),</span>
+<span id="cb31-92"><a href="#cb31-92"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"1e-2"</span>, <span class="st">"1e-4"</span>, <span class="st">"1e-6"</span>, <span class="st">"1e-8"</span>, <span class="st">"1e-12"</span>, <span class="st">"1e-16"</span>),</span>
+<span id="cb31-93"><a href="#cb31-93"></a>    <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.02</span>, <span class="fl">0.12</span>))</span>
+<span id="cb31-94"><a href="#cb31-94"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-95"><a href="#cb31-95"></a>  <span class="fu">labs</span>(</span>
+<span id="cb31-96"><a href="#cb31-96"></a>    <span class="at">title =</span> <span class="st">"p-values"</span>,</span>
+<span id="cb31-97"><a href="#cb31-97"></a>    <span class="at">subtitle =</span> <span class="st">"Log scale; dashed line indicates 0.05 threshold"</span>,</span>
+<span id="cb31-98"><a href="#cb31-98"></a>    <span class="at">x =</span> <span class="st">"p-value (log scale)"</span>,</span>
+<span id="cb31-99"><a href="#cb31-99"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb31-100"><a href="#cb31-100"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-101"><a href="#cb31-101"></a>  theme_portfolio</span>
+<span id="cb31-102"><a href="#cb31-102"></a></span>
+<span id="cb31-103"><a href="#cb31-103"></a>(p_est <span class="sc">/</span> p_se <span class="sc">/</span> p_pval) <span class="sc">+</span></span>
+<span id="cb31-104"><a href="#cb31-104"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb31-105"><a href="#cb31-105"></a>    <span class="at">title =</span> <span class="st">"Comparison of inference across denominator df approximations and nlme"</span>,</span>
+<span id="cb31-106"><a href="#cb31-106"></a>    <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">16</span>))</span>
+<span id="cb31-107"><a href="#cb31-107"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_3_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="5600"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The comparison between the Satterthwaite and Kenward-Roger approximations for computing denominator degrees of freedom (df) in the mixed model shows close agreement, though some differences in df values and p-values are observed. For most predictors, the differences in df between Satterthwaite and Kenward-Roger are minor, with the df varying slightly—often by only a few units. Notably, predictors such as “social1” and “social20” display larger df discrepancies, though these differences do not substantially impact p-values, as both methods consistently yield highly significant results for the same predictors. Compared with the results from the <code>lme</code> model, which provides fixed df values without these refined approximations, both Satterthwaite and Kenward-Roger offer more precise df estimates, particularly beneficial in cases of smaller sample sizes or complex random structures. However, in this example, these differences are not practically important, as they do not alter the statistical significance or interpretation of the model.</p>
+</section>
+<section id="i-plot-of-the-random-effect-of-sex-for-each-school" class="level1">
+<h1>i) Plot of the Random Effect of Sex for Each school</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="do">## model_final &lt;- lmer(attain ~ social + sex + verbal + (1 + sex | primary), data = ScotsSec)</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="do">## Extract random effects and convert to a tidy data frame</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a>random_effects <span class="ot">&lt;-</span> <span class="fu">ranef</span>(model_final, <span class="at">condVar =</span> <span class="cn">TRUE</span>, <span class="at">drop =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb32-5"><a href="#cb32-5"></a>random_effects_df <span class="ot">&lt;-</span> random_effects<span class="sc">$</span>primary <span class="sc">%&gt;%</span></span>
+<span id="cb32-6"><a href="#cb32-6"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">"school"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-8"><a href="#cb32-8"></a>  <span class="fu">rename</span>(</span>
+<span id="cb32-9"><a href="#cb32-9"></a>    <span class="at">intercept =</span> <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span>,</span>
+<span id="cb32-10"><a href="#cb32-10"></a>    <span class="at">sex_effect =</span> <span class="st">`</span><span class="at">sexF</span><span class="st">`</span></span>
+<span id="cb32-11"><a href="#cb32-11"></a>  )</span>
+<span id="cb32-12"><a href="#cb32-12"></a></span>
+<span id="cb32-13"><a href="#cb32-13"></a><span class="co"># Plot: Random Effect of Sex vs. Random Intercept by School</span></span>
+<span id="cb32-14"><a href="#cb32-14"></a><span class="fu">ggplot</span>(random_effects_df, <span class="fu">aes</span>(<span class="at">x =</span> sex_effect, <span class="at">y =</span> intercept)) <span class="sc">+</span></span>
+<span id="cb32-15"><a href="#cb32-15"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb32-16"><a href="#cb32-16"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"#E74C3C"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span></span>
+<span id="cb32-17"><a href="#cb32-17"></a>  <span class="fu">labs</span>(</span>
+<span id="cb32-18"><a href="#cb32-18"></a>    <span class="at">title =</span> <span class="st">"Random Intercept vs. Random Effect of Sex by School"</span>,</span>
+<span id="cb32-19"><a href="#cb32-19"></a>    <span class="at">x =</span> <span class="st">"Random Effect of Sex"</span>,</span>
+<span id="cb32-20"><a href="#cb32-20"></a>    <span class="at">y =</span> <span class="st">"Random Intercept"</span></span>
+<span id="cb32-21"><a href="#cb32-21"></a>  ) <span class="sc">+</span></span>
+<span id="cb32-22"><a href="#cb32-22"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb32-23"><a href="#cb32-23"></a>  <span class="fu">theme</span>(</span>
+<span id="cb32-24"><a href="#cb32-24"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb32-25"><a href="#cb32-25"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb32-26"><a href="#cb32-26"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="cn">NA</span>)</span>
+<span id="cb32-27"><a href="#cb32-27"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_3_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>correlation <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(random_effects_df<span class="sc">$</span>intercept, random_effects_df<span class="sc">$</span>sex_effect), <span class="dv">4</span>)</span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="st">"The Degree of Linear Correlation is: "</span>, correlation))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "The Degree of Linear Correlation is: "
+[2] "-0.6633"                              </code></pre>
+</div>
+</div>
+<p>In the analysis of school-level random effects from a linear mixed-effects model predicting attainment, we observe a notable negative correlation between the random intercepts and the random effects of sex for each school (r =−0.6633). The plot illustrates this relationship, with each point representing a school, showing how schools with higher random intercepts tend to have smaller (or even negative) deviations in the effect of sex on attainment. The fitted trend line, shown as a dashed red line, further emphasizes this negative linear relationship. This finding suggests that as the baseline attainment (random intercept) of a school increases, the difference between genders in attainment tends to decrease, potentially indicating that schools with higher baseline attainment levels exhibit less gender disparity in achievement.</p>
+</section>
+<section id="j-why-it-does-not-make-sense-to-treat-social-as-a-random-effect-grouping-variable" class="level1">
+<h1>j) Why It Does Not Make Sense to Treat “social” as a Random-Effect Grouping Variable</h1>
+<p>In this model, it would not make sense to treat the variable <em>social</em> (indicating students’ social class) as a random-effects grouping factor because the levels of <em>social</em> represent specific, ordered categories reflecting socioeconomic status rather than exchangeable clusters. Unlike random effects, which assume that groups are sampled from a larger, homogeneous population and can be treated as similar or interchangeable, social classes carry unique and non-interchangeable socioeconomic implications that likely exert distinct, fixed influences on educational attainment. Treating <em>social</em> as a fixed effect appropriately models these non-random, structured differences across social classes, allowing for direct estimation of the unique effects associated with each social class level on attainment, which is essential for accurate interpretation of its impact in the context of socioeconomic background.</p>
+</section>
+<section id="k-some-weird-parametrization" class="level1">
+<h1>k) Some Weird Parametrization</h1>
+<p>In modeling educational attainment using the ScotsSec dataset, omitting the fixed effect of sex while retaining its random variation across primary schools would yield an incomplete understanding of the data’s structure. Specifically, the fixed effect of sex accounts for systematic differences in attainment scores attributable to gender, providing a baseline adjustment that is critical for interpreting the influence of other variables such as social class and verbal reasoning. Conversely, allowing for random variation of sex across primary schools suggests that the effect of gender on attainment may differ by school context, yet without the fixed effect, this model would not appropriately estimate or control for the average gender disparity across the entire sample. This could lead to biased estimates of other predictors and ultimately obscure the nuanced interactions between sex, social class, and school type, thereby compromising the validity and interpretability of the findings.</p>
+</section>
+<section id="l-evaluating-random-effects-in-linear-mixed-effects-models-a-comparison-of-standard-likelihood-ratio-tests-and-parametric-bootstrapping-techniques" class="level1">
+<h1>l) <strong>Evaluating Random Effects in Linear Mixed-Effects Models: A Comparison of Standard Likelihood Ratio Tests and Parametric Bootstrapping Techniques</strong></h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># Model m3: Linear mixed-effects model with separate random intercept and random slope for sex by primary school</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>m3 <span class="ot">&lt;-</span> lme4<span class="sc">::</span><span class="fu">lmer</span>(attain <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> social <span class="sc">+</span> sex <span class="sc">+</span> verbal <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> primary) <span class="sc">+</span> (<span class="dv">0</span> <span class="sc">+</span> <span class="fu">dummy</span>(sex, <span class="st">"M"</span>) <span class="sc">|</span> primary), <span class="at">data =</span> ScotsSec, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="co"># Explanation: (I used different optimization algo and increase the umber of interactions to resolve some convergence issues)</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a><span class="co"># - Fixed effects: Same as m3.</span></span>
+<span id="cb35-5"><a href="#cb35-5"></a><span class="co"># - Random effects: Separate terms for the random intercept (1 | primary) and the random slope for sex (0 + dummy(sex, "M") | primary).</span></span>
+<span id="cb35-6"><a href="#cb35-6"></a><span class="co"># - This model has the same random structure as m3 but separates the intercept and slope components, consider them independent.</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a></span>
+<span id="cb35-8"><a href="#cb35-8"></a></span>
+<span id="cb35-9"><a href="#cb35-9"></a><span class="co"># Model m2: Linear mixed-effects model with both random intercept and random slope for sex by primary school</span></span>
+<span id="cb35-10"><a href="#cb35-10"></a>m2 <span class="ot">&lt;-</span> <span class="fu">update</span>(m3, . <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> social <span class="sc">+</span> sex <span class="sc">+</span> verbal <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> sex <span class="sc">|</span> primary))</span>
+<span id="cb35-11"><a href="#cb35-11"></a><span class="co"># Explanation:</span></span>
+<span id="cb35-12"><a href="#cb35-12"></a><span class="co"># - Fixed effects: Intercept, social class (social), sex, and verbal ability (verbal).</span></span>
+<span id="cb35-13"><a href="#cb35-13"></a><span class="co"># - Random effects: Random intercept and random slope for sex, grouped by primary school.</span></span>
+<span id="cb35-14"><a href="#cb35-14"></a><span class="co"># - REML = FALSE is used to fit the model with maximum likelihood, as it allows for comparison between models via ANOVA.</span></span>
+<span id="cb35-15"><a href="#cb35-15"></a></span>
+<span id="cb35-16"><a href="#cb35-16"></a><span class="co"># Model m1: Linear mixed-effects model with only a random intercept for primary school</span></span>
+<span id="cb35-17"><a href="#cb35-17"></a>m1 <span class="ot">&lt;-</span> <span class="fu">update</span>(m3, . <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> social <span class="sc">+</span> sex <span class="sc">+</span> verbal <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> primary))</span>
+<span id="cb35-18"><a href="#cb35-18"></a><span class="co"># Explanation:</span></span>
+<span id="cb35-19"><a href="#cb35-19"></a><span class="co"># - Fixed effects: Same as m3.</span></span>
+<span id="cb35-20"><a href="#cb35-20"></a><span class="co"># - Random effects: Only a random intercept for primary school, without a random slope for sex.</span></span>
+<span id="cb35-21"><a href="#cb35-21"></a><span class="co"># - This model tests if the random slope for sex by primary school is necessary.</span></span>
+<span id="cb35-22"><a href="#cb35-22"></a></span>
+<span id="cb35-23"><a href="#cb35-23"></a><span class="co"># Model m0: Linear model without random effects (i.e., fixed-effects model)</span></span>
+<span id="cb35-24"><a href="#cb35-24"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(attain <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> social <span class="sc">+</span> sex <span class="sc">+</span> verbal, <span class="at">data =</span> ScotsSec)</span>
+<span id="cb35-25"><a href="#cb35-25"></a><span class="co"># Explanation:</span></span>
+<span id="cb35-26"><a href="#cb35-26"></a><span class="co"># - Fixed effects: Same as m3.</span></span>
+<span id="cb35-27"><a href="#cb35-27"></a><span class="co"># - No random effects; this is a traditional linear regression model.</span></span>
+<span id="cb35-28"><a href="#cb35-28"></a><span class="co"># - This model serves as a baseline to assess the need for random intercepts and slopes.</span></span>
+<span id="cb35-29"><a href="#cb35-29"></a></span>
+<span id="cb35-30"><a href="#cb35-30"></a><span class="co"># Conduct ANOVA to compare models</span></span>
+<span id="cb35-31"><a href="#cb35-31"></a><span class="co"># Explanation:</span></span>
+<span id="cb35-32"><a href="#cb35-32"></a><span class="co"># - Sequential tests comparing each model to the simpler model, allowing assessment of the need for random effects.</span></span>
+<span id="cb35-33"><a href="#cb35-33"></a><span class="co"># - These tests help determine if random slopes, intercepts, or both improve model fit.</span></span>
+<span id="cb35-34"><a href="#cb35-34"></a><span class="fu">anova</span>(m3, m2, m1, m0)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data: ScotsSec
+Models:
+m0: attain ~ 1 + social + sex + verbal
+m1: attain ~ social + sex + verbal + (1 | primary)
+m3: attain ~ 1 + social + sex + verbal + (1 | primary) + (0 + dummy(sex, "M") | primary)
+m2: attain ~ social + sex + verbal + (1 + sex | primary)
+   npar   AIC   BIC  logLik -2*log(L)   Chisq Df Pr(&gt;Chisq)    
+m0    7 14713 14756 -7349.4     14699                          
+m1    8 14683 14732 -7333.4     14667 31.9812  1  1.557e-08 ***
+m3    9 14677 14732 -7329.5     14659  7.9352  1   0.004848 ** 
+m2   10 14676 14737 -7328.0     14656  2.9059  1   0.088259 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The analysis compared four models predicting educational attainment (<code>attain</code>) in the ScotsSec dataset, progressively adding random effects to examine their impact on model fit. Model m0 served as a baseline linear model with only fixed effects for social class, sex, and verbal ability, while Model m1 introduced a random intercept for primary school to account for differences between schools. Model m1 significantly improved fit over m0 (X² = 31.9812, df = 1, p &lt; 0.001), suggesting that including school-level variation enhances explanatory power. Model m3 further added a separate random slope for sex, allowing the effect of sex to vary across schools independently from the intercept. This model improved significantly over m1 (X² = 7.9352, df = 1, p = 0.004848), indicating that sex effects vary by school context. Model m2, specifying both a random intercept and random slope for sex but treating them as correlated, showed a smaller, non-significant improvement over m3 (X² = 2.9059, df = 1, p = 0.088259), suggesting that treating the random intercept and slope as independent better captures the data structure. Overall, model m3 provides the best fit with interpretable random effects, balancing complexity and model improvement (there is no big difference from the model with correlated random effects).</p>
+<ul>
+<li><strong>Comparing Linear Mixed-Effects Models with Parametric Bootstrap Testing: Assessing the Impact of Random Slopes for Sex by Primary School</strong></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="co"># Perform parametric bootstrapping</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>boot_comp <span class="ot">&lt;-</span> pbkrtest<span class="sc">::</span><span class="fu">PBmodcomp</span>(m2, m1, <span class="at">nsim =</span> <span class="dv">1000</span>)</span>
+<span id="cb37-4"><a href="#cb37-4"></a></span>
+<span id="cb37-5"><a href="#cb37-5"></a><span class="co"># Print the bootstrap comparison results</span></span>
+<span id="cb37-6"><a href="#cb37-6"></a><span class="fu">print</span>(boot_comp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bootstrap test; time: 46.78 sec; samples: 1000; extremes: 0;
+Requested samples: 1000 Used samples: 741 Extremes: 0
+large : attain ~ social + sex + verbal + (1 + sex | primary)
+         stat df  p.value   
+LRT    10.841  2 0.004425 **
+PBtest 10.841    0.001348 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>A parametric bootstrap test was conducted to further examine the necessity of including a random slope for sex in the model predicting educational attainment (“attain”). Comparing models m1 (random intercept only) and m2 (random intercept and slope for sex), the likelihood ratio test (LRT) yielded a significant improvement (X² = 10.841, df = 2, p = 0.004425), suggesting that including a random slope for sex captures meaningful variability across primary schools. The parametric bootstrap test confirmed this result, with a significant p-value (p = 0.001348), reinforcing that the inclusion of the random slope significantly improves model fit. Thus, model m2, which allows for both random intercepts and slopes, is supported as an improved model over m1, capturing school-level differences in the effect of sex on educational attainment.</p>
+<ul>
+<li><strong>Evaluating the Impact of Including an Independent Random Slope for Sex by Primary School on Model Fit for Educational Attainment</strong></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="co"># Perform parametric bootstrapping</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a>boot_comp <span class="ot">&lt;-</span> pbkrtest<span class="sc">::</span><span class="fu">PBmodcomp</span>(m3, m1, <span class="at">nsim =</span> <span class="dv">1000</span>)</span>
+<span id="cb39-4"><a href="#cb39-4"></a></span>
+<span id="cb39-5"><a href="#cb39-5"></a><span class="co"># Print the bootstrap comparison results</span></span>
+<span id="cb39-6"><a href="#cb39-6"></a><span class="fu">print</span>(boot_comp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bootstrap test; time: 41.80 sec; samples: 1000; extremes: 0;
+Requested samples: 1000 Used samples: 570 Extremes: 0
+large : attain ~ 1 + social + sex + verbal + (1 | primary) + (0 + dummy(sex, 
+    "M") | primary)
+         stat df  p.value   
+LRT    7.9352  1 0.004848 **
+PBtest 7.9352    0.001751 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>A parametric bootstrap test was conducted to assess the necessity of including an independent random slope for sex by primary school in the model predicting educational attainment (“attain”). Model m1 included only a random intercept for primary school, while model m3 added a separate, independent random slope for sex. The likelihood ratio test (LRT) showed a significant improvement in fit with the addition of the random slope (X² = 7.9352, df = 1, p = 0.004848), suggesting that the effect of sex on attainment varies across primary schools. This finding was further supported by the parametric bootstrap test, which yielded a p-value of 0.001751. These results indicate that incorporating an independent random slope for sex by school (as in model m3) provides a significantly better fit than a model with only a random intercept, capturing meaningful school-level variation in the effect of sex on educational attainment.</p>
+<p><strong>To sum up</strong>, the results from the likelihood ratio tests and parametric bootstrap tests consistently indicate that including random effects for primary school meaningfully improves model fit in predicting educational attainment (“attain”). Model comparisons demonstrated that adding a random intercept for primary school (m1) significantly enhanced fit over the fixed-effects model (m0), highlighting the importance of accounting for school-level variability. Furthermore, including a random slope for sex, either as a separate independent term (m3) or as a correlated term with the intercept (m2), also significantly improved fit compared to the intercept-only model (m1). The parametric bootstrap tests confirmed these improvements, with significant p-values (m2 vs.&nbsp;m1: p = 0.001348; m3 vs.&nbsp;m1: p = 0.001751), underscoring the relevance of allowing the effect of sex to vary by school. Overall, model m3, which includes a separate random intercept and slope for sex by primary school, provides a balanced, interpretable approach that effectively captures school-level differences in the influence of sex on attainment.</p>
+<section id="conclusion-discussion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-discussion">Conclusion / Discussion</h2>
+<p>The <strong>Bobyqa optimizer</strong> is chosen for fitting linear mixed-effects models because it effectively handles complex, non-linear optimization problems that often arise in such models. Its ability to search in a trust region helps avoid issues of convergence that can occur with simpler algorithms, especially when dealing with multiple random effects or high-dimensional parameter spaces. Additionally, Bobyqa is robust in terms of stability and efficiency, making it suitable for models with intricate covariance structures. The increased iteration limit of 10 million iterations ensures that the algorithm has ample opportunity to converge to an optimal solution, which is particularly important when fitting models with complicated random effects. Overall, this choice aims to enhance model reliability and accuracy in parameter estimation. However, the algorithm can also get trapped in local minima, yielding biased parameter estimates. Additionally, reliance on Bobyqa may overlook important model diagnostics, which could result in conclusions based on misspecified models or poor data quality. During the diagnostic process, we had signs for violations of the assumptions of the model, as well as, outliers (how is possible the graph for influential observations looks desirable, while the test and graph for outliers not?). Outlines is a very important issue that may add bias to our estimates and inflate p-values, so further investigation is required.</p>
+<p>Another very important topic is the reliability of the LRT comparison between the models m0, m1, m2 and m3. For instance, in this analysis, we evaluated two linear mixed-effects models to assess the impact of social class, sex, and verbal ability on educational attainment, while accounting for the hierarchical structure of the data with primary schools as a grouping factor. Model m2 incorporated a random intercept and a random slope for sex, allowing us to investigate whether the relationship between sex and educational attainment varied by primary school. In contrast, Model m1 included only a random intercept for primary school, serving as a baseline to determine the necessity of the random slope for sex. To compare the models, we conducted a likelihood ratio test (LRT); however, we acknowledge that LRT-based null hypothesis assumes zero variance, it is on the <strong>boundary of the parameter space</strong>, which violates the assumptions underlying the standard asymptotic chi-square distribution ( the information matrix is not inversable) used in LRTs (the distribution in this case looks more to a mixture). As shown by Self and Liang (1987) and others, when the null hypothesis is on the boundary, the standard LRT becomes <strong>conservative</strong>, meaning it tends to yield higher p-values than it should. This can reduce the test’s sensitivity, making it harder to detect significant random effects when they actually exist (In simpler cases (e.g., one random effect variance), the p-value under standard LRT tends to be approximately <strong>twice as large</strong> as it would be with a correctly adjusted test (Pinheiro and Bates 2000)). (As we have indications for outliers, a coherent question would be: How the outliers could inflate the above comparisons?)</p>
+<p>Parametric bootstrapping involves simulating data under the null hypothesis (e.g.&nbsp;σ^2 = 0 ), fitting models to each simulated dataset, and calculating the likelihood ratio for each. The empirical distribution of the test statistic from these simulations provides an adjusted p-value that better reflects the boundary constraint.</p>
+</section>
+</section>
+<section id="references" class="level1">
+<h1><strong>References</strong></h1>
+<ul>
+<li><p>Barr, Dale J., Roger Levy, Christoph Scheepers, and Harry J. Tily. 2013. “Random Effects Structure for Confirmatory Hypothesis Testing: Keep It Maximal.” Journal of Memory and Language 68 (3): 255–78. https://doi.org/10.1016/j.jml.2012.11.001.</p></li>
+<li><p>Bates, Douglas, Reinhold Kliegl, Shravan Vasishth, and Harald Baayen. 2015. “Parsimonious Mixed Models.” arXiv:1506.04967 [Stat], June. https://arxiv.org/abs/1506.04967.</p></li>
+<li><p>Bates, Douglas, Martin Mächler, Ben Bolker, and Steve Walker. 2015. “Fitting Linear MixedEffects Models Using Lme4.” Journal of Statistical Software 67 (October): 1–48. https://doi. org/10.18637/jss.v067.i01.</p></li>
+<li><p>Biswas, Keya. 2015. “Performances of Different Estimation Methods for Generalized Linear Mixed Models.” Master’s thesis, McMaster University. https://macsphere.mcmaster.ca/ bitstream/11375/17272/2/M.Sc_Thesis_final_Keya_Biswas.pdf.</p></li>
+<li><p>Bolker, Benjamin M. 2015. “Generalized Linear Mixed Models.” In Ecological Statistics: Contemporary Theory and Application, edited by Gordon A. Fox, Simoneta Negrete-Yankelevich, and Vinicio J. Sosa. Oxford University Press.</p></li>
+<li><p>Booth, James G., and James P. Hobert. 1999. “Maximizing Generalized Linear Mixed Model Likelihoods with an Automated Monte Carlo EM Algorithm.” Journal of the Royal Statistical Society. Series B 61 (1): 265–85. https://doi.org/10.1111/1467-9868.00176.</p></li>
+<li><p>Breslow, N. E. 2004. “Whither PQL?” In Proceedings of the Second Seattle Symposium in Biostatistics: Analysis of Correlated Data, edited by Danyu Y. Lin and P. J. Heagerty, 1–22. Springer.</p></li>
+<li><p>Crawley, Michael J. 2002. Statistical Computing: An Introduction to Data Analysis Using S-PLUS. John Wiley &amp; Sons.</p></li>
+<li><p>Gelman, Andrew. 2005. “Analysis of Variance: Why It Is More Important Than Ever.” Annals of Statistics 33 (1): 1–53. https://doi.org/doi:10.1214/009053604000001048.</p></li>
+<li><p>Matuschek, Hannes, Reinhold Kliegl, Shravan Vasishth, Harald Baayen, and Douglas Bates.</p>
+<ol start="2017" type="1">
+<li>“Balancing Type I Error and Power in Linear Mixed Models.” Journal of Memory and Language 94 (June): 305–15. https://doi.org/10.1016/j.jml.2017.01.001.</li>
+</ol></li>
+<li><p>Murtaugh, Paul A. 2007. “Simplicity and Complexity in Ecological Data Analysis.” Ecology 88 (1): 56–62. http://www.esajournals.org/doi/abs/10.1890/0012-9658%282007%2988%5B5 6%3ASACIED%5D2.0.CO%3B2.</p></li>
+<li><p>Pinheiro, José C., and Douglas M. Bates. 1996. “Unconstrained Parametrizations for VarianceCovariance Matrices.” Statistics and Computing 6 (3): 289–96. https://doi.org/10.1007/BF</p>
+<ol start="140873" type="1">
+<li></li>
+</ol></li>
+<li><p>Ponciano, José Miguel, Mark L. Taper, Brian Dennis, and Subhash R. Lele. 2009. “Hierarchical Models in Ecology: Confidence Intervals, Hypothesis Testing, and Model Selection Using Data Cloning.” Ecology 90 (2): 356–62. http://www.jstor.org/stable/27650990.</p></li>
+<li><p>Stroup, Walter W. 2014. “Rethinking the Analysis of Non-Normal Data in Plant and Soil Science.” Agronomy Journal 106: 1–17. https://doi.org/10.2134/agronj2013.0342.</p></li>
+<li><p>Sung, Yun Ju, and Charles J. Geyer. 2007. “Monte Carlo Likelihood Inference for Missing Data Models.” The Annals of Statistics 35 (3): 990–1011. https://doi.org/10.1214/009053606000</p>
+<ol start="1389" type="1">
+<li></li>
+</ol></li>
+<li><p>I read assignments for previous years in order to gain some great code ideas and identify previous mistakes inorder to avoid them.</p></li>
+<li><p>I used Chat Gpt extensively to create reports (I was writting my conclusions and after that, I was asking Chat Gpt to write it in a formal way as a report).</p></li>
+<li><p>I used chat-gpt to code some plots I didnt know and create a more professional output.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
