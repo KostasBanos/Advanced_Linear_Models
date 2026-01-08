@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Konstantinos Banos 400609120">
+<meta name="author" content="Konstantinos Banos">
 <meta name="dcterms.date" content="2024-12-20">
 
-<title>STATS 720 Project – STATS 720 Portfolio — Konstantinos Banos</title>
+<title>Project 5 – STATS 720 Portfolio — Konstantinos Banos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -161,15 +161,15 @@ window.Quarto = {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Project_1.pdf"> 
+    <a class="nav-link" href="./Project_1.html"> 
 <span class="menu-text">Project 1</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Project_2.pdf"> 
+    <a class="nav-link" href="./Project_2.html"> 
 <span class="menu-text">Project 2</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Project_3.pdf"> 
+    <a class="nav-link" href="./Project_3.html"> 
 <span class="menu-text">Project 3</span></a>
   </li>  
   <li class="nav-item">
@@ -177,7 +177,7 @@ window.Quarto = {
 <span class="menu-text">Project 4</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Project_5.pdf"> 
+    <a class="nav-link active" href="./Project_5.html" aria-current="page"> 
 <span class="menu-text">Project 5</span></a>
   </li>  
 </ul>
@@ -221,7 +221,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">STATS 720 Project</h1>
+<h1 class="title">Project 5</h1>
 </div>
 
 
@@ -231,7 +231,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Konstantinos Banos 400609120 </p>
+             <p>Konstantinos Banos </p>
           </div>
   </div>
     
@@ -250,6 +250,7 @@ window.Quarto = {
 </header>
 
 
+<div style="page-break-after: always;"></div>
 <section id="analysis-of-contraception-data-from-the-package-mlmrev-using-generalized-mixed-models" class="level1">
 <h1><strong>Analysis of Contraception Data from the Package mlmRev Using Generalized Mixed Models</strong></h1>
 <div class="cell">
@@ -633,23 +634,23 @@ Formula: use_num ~ ns(age, df = 2) + livch + urban + (1 + urban | district)
 Multilevel Hyperparameters:
 ~district (Number of levels: 60) 
                       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-sd(Intercept)             0.64      0.11     0.44     0.88 1.00     1443
-sd(urbanY)                0.77      0.23     0.34     1.24 1.00      864
-cor(Intercept,urbanY)    -0.69      0.17    -0.92    -0.29 1.00     1849
+sd(Intercept)             0.64      0.10     0.45     0.87 1.01     1240
+sd(urbanY)                0.76      0.22     0.35     1.20 1.01      876
+cor(Intercept,urbanY)    -0.70      0.16    -0.92    -0.30 1.00     1715
                       Tail_ESS
-sd(Intercept)             2331
-sd(urbanY)                1118
-cor(Intercept,urbanY)     2503
+sd(Intercept)             1946
+sd(urbanY)                1046
+cor(Intercept,urbanY)     2127
 
 Regression Coefficients:
             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept      -1.91      0.18    -2.28    -1.55 1.00     4130     3146
-nsagedfEQ21     1.11      0.43     0.26     1.97 1.00     3456     2980
-nsagedfEQ22    -1.24      0.24    -1.72    -0.77 1.00     5374     2644
-livch1          0.84      0.16     0.52     1.14 1.00     4140     3348
-livch2          0.91      0.19     0.54     1.27 1.00     3272     3214
-livch3P         0.94      0.19     0.59     1.31 1.00     2682     2745
-urbanY          0.76      0.17     0.43     1.11 1.00     2784     2631
+Intercept      -1.91      0.18    -2.26    -1.55 1.00     3049     3296
+nsagedfEQ21     1.10      0.44     0.25     1.96 1.00     2761     3194
+nsagedfEQ22    -1.24      0.25    -1.73    -0.76 1.00     3963     3269
+livch1          0.84      0.16     0.52     1.15 1.00     3235     3102
+livch2          0.91      0.19     0.55     1.29 1.00     2462     2820
+livch3P         0.94      0.19     0.58     1.31 1.00     1955     2423
+urbanY          0.78      0.17     0.44     1.12 1.00     2257     2781
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -771,10 +772,10 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
 1 model_… fixed  (Int…   -1.90      0.181    -10.5   8.33e-26   -2.25      -1.54
 2 glmmPQ… fixed  (Int…   -1.85      0.175    -10.6   1.59e-25   -2.19      -1.51
-3 model_… fixed  (Int…   -1.91      0.184     NA    NA          -2.28      -1.55
+3 model_… fixed  (Int…   -1.91      0.180     NA    NA          -2.26      -1.55
 4 model_… fixed  livc…    0.831     0.165      5.03  5.00e- 7    0.507      1.16
 5 glmmPQ… fixed  livc…    0.812     0.160      5.08  4.12e- 7    0.499      1.13
-6 model_… fixed  livc…    0.836     0.160     NA    NA           0.522      1.14
+6 model_… fixed  livc…    0.837     0.163     NA    NA           0.517      1.15
 # ℹ 2 more variables: df &lt;dbl&gt;, component &lt;chr&gt;</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Plot fixed effects using ggplot2</span></span>
